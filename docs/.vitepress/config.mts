@@ -26,6 +26,32 @@ const docs = [
     ]
   },
   {
+    'text': 'Combobox',
+    items: [
+      {
+        text: 'AppCombobox',
+        link: '/components/app-combobox'
+      },
+      {
+        text: 'FormCombobox',
+        link: '/components/form-combobox'
+      }
+    ]
+  },
+  {
+    text: 'FormCheckbox',
+    items: [
+      {
+        text: 'FormCheckbox',
+        link: '/components/form-checkbox'
+      },
+      {
+        text: 'FormCheckboxGroup',
+        link: '/components/form-checkbox-group'
+      }
+    ]
+  },
+  {
     text: 'Input',
     items: [
       {

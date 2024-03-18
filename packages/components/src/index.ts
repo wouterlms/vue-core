@@ -10,6 +10,7 @@ export * from './components/button/button.style'
 
 // Checkbox
 export { default as FormCheckbox } from './components/checkbox/FormCheckbox.vue'
+export { default as FormCheckboxGroup } from './components/checkbox/FormCheckboxGroup.vue'
 
 // Combobox
 export { default as AppCombobox } from './components/combobox/AppCombobox.vue'

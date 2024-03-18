@@ -17,7 +17,7 @@ sidebar: auto
 
 | Prop       | Type          | Description                               |
 |------------|---------------|-------------------------------------------|
-| v-model    | `boolean`     | The value of the checkbox.                |
+| v-model **(required)**    | `boolean`     | The value of the checkbox.                |
 
 ## Example Usage
 
