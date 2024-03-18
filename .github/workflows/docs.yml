@@ -14,6 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: 'Go to docs'
+        run: 'cd docs'
+
       - name: Checkout repo
         uses: actions/checkout@v3
 
@@ -27,7 +30,7 @@ jobs:
           run_install: true
 
       - name: Build documentation
-        run: cd docs && pnpm i && pnpm docs:build
+        run: pnpm docs:build
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v3
