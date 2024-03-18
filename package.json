@@ -5,7 +5,8 @@
   "packageManager": "pnpm@8.15.4",
   "license": "MIT",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "docs"
   ],
   "scripts": {
     "build": "rimraf packages/vue-core/dist && pnpm run -r build",
