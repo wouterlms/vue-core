@@ -55,6 +55,7 @@ const docs = [
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: '/vue-core/',
   title: "Vue Core",
   description: "Vue Core",
   themeConfig: {
