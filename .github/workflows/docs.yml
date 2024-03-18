@@ -27,7 +27,7 @@ jobs:
           run_install: true
 
       - name: Build documentation
-        run: cd docs && pnpm docs:build
+        run: cd docs && pnpm i && pnpm docs:build
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v3
