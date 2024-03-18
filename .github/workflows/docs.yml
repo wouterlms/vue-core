@@ -26,9 +26,6 @@ jobs:
           version: latest
           run_install: true
 
-      - name: Build project
-        run: pnpm run build
-
       - name: Build documentation
         run: pnpm run docs:build
 
