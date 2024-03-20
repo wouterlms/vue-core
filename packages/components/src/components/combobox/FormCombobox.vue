@@ -1,12 +1,17 @@
-<script setup lang="ts" generic="T extends string">
-import type { DataItem } from '@/types/dataItem.type'
+<script setup lang="ts" generic="TValue extends AcceptableValue">
+import type { ComboboxItem } from '@/types/comboboxItem.type'
 import type { FormFieldErrors } from '@/types/formFieldErrors.type'
+import type { AcceptableValue } from '@/types/selectItem.type'
 
 import AppCombobox from '../combobox/AppCombobox.vue'
 import FormInputContainer from '../form-input-container/FormInputContainer.vue'
 
 const props = withDefaults(
   defineProps<{
+    /**
+     * Display function for the selected value
+     */
+    displayFn: (value: TValue) => string
     /**
      * The text to display when there are no options.
      * @default t('components.combobox.empty')
@@ -33,13 +38,13 @@ const props = withDefaults(
      */
     isTouched: boolean
     /**
+     * The options of the combobox.
+     */
+    items: ComboboxItem<TValue>[]
+    /**
      * The label of the combobox.
      */
     label: string
-    /**
-     * The options of the combobox.
-     */
-    options: DataItem<T>[]
     /**
      * The placeholder of the combobox.
      * @default null
@@ -61,7 +66,11 @@ const emit = defineEmits<{
   filter: [value: string]
 }>()
 
-const model = defineModel<T | T[] | null>({
+const model = defineModel<TValue | TValue[] | null>({
+  required: true,
+})
+
+const search = defineModel<null | string>('search', {
   required: true,
 })
 
@@ -86,9 +95,11 @@ function onFilter(filter: string): void {
   >
     <AppCombobox
       :id="id"
+      v-model:search="search"
       v-model="model"
       :is-invalid="isInvalid"
-      :options="props.options"
+      :items="props.items"
+      :display-fn="props.displayFn"
       :empty-text="props.emptyText"
       :is-disabled="props.isDisabled"
       :is-required="props.isRequired"
@@ -96,6 +107,13 @@ function onFilter(filter: string): void {
       :is-loading="props.isLoading"
       @blur="onBlur"
       @filter="onFilter"
-    />
+    >
+      <template #option="{ value }">
+        <slot
+          :value="value"
+          name="option"
+        />
+      </template>
+    </AppCombobox>
   </FormInputContainer>
 </template>

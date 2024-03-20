@@ -4,11 +4,11 @@ import {
   PopoverContent,
   PopoverPortal,
   PopoverRoot,
-  PopoverTrigger,
 } from 'radix-vue'
 import { useSlots } from 'vue'
 
 import AppPopoverCloseButton from './AppPopoverCloseButton.vue'
+import AppPopoverTrigger from './AppPopoverTrigger.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -61,9 +61,9 @@ if (slots.default === undefined) {
 
 <template>
   <PopoverRoot>
-    <PopoverTrigger :as-child="true">
+    <AppPopoverTrigger>
       <slot />
-    </PopoverTrigger>
+    </AppPopoverTrigger>
 
     <PopoverPortal>
       <!-- eslint-disable tailwindcss/no-custom-classname -->

@@ -24,7 +24,7 @@ import AppComboboxItem from './AppComboboxItem.vue'
 const props = withDefaults(
   defineProps<{
     /**
-     *
+     * The display function for the selected value.
      */
     displayFn: (value: TValue) => string
     /**
@@ -52,7 +52,7 @@ const props = withDefaults(
     /**
      * The value of the combobox.
      */
-    modelValue: TValue | TValue[] | null
+    modelValue: TValue[]
     /**
      * The placeholder text to display when the combobox is empty.
      * @default null
@@ -70,17 +70,17 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   'blur': []
-  'update:modelValue': [value: TValue | TValue[] | null]
+  'update:modelValue': [value: TValue[]]
 }>()
 
 const searchModel = defineModel<null | string>('search', {
   required: true,
 })
 
-const model = computed<TValue | TValue[] | undefined>({
-  get: () => props.modelValue ?? undefined,
+const model = computed<TValue[]>({
+  get: () => props.modelValue,
   set: (value) => {
-    emit('update:modelValue', value ?? null)
+    emit('update:modelValue', value ?? [])
   },
 })
 
@@ -96,11 +96,15 @@ const { t } = useI18n()
 const isOpen = ref<boolean>(false)
 
 const placeholderValue = computed<string | undefined>(() => {
-  if (model.value === undefined) {
+  if (model.value.length === 0) {
     return props.placeholder ?? undefined
   }
 
-  return props.displayFn(model.value as TValue)
+  return model.value.map(value => props.displayFn(value)).join(', ')
+})
+
+const isEmpty = computed<boolean>(() => {
+  return model.value.length === 0
 })
 
 function onBlur(): void {
@@ -119,6 +123,7 @@ function onBlur(): void {
       :filter-function="(options) => options"
       :display-value="displayFn"
       :disabled="props.isDisabled"
+      :multiple="true"
     >
       <ComboboxAnchor>
         <div class="relative">
@@ -126,9 +131,11 @@ function onBlur(): void {
             :class="{
               'border-input-border focus-within:ring-ring': !props.isInvalid,
               'border-destructive focus-within:ring-destructive': props.isInvalid,
+              'placeholder:text-input-placeholder': isEmpty,
+              'placeholder:text-input-foreground focus:placeholder:text-input-placeholder': !isEmpty,
             }"
             :placeholder="placeholderValue"
-            class="h-10 w-full truncate rounded-input border bg-input pl-3 pr-9 text-sm outline-none ring-offset-background duration-200 placeholder:text-input-placeholder focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            class="h-10 w-full truncate rounded-input border bg-input pl-3 pr-9 text-sm outline-none ring-offset-background duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             tabindex="0"
             @blur="onBlur"
           />
@@ -185,8 +192,8 @@ function onBlur(): void {
                   v-for="(item, i) of props.items"
                   :key="i"
                   :item="item"
-                  :is-multiple="false"
-                  :display-fn="props.displayFn"
+                  :display-fn="displayFn"
+                  :is-multiple="true"
                 >
                   <template #default="{ item: itemValue }">
                     <slot

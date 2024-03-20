@@ -2,9 +2,9 @@
 sidebar: auto
 ---
 
-# FormCombobox
+# FormMultiCombobox
 
-For multi value select, see [FormMultiCombobox](/components/form-multi-combobox.md).
+For single value select, see [FormCombobox](/components/form-combobox.md).
 
 ## Props
 
@@ -24,7 +24,7 @@ For multi value select, see [FormMultiCombobox](/components/form-multi-combobox.
 
 | Prop       | Type          | Description                               |
 |------------|---------------|-------------------------------------------|
-| v-model **(required)** | `ComboboxItem` \| `null` | The value of the combobox.                |
+| v-model **(required)** | `ComboboxItem[]` \| `null` | The value of the combobox.                |
 | v-model:search **(required)** | `string` \| `null` | The search term                |
 
 ## Events
@@ -38,7 +38,7 @@ For multi value select, see [FormMultiCombobox](/components/form-multi-combobox.
 
 ```vue
 <script setup lang="ts">
-import { AppCombobox } from '@wisemen/vue-core'
+import { FormMultiCombobox } from '@wisemen/vue-core'
 
 interface User {
   firstName: string
@@ -61,19 +61,19 @@ const filteredUserItems = computed<ComboboxItem<User>[]>(
 
 const { form } = useForm({
   schema: z.object({
-    user: z.object({
+    users: z.object({
       firstName: z.string(),
       lastName: z.string(),
-    })
+    }).array()
   })
 })
 
-const user = form.register('user')
+const users = form.register('users')
 </script>
 
 <template>
-  <AppCombobox
-    v-bind="user"
+  <FormMultiCombobox
+    v-bind="users"
     v-model:search="search"
     label="Users"
     :items="users"
@@ -81,7 +81,7 @@ const user = form.register('user')
 
   <!-- Or with a custom option slot -->
   <FormMultiCombobox 
-    v-bind="user"
+    v-bind="users"
     v-model:search="search"
     label="Users"
     :items="users"

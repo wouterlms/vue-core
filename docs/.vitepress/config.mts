@@ -33,8 +33,16 @@ const docs = [
         link: '/components/app-combobox'
       },
       {
+        text: 'AppMultiCombobox',
+        link: '/components/app-multi-combobox'
+      },
+      {
         text: 'FormCombobox',
         link: '/components/form-combobox'
+      },
+      {
+        text: 'FormMultiCombobox',
+        link: '/components/form-multi-combobox'
       }
     ]
   },
@@ -90,6 +98,10 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Examples', link: '/markdown-examples' }
     ],
+
+    search: {
+      provider: 'local'
+    },
 
     sidebar: [
       {

@@ -16,6 +16,10 @@ const props = withDefaults(defineProps<{
   isInvalid: false,
 })
 
+const emit = defineEmits<{
+  blur: []
+}>()
+
 const model = defineModel<boolean>({
   required: true,
 })
@@ -36,6 +40,10 @@ const computedModel = computed<'indeterminate' | boolean>({
     model.value = value === 'indeterminate' ? false : value
   },
 })
+
+function onBlur(): void {
+  emit('blur')
+}
 </script>
 
 <template>
@@ -47,6 +55,7 @@ const computedModel = computed<'indeterminate' | boolean>({
       'border-input-border focus-visible:ring-ring data-[state=checked]:border-primary data-[state=checked]:bg-primary': !props.isInvalid,
     }"
     class="flex size-5 items-center justify-center rounded border-[1.5px] border-solid outline-none ring-offset-2 ring-offset-background duration-200 focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50"
+    @blur="onBlur"
   >
     <CheckboxIndicator>
       <AppIcon

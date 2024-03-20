@@ -50,7 +50,10 @@ function toggleOption(value: T) {
     model.value = model.value.filter(v => v !== value)
   }
   else {
-    model.value = [...model.value, value]
+    model.value = [
+      ...model.value,
+      value,
+    ]
   }
 }
 </script>
@@ -63,7 +66,7 @@ function toggleOption(value: T) {
     :is-disabled="props.isDisabled"
     :is-required="props.isRequired"
   >
-    <div class="space-y-1">
+    <div class="flex flex-col gap-y-2">
       <div
         v-for="option of props.options"
         :key="option.label"

@@ -2,9 +2,9 @@
 sidebar: auto
 ---
 
-# AppCombobox
+# AppMultiCombobox
 
-For multi value select, see [AppMultiCombobox](/components/app-multi-combobox.md).
+For single value select, see [AppCombobox](/components/app-combobox.md).
 
 ## Props
 
@@ -21,7 +21,7 @@ For multi value select, see [AppMultiCombobox](/components/app-multi-combobox.md
 
 | Prop       | Type          | Description                               |
 |------------|---------------|-------------------------------------------|
-| v-model **(required)** | `ComboboxItem` \| `null` | The value of the combobox.                |
+| v-model **(required)** | `ComboboxItem[]` \| `null` | The value of the combobox.                |
 | v-model:search **(required)** | `string` \| `null` | The search term                |
 
 ## Events
@@ -35,7 +35,7 @@ For multi value select, see [AppMultiCombobox](/components/app-multi-combobox.md
 
 ```vue
 <script setup lang="ts">
-import { AppCombobox, ComboboxItem } from '@wisemen/vue-core'
+import { AppMultiCombobox, ComboboxItem } from '@wisemen/vue-core'
 import { ref } from 'vue'
 
 interface User {
@@ -63,22 +63,22 @@ const userItems: ComboboxItem<User>[] = [
   },
 ]
 
-const user = ref<User | null>(null)
+const users = ref<User[]>([])
 </script>
 
 <template>
-  <AppCombobox 
-    v-model="user" 
+  <AppMultiCombobox 
+    v-model="users" 
     :items="userItems"
   />
 
   <!-- Or with a custom option slot -->
-  <AppCombobox 
+  <AppMultiCombobox 
     v-model="value" 
     :items="userItems"
   >
     <template #option="{ value }">
       <!-- custom html -->
     </template>
-  </AppCombobox>
+  </AppMultiCombobox>
 </template>

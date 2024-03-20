@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@wisemen/eslint-config-vue':
-        specifier: ^0.0.6
-        version: 0.0.6(@vue/compiler-sfc@3.4.21)(eslint@8.57.0)(putout@35.7.1)(tailwindcss@3.4.1)(typescript@5.4.2)
+        specifier: ^0.0.9
+        version: 0.0.9(@vue/compiler-sfc@3.4.21)(eslint@8.57.0)(putout@35.7.1)(tailwindcss@3.4.1)(typescript@5.4.2)
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -53,9 +53,12 @@ importers:
       jsdom:
         specifier: ^24.0.0
         version: 24.0.0
+      maska:
+        specifier: ^2.1.11
+        version: 2.1.11
       radix-vue:
-        specifier: ^1.5.2
-        version: 1.5.2(vue@3.4.21)
+        specifier: ^1.5.3
+        version: 1.5.3(vue@3.4.21)
       sass:
         specifier: ^1.71.1
         version: 1.71.1
@@ -3378,8 +3381,8 @@ packages:
       - vue
     dev: true
 
-  /@wisemen/eslint-config-vue@0.0.6(@vue/compiler-sfc@3.4.21)(eslint@8.57.0)(putout@35.7.1)(tailwindcss@3.4.1)(typescript@5.4.2):
-    resolution: {integrity: sha512-+3YVV3BJNPufwxmhfLVqxUDKaOYJpBiKMLfOUq/52J+pPJd+aBD8KpIGOi8YR8MIcwaJnnK+3QhKmuaP3QjOew==}
+  /@wisemen/eslint-config-vue@0.0.9(@vue/compiler-sfc@3.4.21)(eslint@8.57.0)(putout@35.7.1)(tailwindcss@3.4.1)(typescript@5.4.2):
+    resolution: {integrity: sha512-DingVaK9YwR3St98+dWkHIMLHIMHbyWWb5VforH7+o1khEa8RpmXgqLPhavIsHWXmAAz8jAjpgV0xNbnOFT6+g==}
     peerDependencies:
       eslint: '>= 8.57'
     dependencies:
@@ -3395,8 +3398,10 @@ packages:
       eslint-plugin-require-explicit-generics: 1.0.0
       eslint-plugin-simple-import-sort: 12.0.0(eslint@8.57.0)
       eslint-plugin-tailwindcss: 3.15.0(tailwindcss@3.4.1)
+      eslint-plugin-unused-imports: 3.1.0(@typescript-eslint/eslint-plugin@7.1.1)(eslint@8.57.0)
     transitivePeerDependencies:
       - '@babel/preset-typescript'
+      - '@typescript-eslint/eslint-plugin'
       - '@unocss/eslint-plugin'
       - '@vue/compiler-sfc'
       - astro-eslint-parser
@@ -6069,6 +6074,10 @@ packages:
     resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
     dev: true
 
+  /maska@2.1.11:
+    resolution: {integrity: sha512-IGqWjBnKxMYcVa06pb4mPfag9sJjnR2T15CdGfQ2llR3gajiSd4AxXCvNqHMEq9W3UBhjjTazgWumsP3sWrUSg==}
+    dev: true
+
   /mathml-tag-names@2.1.3:
     resolution: {integrity: sha512-APMBEanjybaPzUrfqU0IMU5I0AswKMH7k8OTLs0vvV4KZpExkTkY87nR/zpbuTPj+gARop7aGUbl11pnDfW6xg==}
     dev: true
@@ -7342,8 +7351,8 @@ packages:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
 
-  /radix-vue@1.5.2(vue@3.4.21):
-    resolution: {integrity: sha512-XyXB6mYm7dthW56LDHG4ttR3x+XtspTi48nSq4vHoHldgGZzAEa5VXlqUCr2J21fNKrt3NIYhIIRLB6kKwWwrA==}
+  /radix-vue@1.5.3(vue@3.4.21):
+    resolution: {integrity: sha512-K1JF8P238jGKRwwlWe0LNCd80bamfWFnDhLNBAgoWvSRORRIsoo7DODnC4TLE62JE55tf/6ABSs5JIvp2BvYPA==}
     dependencies:
       '@floating-ui/dom': 1.6.3
       '@floating-ui/vue': 1.0.6(vue@3.4.21)
@@ -8792,7 +8801,7 @@ packages:
       '@vue/composition-api':
         optional: true
     dependencies:
-      vue: 3.4.21(typescript@5.4.2)
+      vue: 3.4.21(typescript@5.3.3)
     dev: true
 
   /vue-eslint-parser@9.4.2(eslint@8.57.0):

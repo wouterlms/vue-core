@@ -11,11 +11,16 @@ const props = defineProps<{
 <template>
   <ComboboxGroup>
     <ComboboxLabel class="px-2 py-1">
-      <AppText variant="subtext">
+      <AppText
+        variant="caption"
+        class="text-secondary-foreground"
+      >
         {{ props.label }}
       </AppText>
     </ComboboxLabel>
 
-    <slot />
+    <div class="pl-2">
+      <slot />
+    </div>
   </ComboboxGroup>
 </template>

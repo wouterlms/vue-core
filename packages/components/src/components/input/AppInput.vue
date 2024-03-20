@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useComponentAttrs } from '@/composables/componentAttrs.composable'
 import type { Icon } from '@/icons/icons'
 
 import AppIcon from '../icon/AppIcon.vue'
@@ -64,6 +65,8 @@ const model = defineModel<null | string>({
   required: true,
 })
 
+const { classAttr, otherAttrs } = useComponentAttrs()
+
 function onBlur(): void {
   emit('blur')
 }
@@ -76,11 +79,14 @@ function onFocus(): void {
 <template>
   <label
     :aria-disabled="props.isDisabled"
-    :class="{
-      'border-input-border focus-within:ring-ring': !props.isInvalid,
-      'border-destructive focus-within:ring-destructive': props.isInvalid,
-      'cursor-not-allowed opacity-50': props.isDisabled,
-    }"
+    :class="[
+      classAttr,
+      {
+        'border-input-border focus-within:ring-ring': !props.isInvalid,
+        'border-destructive focus-within:ring-destructive': props.isInvalid,
+        'cursor-not-allowed opacity-50': props.isDisabled,
+      },
+    ]"
     class="flex h-10 items-center rounded-input border border-solid bg-input ring-offset-background duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2"
   >
     <slot name="left">
@@ -92,6 +98,7 @@ function onFocus(): void {
     </slot>
 
     <input
+      v-bind="otherAttrs"
       :id="props.id ?? undefined"
       v-model="model"
       :type="props.type"

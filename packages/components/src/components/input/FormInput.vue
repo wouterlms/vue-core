@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useComponentAttrs } from '@/composables/componentAttrs.composable'
 import type { Icon } from '@/icons/icons'
 import type { FormFieldErrors } from '@/types/formFieldErrors.type'
 
@@ -74,6 +75,8 @@ const model = defineModel<null | string>({
   required: true,
 })
 
+const { classAttr, otherAttrs } = useComponentAttrs()
+
 function onFocus(): void {
   emit('focus')
 }
@@ -86,6 +89,7 @@ function onBlur(): void {
 <template>
   <FormInputContainer
     v-slot="{ isInvalid, id }"
+    :class="classAttr"
     :errors="props.errors"
     :is-required="props.isRequired"
     :is-touched="props.isTouched"
@@ -96,6 +100,7 @@ function onBlur(): void {
     <AppInput
       :id="id"
       v-model="model"
+      v-bind="otherAttrs"
       :is-invalid="isInvalid"
       :placeholder="props.placeholder"
       :is-disabled="props.isDisabled"
