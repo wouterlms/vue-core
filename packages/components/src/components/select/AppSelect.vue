@@ -47,10 +47,6 @@ const props = withDefaults(
      * The placeholder of the select.
      */
     placeholder?: null | string
-    /**
-     *
-     */
-    triggerClasses?: null | string
   }>(),
   {
     id: null,
@@ -95,7 +91,6 @@ function onTriggerBlur(): void {
         :id="id"
         :is-disabled="props.isDisabled"
         :is-invalid="props.isInvalid"
-        :class="triggerClasses"
         @blur="onTriggerBlur"
       >
         <AppSelectValue :is-empty="model === null">
