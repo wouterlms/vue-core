@@ -18,6 +18,10 @@ const props = withDefaults(
      */
     iconSize?: IconStyleProps['size']
     /**
+     * Whether the button is disabled
+     */
+    isDisabled?: boolean
+    /**
      * The label for the button for accessibility
      */
     label: string
@@ -29,6 +33,7 @@ const props = withDefaults(
   }>(),
   {
     iconSize: 'default',
+    isDisabled: false,
     variant: 'default',
   },
 )
@@ -38,6 +43,7 @@ const props = withDefaults(
   <AppButton
     :variant="props.variant"
     :aria-label="props.label"
+    :is-disabled="props.isDisabled"
     size="icon"
   >
     <AppIcon

@@ -22,6 +22,8 @@ export { default as FormMultiCombobox } from './components/combobox/FormMultiCom
 export { default as AppDialog } from './components/dialog/AppDialog.vue'
 export { default as AppDialogCloseButton } from './components/dialog/AppDialogCloseButton.vue'
 export { default as AppDialogContainer } from './components/dialog/AppDialogContainer.vue'
+export { default as AppDialogDescription } from './components/dialog/AppDialogDescription.vue'
+export { default as AppDialogTitle } from './components/dialog/AppDialogTitle.vue'
 
 // Dropdown menu
 export { default as AppDropdownMenu } from './components/dropdown-menu/AppDropdownMenu.vue'
@@ -46,7 +48,9 @@ export { default as AppIcon } from './components/icon/AppIcon.vue'
 
 // Input
 export { default as AppInput } from './components/input/AppInput.vue'
+export { default as AppNumberInput } from './components/input/AppNumberInput.vue'
 export { default as FormInput } from './components/input/FormInput.vue'
+export { default as FormNumberInput } from './components/input/FormNumberInput.vue'
 export { default as FormPasswordInput } from './components/input/FormPasswordInput.vue'
 export { default as FormPhoneNumberInput } from './components/input/FormPhoneNumberInput.vue'
 
@@ -87,6 +91,7 @@ export { useToast } from './composables/toast.composable'
 export type { Icon, Icons } from './icons/icons'
 export type { ComboboxItem } from '@/types/comboboxItem.type'
 export type { DropdownMenuItem } from '@/types/dropdownMenuItem.type'
+export type { FormFieldErrors } from '@/types/formFieldErrors.type'
 export type { SelectItem } from '@/types/selectItem.type'
 
 // Other

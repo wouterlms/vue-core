@@ -179,7 +179,14 @@ watch(isOpen, (isOpen) => {
       :modal="isActuallyOpen"
     >
       <DialogPortal>
-        <AppDialogOverlay />
+        <Transition
+          enter-active-class="duration-200"
+          enter-from-class="opacity-0"
+          leave-active-class="duration-200"
+          leave-to-class="opacity-0"
+        >
+          <AppDialogOverlay />
+        </Transition>
 
         <Component
           :is="animateFromTrigger ? 'div' : Transition"

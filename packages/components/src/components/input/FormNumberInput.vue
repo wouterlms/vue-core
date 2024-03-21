@@ -4,7 +4,7 @@ import type { Icon } from '@/icons/icons'
 import type { FormFieldErrors } from '@/types/formFieldErrors.type'
 
 import FormInputContainer from '../form-input-container/FormInputContainer.vue'
-import AppInput from '../input/AppInput.vue'
+import AppNumberInput from '../input/AppNumberInput.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -13,15 +13,15 @@ const props = withDefaults(
      */
     errors: FormFieldErrors
     /**
+     * Whether to hide the increment and decrement controls.
+     * @default false
+     */
+    hideControls?: boolean
+    /**
      * The left icon of the input.
      * @default null
      */
     iconLeft?: Icon | null
-    /**
-     * The right icon of the input.
-     * @default null
-     */
-    iconRight?: Icon | null
     /**
      * Whether the input is disabled.
      */
@@ -36,7 +36,7 @@ const props = withDefaults(
      */
     isRequired?: boolean
     /**
-     * Whether the input is touched.
+     *
      */
     isTouched: boolean
     /**
@@ -44,23 +44,30 @@ const props = withDefaults(
      */
     label: string
     /**
+     * The maximum value of the input.
+     * @default null
+     */
+    max?: null | number
+    /**
+     * The minimum value of the input.
+     * @default 0
+     */
+    min?: null | number
+    /**
      * The placeholder of the input.
      * @default null
      */
     placeholder?: null | string
-    /**
-     * The type of the input.
-     * @default 'text'
-     */
-    type?: 'date' | 'datetime-local' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'time' | 'url'
   }>(),
   {
+    hideControls: false,
     iconLeft: undefined,
-    iconRight: undefined,
     isDisabled: false,
     isLoading: false,
     isRequired: false,
     isTouched: false,
+    max: null,
+    min: 0,
     placeholder: null,
     type: 'text',
   },
@@ -71,7 +78,7 @@ const emit = defineEmits<{
   focus: []
 }>()
 
-const model = defineModel<null | string>({
+const model = defineModel<null | number>({
   required: true,
 })
 
@@ -97,7 +104,7 @@ function onBlur(): void {
     :placeholder="placeholder"
     :label="props.label"
   >
-    <AppInput
+    <AppNumberInput
       :id="id"
       v-model="model"
       v-bind="otherAttrs"
@@ -107,7 +114,6 @@ function onBlur(): void {
       :type="props.type"
       :is-loading="props.isLoading"
       :icon-left="props.iconLeft"
-      :icon-right="props.iconRight"
       @focus="onFocus"
       @blur="onBlur"
     >
@@ -118,6 +124,6 @@ function onBlur(): void {
       <template #right>
         <slot name="right" />
       </template>
-    </AppInput>
+    </AppNumberInput>
   </FormInputContainer>
 </template>

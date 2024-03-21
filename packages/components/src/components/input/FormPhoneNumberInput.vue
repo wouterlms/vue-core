@@ -71,9 +71,30 @@ const countries = getCountries()
 function getCountryFromPhoneNumber(phoneNumber: string): CountryCode | null {
   const parsedPhoneNumber = parsePhoneNumber(phoneNumber)
 
-  // Get the calling code from the parsed phone number or the formatted phone number
-  // The parsed phone number is preferred because it is more accurate, but it is not always available
-  const callingCode = parsedPhoneNumber?.countryCallingCode ?? phoneNumber.split(' ')[0]
+  const firstNumberIncludingPlus = phoneNumber.slice(0, 2)
+  const firstTwoNumbersIncludingPlus = phoneNumber.slice(0, 3)
+  const firstThreeNumbersIncludingPlus = phoneNumber.slice(0, 4)
+
+  const phoneNumberLength = phoneNumber.length
+
+  if (phoneNumberLength === 1) {
+    return null
+  }
+
+  let parsedCallingCode: string
+
+  if (phoneNumberLength === 2) {
+    parsedCallingCode = firstNumberIncludingPlus
+  }
+  else if (phoneNumberLength === 3) {
+    parsedCallingCode = firstTwoNumbersIncludingPlus
+  }
+  else {
+    parsedCallingCode = firstThreeNumbersIncludingPlus
+  }
+
+  const callingCode = parsedPhoneNumber?.countryCallingCode ?? parsedCallingCode
+
   const callingCodeWithoutPlus = callingCode.replace('+', '')
 
   // Find the country based on the calling code
@@ -86,6 +107,7 @@ function getCountryFromPhoneNumber(phoneNumber: string): CountryCode | null {
 
 function getExamplePhoneNumberByCountry(countryCode: CountryCode): null | string {
   const exampleNumber = getExampleNumber(countryCode, examples)
+
   return exampleNumber?.formatInternational() ?? null
 }
 
@@ -100,19 +122,19 @@ function getMaskFromExampleNumber(exampleNumber: string): string {
 
 const mask = computed<null | string>(() => {
   if (model.value === null) {
-    return null
+    return '+####'
   }
 
   const country = getCountryFromPhoneNumber(model.value)
 
   if (country === null) {
-    return null
+    return '+####'
   }
 
   const exampleNumber = getExamplePhoneNumberByCountry(country)
 
   if (exampleNumber === null) {
-    return null
+    return '+####'
   }
 
   return getMaskFromExampleNumber(exampleNumber)
