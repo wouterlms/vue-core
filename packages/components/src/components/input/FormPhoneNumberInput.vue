@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { CountryCode } from 'libphonenumber-js'
 import parsePhoneNumber, {
-  AsYouType,
   getCountries,
   getCountryCallingCode,
-  validatePhoneNumberLength,
+  getExampleNumber,
 } from 'libphonenumber-js'
+import examples from 'libphonenumber-js/mobile/examples'
+import { vMaska } from 'maska'
 import { computed } from 'vue'
 
 import type { Icon } from '@/icons/icons'
@@ -66,60 +68,12 @@ const model = defineModel<null | string>({
 
 const countries = getCountries()
 
-const formattedPhoneNumber = computed<null | string>({
-  get() {
-    if (model.value === null) {
-      return null
-    }
-
-    const formattedPhoneNumber = new AsYouType().input(model.value)
-    return formattedPhoneNumber
-  },
-  set(newValue) {
-    if (newValue === null) {
-      model.value = null
-      return
-    }
-
-    const parsedPhoneNumber = parsePhoneNumber(newValue)
-
-    const phoneNumber = parsedPhoneNumber?.number ?? null
-
-    if (phoneNumber === null) {
-      model.value = newValue
-      return
-    }
-
-    model.value = phoneNumber
-  },
-})
-
-const maxLength = computed<null | number>(() => {
-  if (formattedPhoneNumber.value === null) {
-    return null
-  }
-
-  // Add 1 to the length to account for an extra digit
-  // if the phone number is too long, it means the max length was reached
-  const length = validatePhoneNumberLength(`${formattedPhoneNumber.value}0`)
-
-  if (length === 'TOO_LONG') {
-    return formattedPhoneNumber.value.length - 1
-  }
-
-  return null
-})
-
-const country = computed<null | string>(() => {
-  if (formattedPhoneNumber.value === null) {
-    return null
-  }
-
-  const parsedPhoneNumber = parsePhoneNumber(formattedPhoneNumber.value)
+function getCountryFromPhoneNumber(phoneNumber: string): CountryCode | null {
+  const parsedPhoneNumber = parsePhoneNumber(phoneNumber)
 
   // Get the calling code from the parsed phone number or the formatted phone number
   // The parsed phone number is preferred because it is more accurate, but it is not always available
-  const callingCode = parsedPhoneNumber?.countryCallingCode ?? formattedPhoneNumber.value.split(' ')[0]
+  const callingCode = parsedPhoneNumber?.countryCallingCode ?? phoneNumber.split(' ')[0]
   const callingCodeWithoutPlus = callingCode.replace('+', '')
 
   // Find the country based on the calling code
@@ -128,6 +82,54 @@ const country = computed<null | string>(() => {
     ?? countries.find(country => getCountryCallingCode(country) === callingCodeWithoutPlus)
 
   return country ?? null
+}
+
+function getExamplePhoneNumberByCountry(countryCode: CountryCode): null | string {
+  const exampleNumber = getExampleNumber(countryCode, examples)
+  return exampleNumber?.formatInternational() ?? null
+}
+
+function getMaskFromExampleNumber(exampleNumber: string): string {
+  return exampleNumber
+    .replace(/\d/g, '#')
+    .replace(/ /g, ' ')
+    .replace(/\(/g, '(')
+    .replace(/\)/g, ')')
+    .replace(/-/g, '-')
+}
+
+const mask = computed<null | string>(() => {
+  if (model.value === null) {
+    return null
+  }
+
+  const country = getCountryFromPhoneNumber(model.value)
+
+  if (country === null) {
+    return null
+  }
+
+  const exampleNumber = getExamplePhoneNumberByCountry(country)
+
+  if (exampleNumber === null) {
+    return null
+  }
+
+  return getMaskFromExampleNumber(exampleNumber)
+})
+
+const countryFlagUrl = computed<null | string>(() => {
+  if (model.value === null) {
+    return null
+  }
+
+  const country = getCountryFromPhoneNumber(model.value)
+
+  if (country === null) {
+    return null
+  }
+
+  return getCountryFlagUrl(country)
 })
 
 function getCountryFlagUrl(countryCode: string): string {
@@ -137,7 +139,9 @@ function getCountryFlagUrl(countryCode: string): string {
 
 <template>
   <FormInput
-    v-model="formattedPhoneNumber"
+    v-maska
+    v-model="model"
+    :data-maska="mask"
     :errors="props.errors"
     :icon-right="props.iconRight"
     :is-disabled="props.isDisabled"
@@ -146,13 +150,12 @@ function getCountryFlagUrl(countryCode: string): string {
     :is-touched="props.isTouched"
     :label="props.label"
     :placeholder="props.placeholder"
-    :maxlength="maxLength"
   >
     <template #left>
       <div class="ml-3 h-3 w-5 overflow-hidden rounded-sm">
         <img
-          v-if="country !== null"
-          :src="getCountryFlagUrl(country)"
+          v-if="countryFlagUrl !== null"
+          :src="countryFlagUrl"
         >
 
         <div
