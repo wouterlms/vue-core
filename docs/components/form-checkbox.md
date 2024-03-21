@@ -9,6 +9,7 @@ sidebar: auto
 | Prop            | Type           | Description                                     | Default   |
 |-----------------|----------------|-------------------------------------------------|-----------|
 | id              | `null` \| `string` | The id of the checkbox.                        | `null`    |
+| label       | `string` \| `null`        | The label of the checkbox               | `null`   |
 | isDisabled      | `boolean`        | Whether the checkbox is disabled.              | `false`   |
 | isIndeterminate | `boolean`        | Whether the checkbox is in an indeterminate state. | `false`   |
 | isInvalid       | `boolean`        | Whether the checkbox is invalid.               | `false`   |
