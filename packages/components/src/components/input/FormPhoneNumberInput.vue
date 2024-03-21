@@ -1,37 +1,23 @@
 <script setup lang="ts">
-import { vMaska } from 'maska'
-import {
-  computed,
-  ref,
-  watch,
-} from 'vue'
+import parsePhoneNumber, {
+  AsYouType,
+  getCountries,
+  getCountryCallingCode,
+  validatePhoneNumberLength,
+} from 'libphonenumber-js'
+import { computed } from 'vue'
 
 import type { Icon } from '@/icons/icons'
 import type { FormFieldErrors } from '@/types/formFieldErrors.type'
-import type { SelectItem } from '@/types/selectItem.type'
 
-import AppSelect from '../select/AppSelect.vue'
 import FormInput from './FormInput.vue'
-
-interface Country {
-  dialCode: string
-  format: string
-}
 
 const props = withDefaults(
   defineProps<{
     /**
      * The errors associated with the input.
      */
-    errors: FormFieldErrors<{
-      dialCode: string
-      number: string
-    }>
-    /**
-     * The left icon of the input.
-     * @default null
-     */
-    iconLeft?: Icon | null
+    errors: FormFieldErrors<string>
     /**
      * The right icon of the input.
      * @default null
@@ -51,7 +37,7 @@ const props = withDefaults(
      */
     isRequired?: boolean
     /**
-     *
+     * Whether the input is touched.
      */
     isTouched: boolean
     /**
@@ -65,7 +51,6 @@ const props = withDefaults(
     placeholder?: null | string
   }>(),
   {
-    iconLeft: undefined,
     iconRight: undefined,
     isDisabled: false,
     isLoading: false,
@@ -75,68 +60,85 @@ const props = withDefaults(
   },
 )
 
-const model = defineModel<{
-  dialCode: string
-  number: null | string
-}>({
+const model = defineModel<null | string>({
   required: true,
 })
 
-const countries: Country[] = [
-  {
-    dialCode: '+31',
-    format: '# ## ## ## ##',
-  },
-  {
-    dialCode: '+32',
-    format: '### ## ## ##',
-  },
-]
+const countries = getCountries()
 
-const dialCode = ref<string>(model.value.dialCode)
-const number = ref<null | string>(model.value.number)
-
-const items: SelectItem<string>[] = countries.map(country => ({
-  type: 'option',
-  value: country.dialCode,
-}))
-
-const mask = computed<string>(() => {
-  const country = countries.find(country => country.dialCode === dialCode.value) ?? null
-
-  return country?.format ?? ''
-})
-
-watch([
-  dialCode,
-  number,
-], ([
-  dialCode,
-  number,
-]) => {
-  if (dialCode !== null) {
-    model.value = {
-      dialCode,
-      number,
+const formattedPhoneNumber = computed<null | string>({
+  get() {
+    if (model.value === null) {
+      return null
     }
-  }
+
+    const formattedPhoneNumber = new AsYouType().input(model.value)
+    return formattedPhoneNumber
+  },
+  set(newValue) {
+    if (newValue === null) {
+      model.value = null
+      return
+    }
+
+    const parsedPhoneNumber = parsePhoneNumber(newValue)
+
+    const phoneNumber = parsedPhoneNumber?.number ?? null
+
+    if (phoneNumber === null) {
+      model.value = newValue
+      return
+    }
+
+    model.value = phoneNumber
+  },
 })
 
-watch(
-  () => model.value,
-  (value) => {
-    dialCode.value = value.dialCode
-    number.value = value.number
-  },
-)
+const maxLength = computed<null | number>(() => {
+  if (formattedPhoneNumber.value === null) {
+    return null
+  }
+
+  // Add 1 to the length to account for an extra digit
+  // if the phone number is too long, it means the max length was reached
+  const length = validatePhoneNumberLength(`${formattedPhoneNumber.value}0`)
+
+  if (length === 'TOO_LONG') {
+    return formattedPhoneNumber.value.length - 1
+  }
+
+  return null
+})
+
+const country = computed<null | string>(() => {
+  if (formattedPhoneNumber.value === null) {
+    return null
+  }
+
+  const parsedPhoneNumber = parsePhoneNumber(formattedPhoneNumber.value)
+
+  // Get the calling code from the parsed phone number or the formatted phone number
+  // The parsed phone number is preferred because it is more accurate, but it is not always available
+  const callingCode = parsedPhoneNumber?.countryCallingCode ?? formattedPhoneNumber.value.split(' ')[0]
+  const callingCodeWithoutPlus = callingCode.replace('+', '')
+
+  // Find the country based on the calling code
+  // the parsed phone number is preferred because it is more accurate, but it is not always available
+  const country = parsedPhoneNumber?.country
+    ?? countries.find(country => getCountryCallingCode(country) === callingCodeWithoutPlus)
+
+  return country ?? null
+})
+
+function getCountryFlagUrl(countryCode: string): string {
+  return `https://purecatamphetamine.github.io/country-flag-icons/3x2/${countryCode}.svg`
+}
 </script>
 
 <template>
   <FormInput
-    v-model="number"
-    v-maska
-    :errors="props.errors?.number"
-    :icon-left="props.iconLeft"
+    v-model="formattedPhoneNumber"
+    :errors="props.errors"
     :icon-right="props.iconRight"
     :is-disabled="props.isDisabled"
     :is-loading="props.isLoading"
@@ -144,16 +146,18 @@ watch(
     :is-touched="props.isTouched"
     :label="props.label"
     :placeholder="props.placeholder"
-    :data-maska="mask"
+    :maxlength="maxLength"
   >
     <template #left>
-      <div class="flex h-full w-20 shrink-0 items-center border-r border-solid border-input-border">
-        <AppSelect
-          v-model="dialCode"
-          :items="items"
-          :display-fn="(dialCode) => dialCode"
-          class="size-full"
-          trigger-classes="border-0 h-full rounded-r-none focus-visible:ring-transparent outline-none focus-visible:ring-offset-transparent focus-visible:bg-ring/10 focus-visible:ring-0"
+      <div class="ml-3 h-3 w-5 overflow-hidden rounded-sm">
+        <img
+          v-if="country !== null"
+          :src="getCountryFlagUrl(country)"
+        >
+
+        <div
+          v-else
+          class="h-full bg-neutral-200"
         />
       </div>
     </template>

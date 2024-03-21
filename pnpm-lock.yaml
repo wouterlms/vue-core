@@ -53,6 +53,9 @@ importers:
       jsdom:
         specifier: ^24.0.0
         version: 24.0.0
+      libphonenumber-js:
+        specifier: ^1.10.58
+        version: 1.10.58
       maska:
         specifier: ^2.1.11
         version: 2.1.11
@@ -5970,6 +5973,10 @@ packages:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
+    dev: true
+
+  /libphonenumber-js@1.10.58:
+    resolution: {integrity: sha512-53A0IpJFL9LdHbpeatwizf8KSwPICrqn9H0g3Y7WQ+Jgeu9cQ4Ew3WrRtrLBu/CX2lXd5+rgT01/tGlkbkzOjw==}
     dev: true
 
   /lilconfig@2.1.0:
