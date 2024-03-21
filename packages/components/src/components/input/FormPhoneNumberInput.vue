@@ -71,36 +71,29 @@ const countries = getCountries()
 function getCountryFromPhoneNumber(phoneNumber: string): CountryCode | null {
   const parsedPhoneNumber = parsePhoneNumber(phoneNumber)
 
-  const firstNumberIncludingPlus = phoneNumber.slice(0, 2)
-  const firstTwoNumbersIncludingPlus = phoneNumber.slice(0, 3)
-  const firstThreeNumbersIncludingPlus = phoneNumber.slice(0, 4)
-
-  const phoneNumberLength = phoneNumber.length
-
-  if (phoneNumberLength === 1) {
+  if (phoneNumber.length < 2) {
     return null
   }
 
-  let parsedCallingCode: string
+  // let parsedCallingCode: string
 
-  if (phoneNumberLength === 2) {
-    parsedCallingCode = firstNumberIncludingPlus
-  }
-  else if (phoneNumberLength === 3) {
-    parsedCallingCode = firstTwoNumbersIncludingPlus
-  }
-  else {
-    parsedCallingCode = firstThreeNumbersIncludingPlus
-  }
+  // Loop over first 3 characters of the phone number to find the calling code
+  // 3 has priority, but if 3 has no match, then 2, and if 2 has no match, then 1
+  let country = null
 
-  const callingCode = parsedPhoneNumber?.countryCallingCode ?? parsedCallingCode
+  for (let i = 3; i > 0; i--) {
+    const callingCode = phoneNumber.slice(0, i).replace('+', '')
 
-  const callingCodeWithoutPlus = callingCode.replace('+', '')
+    country = countries.find(country => getCountryCallingCode(country) === callingCode)
+
+    if (country !== undefined) {
+      break
+    }
+  }
 
   // Find the country based on the calling code
   // the parsed phone number is preferred because it is more accurate, but it is not always available
-  const country = parsedPhoneNumber?.country
-    ?? countries.find(country => getCountryCallingCode(country) === callingCodeWithoutPlus)
+  country = parsedPhoneNumber?.country ?? country
 
   return country ?? null
 }
