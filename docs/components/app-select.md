@@ -9,6 +9,7 @@ sidebar: auto
 | Prop         | Type           | Description                                                        | Default                          |
 |--------------|----------------|--------------------------------------------------------------------|----------------------------------|
 | items  **(required)**      | `SelectItem<T>[]` | The items to display in the select.                           |                                  |
+| displayFn  **(required)**      | `(value: T) => string` | Display function for the selected value.                           |                                  |
 | isDisabled   | `boolean`        | Whether the select is disabled.                                 | `false`                          |
 | isInvalid    | `boolean`        | Whether the select is in an invalid state.                      | `false`                          |
 | isLoading    | `boolean`        | Whether the select is loading.                                  | `false`                          |

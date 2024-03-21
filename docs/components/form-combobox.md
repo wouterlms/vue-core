@@ -11,7 +11,8 @@ For multi value select, see [FormMultiCombobox](/components/form-multi-combobox.
 | Prop       | Type                      | Description                                                  | Default          |
 |------------|---------------------------|--------------------------------------------------------------|------------------|
 | label **(required)**      | `string`                  | The label of the combobox.                                   |                 |
-| options **(required)**    | `ComboboxItem<T>[]`           | The items of the combobox.                                 |                 |
+| items **(required)**    | `ComboboxItem<T>[]`           | The items of the combobox.                                 |                 |
+| displayFn  **(required)**      | `(value: T) => string` | Display function for the selected value.                           |                                  |
 | isTouched **(required)**  | `boolean`                 | Whether the combobox has been touched (focused and blurred). | `false`          |
 | errors **(required)**     | `FormFieldErrors`         | The errors associated with the combobox.                     |                 |
 | emptyText  | `null` \| `string`          | The text to display when there are no options.               | `t('components.combobox.empty')` |

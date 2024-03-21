@@ -9,7 +9,8 @@ sidebar: auto
 | Prop       | Type                      | Description                                                  | Default          |
 |------------|---------------------------|--------------------------------------------------------------|------------------|
 | label **(required)**      | `string`                  | The label of the select.                                   |                 |
-| options **(required)**    | `SelectItem<T>[]`           | The items of the select.                                 |                 |
+| items **(required)**    | `SelectItem<T>[]`           | The items of the select.                                 |                 |
+| displayFn  **(required)**      | `(value: T) => string` | Display function for the selected value.                           |                                  |
 | isTouched **(required)**  | `boolean`                 | Whether the select has been touched (focused and blurred). | `false`          |
 | errors **(required)**     | `FormFieldErrors`         | The errors associated with the select.                     |                 |
 | isDisabled | `boolean`                 | Whether the select is disabled.                            | `false`          |

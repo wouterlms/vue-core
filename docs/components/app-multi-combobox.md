@@ -11,6 +11,7 @@ For single value select, see [AppCombobox](/components/app-combobox.md).
 | Prop         | Type           | Description                                                        | Default                          |
 |--------------|----------------|--------------------------------------------------------------------|----------------------------------|
 | items  **(required)**      | `ComboboxItem<T>[]` | The items to display in the combobox.                           |                                  |
+| displayFn  **(required)**      | `(value: T) => string` | Display function for the selected value.                           |                                  |
 | emptyText    | `null` \| `string` | The text to display when there are no options.                    | `t('components.combobox.empty')` |
 | isDisabled   | `boolean`        | Whether the combobox is disabled.                                 | `false`                          |
 | isInvalid    | `boolean`        | Whether the combobox is in an invalid state.                      | `false`                          |
