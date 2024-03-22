@@ -1,4 +1,5 @@
 import type { Icon } from '../icons/icons'
+import type { KeyboardCommand } from './keyboard.type'
 
 export interface DropdownMenuDivider {
   type: 'divider'
@@ -23,6 +24,7 @@ export interface DropdownMenuGroup {
 }
 
 export interface DropdownMenuOption {
+  command?: Omit<KeyboardCommand, 'onPressed'>
   icon: Icon
   label: string
   onSelect: () => void

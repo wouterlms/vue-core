@@ -4,7 +4,6 @@ import './styles/index.scss'
 export type { AppButtonProps } from './components/button/AppButton.vue'
 export { default as AppButton } from './components/button/AppButton.vue'
 export { default as AppIconButton } from './components/button/AppIconButton.vue'
-export type { AppRouterLinkButtonProps } from './components/button/AppRouterLinkButton.vue'
 export { default as AppRouterLinkButton } from './components/button/AppRouterLinkButton.vue'
 export * from './components/button/button.style'
 
@@ -54,6 +53,10 @@ export { default as FormNumberInput } from './components/input/FormNumberInput.v
 export { default as FormPasswordInput } from './components/input/FormPasswordInput.vue'
 export { default as FormPhoneNumberInput } from './components/input/FormPhoneNumberInput.vue'
 
+// Keyboard
+export { default as AppKeyboardCommand } from './components/keyboard/AppKeyboardCommand.vue'
+export { default as AppKeyboardKey } from './components/keyboard/AppKeyboardKey.vue'
+
 // Popover
 export { default as AppPopover } from './components/popover/AppPopover.vue'
 
@@ -85,6 +88,7 @@ export { default as AppTooltip } from './components/tooltip/AppTooltip.vue'
 
 // Composables
 export { useDialog } from './composables/dialog.composable'
+export { useKeyboardCommand } from './composables/keyboardCommand.composable'
 export { useToast } from './composables/toast.composable'
 
 // Types
@@ -92,6 +96,7 @@ export type { Icon, Icons } from './icons/icons'
 export type { ComboboxItem } from '@/types/comboboxItem.type'
 export type { DropdownMenuItem } from '@/types/dropdownMenuItem.type'
 export type { FormFieldErrors } from '@/types/formFieldErrors.type'
+export type { Routes } from '@/types/routes.type'
 export type { SelectItem } from '@/types/selectItem.type'
 
 // Other

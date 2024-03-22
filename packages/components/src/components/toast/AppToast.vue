@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Icon } from '@/icons/icons'
+import type { ToastType } from '@/types/toast.type'
 
 import AppIcon from '../icon/AppIcon.vue'
 import AppText from '../text/AppText.vue'
@@ -8,6 +9,7 @@ const props = withDefaults(defineProps<{
   description?: null | string
   icon: Icon
   title: string
+  type: ToastType
 }>(), {
   description: null,
 })
@@ -38,11 +40,18 @@ function onClose(): void {
     </div>
 
     <div class="flex items-start gap-x-4">
-      <div class="mt-1 line-clamp-2  flex size-4 shrink-0 items-center justify-center rounded-full bg-foreground">
+      <div
+        :class="{
+          'bg-destructive text-destructive-foreground': props.type === 'error',
+          'bg-success text-success-foreground': props.type === 'success',
+          'bg-primary text-primary-foreground': props.type === 'info',
+        }"
+        class="mt-1 line-clamp-2  flex size-4 shrink-0 items-center justify-center rounded-full"
+      >
         <AppIcon
           :icon="props.icon"
           size="sm"
-          class="p-px text-background"
+          class="p-px"
         />
       </div>
 

@@ -1,7 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 
 export default {
-  content: ['./src/components/**/*.{vue,ts}'],
+  content: [
+    './src/components/**/*.{vue,ts}',
+  ],
   plugins: [],
   theme: {
     extend: {
@@ -21,6 +23,7 @@ export default {
         'card-hover-shadow': 'var(--shadow-card-hover);',
         'card-shadow': 'var(--shadow-card);',
         'dialog-shadow': 'var(--shadow-dialog);',
+        'keyboard-key-shadow': 'rgba(0, 0, 0, 0.027) 0px 2px 0px 0px',
         'popover-shadow': 'var(--shadow-popover);',
         'table-header': '0px 2px 3px 0px #1018281A',
         'table-shadow': '0px 1px 2px 0px #1018280F',
