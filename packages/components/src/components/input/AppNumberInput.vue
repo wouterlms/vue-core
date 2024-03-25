@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import type { Icon } from '@/icons/icons'
-
+import type { Icon } from '../../icons/icons'
 import AppIconButton from '../button/AppIconButton.vue'
 import AppInput from './AppInput.vue'
 

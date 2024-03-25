@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { useComponentAttrs } from '@/composables/componentAttrs.composable'
-import type { Icon } from '@/icons/icons'
-
+import { useComponentAttrs } from '../../composables/componentAttrs.composable'
+import type { Icon } from '../../icons/icons'
 import AppIcon from '../icon/AppIcon.vue'
 import AppLoader from '../loader/AppLoader.vue'
 
@@ -82,12 +81,12 @@ function onFocus(): void {
     :class="[
       classAttr,
       {
-        'border-input-border focus-within:ring-ring': !props.isInvalid,
-        'border-destructive focus-within:ring-destructive': props.isInvalid,
+        'border-input-border [&:has(:focus-visible)]:ring-ring': !props.isInvalid,
+        'border-destructive [&:has(:focus-visible)]:ring-destructive': props.isInvalid,
         'cursor-not-allowed opacity-50': props.isDisabled,
       },
     ]"
-    class="flex h-10 items-center rounded-input border border-solid bg-input ring-offset-background duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2"
+    class="flex h-10 items-center rounded-input border border-solid bg-input ring-offset-background duration-200 [&:has(:focus-visible)]:outline-none [&:has(:focus-visible)]:ring-2 [&:has(:focus-visible)]:ring-offset-2"
   >
     <slot name="left">
       <AppIcon

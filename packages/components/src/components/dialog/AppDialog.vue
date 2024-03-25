@@ -1,13 +1,12 @@
-<!-- eslint-disable simple-import-sort/imports -->
 <script setup lang="ts">
 import {
   DialogPortal,
   DialogRoot,
 } from 'radix-vue'
 import {
-  Transition,
   nextTick,
   ref,
+  Transition,
   watch,
 } from 'vue'
 

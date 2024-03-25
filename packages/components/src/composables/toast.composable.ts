@@ -2,7 +2,8 @@ import { h } from 'vue'
 import { toast as vueSonnerToast } from 'vue-sonner'
 
 import AppToast from '@/components/toast/AppToast.vue'
-import type { Toast } from '@/types/toast.type'
+
+import type { Toast } from '../types/toast.type'
 
 interface UseToastReturnType {
   showErrorToast: (toast: Omit<Toast, 'icon'>) => void

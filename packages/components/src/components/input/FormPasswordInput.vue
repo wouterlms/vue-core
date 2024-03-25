@@ -2,9 +2,8 @@
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import type { Icon } from '@/icons/icons'
-import type { FormFieldErrors } from '@/types/formFieldErrors.type'
-
+import type { Icon } from '../../icons/icons'
+import type { FormFieldErrors } from '../../types/formFieldErrors.type'
 import AppIconButton from '../button/AppIconButton.vue'
 import FormInputContainer from '../form-input-container/FormInputContainer.vue'
 import AppToggle from '../toggle/AppToggle.vue'

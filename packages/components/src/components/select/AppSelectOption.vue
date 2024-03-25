@@ -2,8 +2,7 @@
 import { SelectItem as RadixSelectItem, SelectItemIndicator } from 'radix-vue'
 import { computed } from 'vue'
 
-import type { AcceptableValue, SelectItemOption } from '@/types/selectItem.type'
-
+import type { AcceptableValue, SelectItemOption } from '../../types/selectItem.type'
 import AppIcon from '../icon/AppIcon.vue'
 import AppText from '../text/AppText.vue'
 

@@ -4,14 +4,13 @@ import {
   DropdownMenuRoot,
   DropdownMenuTrigger,
 } from 'radix-vue'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
-import { useKeyboardCommand } from '@/composables/keyboardCommand.composable'
+import { useKeyboardCommand } from '../../composables/keyboardCommand.composable'
 import type {
   DropdownMenuItem,
   DropdownMenuOption,
-} from '@/types/dropdownMenuItem.type'
-
+} from '../../types/dropdownMenuItem.type'
 import AppDropdownMenuArrow from './AppDropdownMenuArrow.vue'
 import AppDropdownMenuContent from './AppDropdownMenuContent.vue'
 import AppDropdownMenuItem from './AppDropdownMenuItem.vue'
@@ -34,6 +33,8 @@ const props = withDefaults(
   },
 )
 
+const isDropdownOpen = ref<boolean>(false)
+
 function getAllItems(items: DropdownMenuItem[]): DropdownMenuItem[] {
   const allItems: DropdownMenuItem[] = []
 
@@ -53,20 +54,26 @@ const optionItems = computed<DropdownMenuOption[]>(() => {
 })
 
 optionItems.value.forEach((item) => {
+  const { command } = item
+
+  if (command === undefined) {
+    return
+  }
+
   useKeyboardCommand({
     command: {
-      keys: item.command!.keys,
+      keys: command.keys,
       onPressed: item.onSelect,
-      type: item.command!.type,
+      type: command.type,
     },
-    isActive: computed<boolean>(() => props.enableKeyboardCommands),
+    isActive: computed<boolean>(() => props.enableKeyboardCommands && !isDropdownOpen.value),
     scope: 'controlled',
   })
 })
 </script>
 
 <template>
-  <DropdownMenuRoot>
+  <DropdownMenuRoot v-model:open="isDropdownOpen">
     <DropdownMenuTrigger :as-child="true">
       <slot />
     </DropdownMenuTrigger>

@@ -9,9 +9,8 @@ import examples from 'libphonenumber-js/mobile/examples'
 import { vMaska } from 'maska'
 import { computed } from 'vue'
 
-import type { Icon } from '@/icons/icons'
-import type { FormFieldErrors } from '@/types/formFieldErrors.type'
-
+import type { Icon } from '../../icons/icons'
+import type { FormFieldErrors } from '../../types/formFieldErrors.type'
 import FormInput from './FormInput.vue'
 
 const props = withDefaults(

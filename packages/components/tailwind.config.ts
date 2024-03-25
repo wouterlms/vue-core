@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+import type { Config } from 'tailwindcss'
 
 export default {
   content: [
@@ -154,18 +154,31 @@ export default {
         ],
       },
 
+      gridTemplateColumns: {
+        'table-skeleton': '1fr 4fr 2fr 1fr',
+      },
+
+      maxWidth: {
+        container: '1400px',
+      },
+
       transitionTimingFunction: {
         'dialog': 'cubic-bezier(0.22, 0.68, 0, 1.51)',
         'dialog-overlay': 'cubic-bezier(0.17, 0.67, 0.16, 0.99)',
       },
 
       zIndex: {
+        // @ts-expect-error Tailwind doesn't support named z-index values
         'aboveEverything': 9999,
+        // @ts-expect-error Tailwind doesn't support named z-index values
         'dialog': 40,
+        // @ts-expect-error Tailwind doesn't support named z-index values
         'dialog-overlay': 39,
+        // @ts-expect-error Tailwind doesn't support named z-index values
         'navbar': 30,
+        // @ts-expect-error Tailwind doesn't support named z-index values
         'popover': 50,
       },
     },
   },
-}
+} satisfies Config

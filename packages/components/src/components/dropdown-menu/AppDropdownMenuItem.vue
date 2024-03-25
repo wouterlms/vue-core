@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { DropdownMenuPortal } from 'radix-vue'
 
-import type { DropdownMenuItem } from '@/types/dropdownMenuItem.type'
-
+import type { DropdownMenuItem } from '../../types/dropdownMenuItem.type'
 import AppDropdownMenuDivider from './AppDropdownMenuDivider.vue'
 import AppDropdownMenuGroup from './AppDropdownMenuGroup.vue'
 import AppDropdownMenuOption from './AppDropdownMenuOption.vue'

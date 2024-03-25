@@ -5,8 +5,7 @@ import {
 } from 'radix-vue'
 import { ref } from 'vue'
 
-import type { AcceptableValue, SelectItem } from '@/types/selectItem.type'
-
+import type { AcceptableValue, SelectItem } from '../../types/selectItem.type'
 import AppIcon from '../icon/AppIcon.vue'
 import AppLoader from '../loader/AppLoader.vue'
 import AppSelectContent from './AppSelectContent.vue'

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { useComponentAttrs } from '@/composables/componentAttrs.composable'
-import type { Icon } from '@/icons/icons'
-import type { FormFieldErrors } from '@/types/formFieldErrors.type'
-
+import { useComponentAttrs } from '../../composables/componentAttrs.composable'
+import type { Icon } from '../../icons/icons'
+import type { FormFieldErrors } from '../../types/formFieldErrors.type'
 import FormInputContainer from '../form-input-container/FormInputContainer.vue'
 import AppInput from '../input/AppInput.vue'
 

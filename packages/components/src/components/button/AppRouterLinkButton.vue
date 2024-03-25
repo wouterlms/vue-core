@@ -2,9 +2,8 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 
-import type { Icon } from '@/icons/icons'
-import type { RouteLocationTyped, Routes } from '@/types/routes.type'
-
+import type { Icon } from '../../icons/icons'
+import type { RouteLocationTyped, Routes } from '../../types/routes.type'
 import AppIcon from '../icon/AppIcon.vue'
 import AppLoader from '../loader/AppLoader.vue'
 import type { ButtonStyleProps } from './button.style'

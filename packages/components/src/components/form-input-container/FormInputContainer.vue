@@ -1,9 +1,8 @@
 <script setup lang="ts">
+import { useId } from 'radix-vue'
 import { computed } from 'vue'
 
-import type { FormFieldErrors } from '@/types/formFieldErrors.type'
-import { generateUuid } from '@/utils/uuid.util'
-
+import type { FormFieldErrors } from '../../types/formFieldErrors.type'
 import FormError from '../form-error/FormError.vue'
 import FormGroup from '../form-group/FormGroup.vue'
 import FormLabel from '../form-label/FormLabel.vue'
@@ -31,7 +30,7 @@ const props = defineProps<{
   label: string
 }>()
 
-const inputId = `form-input-${generateUuid()}`
+const inputId = useId(null, 'input')
 
 const isInvalid = computed<boolean>(() => {
   return props.isTouched && props.errors !== undefined

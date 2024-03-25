@@ -1,4 +1,4 @@
-import type { Icon } from '@/icons/icons'
+import type { Icon } from '../icons/icons'
 
 export type ToastType = 'error' | 'info' | 'success'
 

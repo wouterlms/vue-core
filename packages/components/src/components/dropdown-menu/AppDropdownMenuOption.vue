@@ -2,8 +2,7 @@
 import { DropdownMenuItem as RadixDropdownMenuItem } from 'radix-vue'
 import { ref } from 'vue'
 
-import type { DropdownMenuOption } from '@/types/dropdownMenuItem.type'
-
+import type { DropdownMenuOption } from '../../types/dropdownMenuItem.type'
 import AppIcon from '../icon/AppIcon.vue'
 import AppKeyboardCommand from '../keyboard/AppKeyboardCommand.vue'
 import AppText from '../text/AppText.vue'
@@ -44,6 +43,7 @@ function onCommandFired(): void {
     <AppKeyboardCommand
       v-if="props.item.command !== undefined"
       :command="props.item.command"
+      :is-active="true"
       scope="global"
       class="ml-4"
       @command-fired="onCommandFired"

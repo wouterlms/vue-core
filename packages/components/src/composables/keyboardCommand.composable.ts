@@ -5,7 +5,7 @@ import {
   type Ref,
 } from 'vue'
 
-import type { KeyboardCommand, KeyboardKey } from '@/types/keyboard.type'
+import type { KeyboardCommand, KeyboardKey } from '../types/keyboard.type'
 
 interface BaseKeyboardCommand {
   command: KeyboardCommand

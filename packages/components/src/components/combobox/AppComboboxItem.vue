@@ -1,7 +1,6 @@
 <script setup lang="ts" generic="TValue extends AcceptableValue">
-import type { ComboboxItem } from '@/types/comboboxItem.type'
-import type { AcceptableValue } from '@/types/selectItem.type'
-
+import type { ComboboxItem } from '../../types/comboboxItem.type'
+import type { AcceptableValue } from '../../types/selectItem.type'
 import AppComboboxDivider from './AppComboboxDivider.vue'
 import AppComboboxGroup from './AppComboboxGroup.vue'
 import AppComboboxOption from './AppComboboxOption.vue'

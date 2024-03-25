@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import type { Icon } from '@/icons/icons'
-import type { ToastType } from '@/types/toast.type'
-
+import type { Icon } from '../../icons/icons'
+import type { ToastType } from '../../types/toast.type'
 import AppIcon from '../icon/AppIcon.vue'
 import AppText from '../text/AppText.vue'
 

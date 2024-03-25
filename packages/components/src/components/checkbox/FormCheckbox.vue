@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { CheckboxIndicator, CheckboxRoot } from 'radix-vue'
+import {
+  CheckboxIndicator,
+  CheckboxRoot,
+  useId,
+} from 'radix-vue'
 import { computed } from 'vue'
-
-import { generateUuid } from '@/utils/uuid.util'
 
 import FormLabel from '../form-label/FormLabel.vue'
 import AppIcon from '../icon/AppIcon.vue'
@@ -29,7 +31,7 @@ const model = defineModel<boolean>({
   required: true,
 })
 
-const id = generateUuid()
+const id = useId()
 
 const computedModel = computed<'indeterminate' | boolean>({
   get() {

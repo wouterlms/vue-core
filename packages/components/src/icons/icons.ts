@@ -5,6 +5,7 @@ export interface BaseIcons {
   arrowLeft: Promise<Component>
   arrowRight: Promise<Component>
   arrowUp: Promise<Component>
+  arrowUpDown: Promise<Component>
   checkmark: Promise<Component>
   chevronDown: Promise<Component>
   chevronLeft: Promise<Component>
@@ -14,6 +15,7 @@ export interface BaseIcons {
   eye: Promise<Component>
   eyeSlash: Promise<Component>
   minus: Promise<Component>
+  search: Promise<Component>
   warning: Promise<Component>
 }
 
@@ -26,6 +28,7 @@ export const icons: AllIcons = {
   arrowLeft: import('./ArrowLeftIcon.vue'),
   arrowRight: import('./ArrowRightIcon.vue'),
   arrowUp: import('./ArrowUpIcon.vue'),
+  arrowUpDown: import('./ArrowUpDownIcon.vue'),
   checkmark: import('./CheckmarkIcon.vue'),
   chevronDown: import('./ChevronDownIcon.vue'),
   chevronLeft: import('./ChevronLeftIcon.vue'),
@@ -35,6 +38,7 @@ export const icons: AllIcons = {
   eye: import('./EyeIcon.vue'),
   eyeSlash: import('./EyeSlashIcon.vue'),
   minus: import('./MinusIcon.vue'),
+  search: import('./SearchIcon.vue'),
   warning: import('./WarningIcon.vue'),
 }
 

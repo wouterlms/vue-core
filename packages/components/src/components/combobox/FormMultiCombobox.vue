@@ -1,8 +1,7 @@
 <script setup lang="ts" generic="TValue extends AcceptableValue">
-import type { ComboboxItem } from '@/types/comboboxItem.type'
-import type { FormFieldErrors } from '@/types/formFieldErrors.type'
-import type { AcceptableValue } from '@/types/selectItem.type'
-
+import type { ComboboxItem } from '../../types/comboboxItem.type'
+import type { FormFieldErrors } from '../../types/formFieldErrors.type'
+import type { AcceptableValue } from '../../types/selectItem.type'
 import AppMultiCombobox from '../combobox/AppMultiCombobox.vue'
 import FormInputContainer from '../form-input-container/FormInputContainer.vue'
 

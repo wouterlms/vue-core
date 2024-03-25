@@ -1,9 +1,8 @@
 <script setup lang="ts" generic="TValue extends AcceptableValue">
 import { ComboboxItem as RadixComboboxItem, ComboboxItemIndicator } from 'radix-vue'
 
-import type { ComboboxItemOption } from '@/types/comboboxItem.type'
-import type { AcceptableValue } from '@/types/selectItem.type'
-
+import type { ComboboxItemOption } from '../../types/comboboxItem.type'
+import type { AcceptableValue } from '../../types/selectItem.type'
 import AppIcon from '../icon/AppIcon.vue'
 import AppText from '../text/AppText.vue'
 

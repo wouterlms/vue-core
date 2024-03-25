@@ -1,5 +1,8 @@
 import './styles/index.scss'
 
+// Badge
+export { default as AppBadge } from './components/badge/AppBadge.vue'
+
 // Button
 export type { AppButtonProps } from './components/button/AppButton.vue'
 export { default as AppButton } from './components/button/AppButton.vue'
@@ -10,6 +13,9 @@ export * from './components/button/button.style'
 // Checkbox
 export { default as FormCheckbox } from './components/checkbox/FormCheckbox.vue'
 export { default as FormCheckboxGroup } from './components/checkbox/FormCheckboxGroup.vue'
+
+// Container
+export { default as AppContainer } from './components/container/AppContainer.vue'
 
 // Combobox
 export { default as AppCombobox } from './components/combobox/AppCombobox.vue'
@@ -37,10 +43,7 @@ export { default as FormGroup } from './components/form-group/FormGroup.vue'
 export { default as FormInputContainer } from './components/form-input-container/FormInputContainer.vue'
 
 // Form label
-
 export { default as FormLabel } from './components/form-label/FormLabel.vue'
-// Loader
-export { default as AppLoader } from './components/loader/AppLoader.vue'
 
 // Icon
 export { default as AppIcon } from './components/icon/AppIcon.vue'
@@ -56,6 +59,9 @@ export { default as FormPhoneNumberInput } from './components/input/FormPhoneNum
 // Keyboard
 export { default as AppKeyboardCommand } from './components/keyboard/AppKeyboardCommand.vue'
 export { default as AppKeyboardKey } from './components/keyboard/AppKeyboardKey.vue'
+
+// Loader
+export { default as AppLoader } from './components/loader/AppLoader.vue'
 
 // Popover
 export { default as AppPopover } from './components/popover/AppPopover.vue'
@@ -93,11 +99,11 @@ export { useToast } from './composables/toast.composable'
 
 // Types
 export type { Icon, Icons } from './icons/icons'
-export type { ComboboxItem } from '@/types/comboboxItem.type'
-export type { DropdownMenuItem } from '@/types/dropdownMenuItem.type'
-export type { FormFieldErrors } from '@/types/formFieldErrors.type'
-export type { Routes } from '@/types/routes.type'
-export type { SelectItem } from '@/types/selectItem.type'
+export type { ComboboxItem } from './types/comboboxItem.type'
+export type { DropdownMenuItem } from './types/dropdownMenuItem.type'
+export type { FormFieldErrors } from './types/formFieldErrors.type'
+export type { Routes } from './types/routes.type'
+export type { SelectItem } from './types/selectItem.type'
 
 // Other
 export { extendIcons } from './icons/icons'

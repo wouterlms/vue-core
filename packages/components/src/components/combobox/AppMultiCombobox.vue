@@ -13,9 +13,8 @@ import {
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import type { ComboboxItem } from '@/types/comboboxItem.type'
-import type { AcceptableValue } from '@/types/selectItem.type'
-
+import type { ComboboxItem } from '../../types/comboboxItem.type'
+import type { AcceptableValue } from '../../types/selectItem.type'
 import AppIcon from '../icon/AppIcon.vue'
 import AppLoader from '../loader/AppLoader.vue'
 import AppText from '../text/AppText.vue'
@@ -129,8 +128,8 @@ function onBlur(): void {
         <div class="relative">
           <ComboboxInput
             :class="{
-              'border-input-border focus-within:ring-ring': !props.isInvalid,
-              'border-destructive focus-within:ring-destructive': props.isInvalid,
+              'border-input-border [&:has(:focus-visible)]:ring-ring': !props.isInvalid,
+              'border-destructive [&:has(:focus-visible)]:ring-destructive': props.isInvalid,
               'placeholder:text-input-placeholder': isEmpty,
               'placeholder:text-input-foreground focus:placeholder:text-input-placeholder': !isEmpty,
             }"

@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import { useKeyboardCommand } from '@/composables/keyboardCommand.composable'
-import type { CommandScope, KeyboardCommand } from '@/types/keyboard.type'
-
+import { useKeyboardCommand } from '../../composables/keyboardCommand.composable'
+import type { CommandScope, KeyboardCommand } from '../../types/keyboard.type'
 import AppText from '../text/AppText.vue'
 import AppKeyboardKey from './AppKeyboardKey.vue'
 
 const props = withDefaults(defineProps<{
   command: Omit<KeyboardCommand, 'onPressed'>
   hasBorder?: boolean
+  /**
+   * Whether the command is active or not.
+   * Can be active if e.g. something is focused, but can also never be active if the
+   * command is controlled by `useKeyboardCommand`.
+   * @default null
+   */
   isActive?: boolean | null
   scope: CommandScope
 }>(), {

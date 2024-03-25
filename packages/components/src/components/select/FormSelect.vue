@@ -1,7 +1,6 @@
 <script setup lang="ts" generic="TValue extends AcceptableValue">
-import type { FormFieldErrors } from '@/types/formFieldErrors.type'
-import type { AcceptableValue, SelectItem } from '@/types/selectItem.type'
-
+import type { FormFieldErrors } from '../../types/formFieldErrors.type'
+import type { AcceptableValue, SelectItem } from '../../types/selectItem.type'
 import FormInputContainer from '../form-input-container/FormInputContainer.vue'
 import AppSelect from '../select/AppSelect.vue'
 

@@ -15,7 +15,7 @@
     "pub:release": "cd packages/components && pnpm pub:release --no-git-checks"
   },
   "devDependencies": {
-    "@wisemen/eslint-config-vue": "^0.0.9",
+    "@wisemen/eslint-config-vue": "^0.0.10",
     "eslint": "^8.57.0",
     "rimraf": "^5.0.5"
   }

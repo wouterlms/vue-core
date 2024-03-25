@@ -13,9 +13,8 @@ import {
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import type { ComboboxItem } from '@/types/comboboxItem.type'
-import type { AcceptableValue } from '@/types/selectItem.type'
-
+import type { ComboboxItem } from '../../types/comboboxItem.type'
+import type { AcceptableValue } from '../../types/selectItem.type'
 import AppIcon from '../icon/AppIcon.vue'
 import AppLoader from '../loader/AppLoader.vue'
 import AppText from '../text/AppText.vue'
@@ -52,7 +51,7 @@ const props = withDefaults(
     /**
      * The value of the combobox.
      */
-    modelValue: TValue | TValue[] | null
+    modelValue: TValue | null
     /**
      * The placeholder text to display when the combobox is empty.
      * @default null
@@ -70,14 +69,14 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   'blur': []
-  'update:modelValue': [value: TValue | TValue[] | null]
+  'update:modelValue': [value: TValue | null]
 }>()
 
 const searchModel = defineModel<null | string>('search', {
   required: true,
 })
 
-const model = computed<TValue | TValue[] | undefined>({
+const model = computed<TValue | undefined>({
   get: () => props.modelValue ?? undefined,
   set: (value) => {
     emit('update:modelValue', value ?? null)
@@ -124,8 +123,8 @@ function onBlur(): void {
         <div class="relative">
           <ComboboxInput
             :class="{
-              'border-input-border focus-within:ring-ring': !props.isInvalid,
-              'border-destructive focus-within:ring-destructive': props.isInvalid,
+              'border-input-border [&:has(:focus-visible)]:ring-ring': !props.isInvalid,
+              'border-destructive [&:has(:focus-visible)]:ring-destructive': props.isInvalid,
             }"
             :placeholder="placeholderValue"
             class="h-10 w-full truncate rounded-input border bg-input pl-3 pr-9 text-sm outline-none ring-offset-background duration-200 placeholder:text-input-placeholder focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"

@@ -1,7 +1,6 @@
 <script setup lang="ts" generic="T extends string">
-import type { DataItem } from '@/types/dataItem.type'
-import type { FormFieldErrors } from '@/types/formFieldErrors.type'
-
+import type { DataItem } from '../../types/dataItem.type'
+import type { FormFieldErrors } from '../../types/formFieldErrors.type'
 import FormInputContainer from '../form-input-container/FormInputContainer.vue'
 import FormCheckbox from './FormCheckbox.vue'
 
