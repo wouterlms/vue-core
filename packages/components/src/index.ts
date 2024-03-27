@@ -20,8 +20,10 @@ export { default as AppContainer } from './components/container/AppContainer.vue
 // Combobox
 export { default as AppCombobox } from './components/combobox/AppCombobox.vue'
 export { default as AppMultiCombobox } from './components/combobox/AppMultiCombobox.vue'
+export { default as AppTagsCombobox } from './components/combobox/AppTagsCombobox.vue'
 export { default as FormCombobox } from './components/combobox/FormCombobox.vue'
 export { default as FormMultiCombobox } from './components/combobox/FormMultiCombobox.vue'
+export { default as FormTagsCombobox } from './components/combobox/FormTagsCombobox.vue'
 
 // Dialog
 export { default as AppDialog } from './components/dialog/AppDialog.vue'
@@ -79,6 +81,18 @@ export { default as FormSelect } from './components/select/FormSelect.vue'
 // Switch
 export { default as FormSwitch } from './components/switch/FormSwitch.vue'
 
+// Table
+export { default as AppTable } from './components/table/AppTable.vue'
+
+// Tabs
+export { default as AppRouteTabs } from './components/tabs/AppRouteTabs.vue'
+export { default as AppTabs } from './components/tabs/AppTabs.vue'
+
+// Tags input
+export { default as AppTagsInput } from './components/tags-input/AppTagsInput.vue'
+export { default as AppTagsInputItem } from './components/tags-input/AppTagsInputItem.vue'
+export { default as FormTagsInput } from './components/tags-input/FormTagsInput.vue'
+
 // Text
 export { default as AppText } from './components/text/AppText.vue'
 export * from './components/text/text.style'
@@ -95,6 +109,7 @@ export { default as AppTooltip } from './components/tooltip/AppTooltip.vue'
 // Composables
 export { useDialog } from './composables/dialog.composable'
 export { useKeyboardCommand } from './composables/keyboardCommand.composable'
+export { useTablePagination } from './composables/tablePagination.composable'
 export { useToast } from './composables/toast.composable'
 
 // Types
@@ -102,8 +117,16 @@ export type { Icon, Icons } from './icons/icons'
 export type { ComboboxItem } from './types/comboboxItem.type'
 export type { DropdownMenuItem } from './types/dropdownMenuItem.type'
 export type { FormFieldErrors } from './types/formFieldErrors.type'
+export type { KeyboardKey } from './types/keyboard.type'
 export type { Routes } from './types/routes.type'
 export type { SelectItem } from './types/selectItem.type'
+export type {
+  PaginatedData,
+  Pagination,
+  PaginationOptions,
+  TableColumn,
+  TableFilter,
+} from './types/table.type'
 
 // Other
 export { extendIcons } from './icons/icons'

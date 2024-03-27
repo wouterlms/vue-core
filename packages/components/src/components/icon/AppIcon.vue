@@ -24,6 +24,7 @@ watch(
   () => props.icon,
   async () => {
     const resolvedComponent = await icons[props.icon]
+
     // @ts-expect-error TODO: Fix this
     svgComponent.value = resolvedComponent.default
   },

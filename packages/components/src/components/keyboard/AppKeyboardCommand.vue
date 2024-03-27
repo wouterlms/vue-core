@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { useKeyboardCommand } from '../../composables/keyboardCommand.composable'
 import type { CommandScope, KeyboardCommand } from '../../types/keyboard.type'
@@ -25,6 +26,8 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   commandFired: []
 }>()
+
+const { t } = useI18n()
 
 if (props.isActive === null && props.scope === 'controlled') {
   throw new Error('[AppKeyboardCommand] `isActive` prop is required when scope is `controlled`')
@@ -60,7 +63,7 @@ useKeyboardCommand({
           variant="caption"
           class="text-muted-foreground"
         >
-          then
+          {{ t('components.keyboard_command.then') }}
         </AppText>
       </template>
     </template>

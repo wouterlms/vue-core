@@ -6,7 +6,9 @@ import { createI18n } from 'vue-i18n'
 import App from './App.vue'
 
 export const i18nPlugin = createI18n({
+  fallbackWarn: false,
   legacy: false,
+  missingWarn: false,
 })
 
 createApp(App).use(i18nPlugin).mount('#app')

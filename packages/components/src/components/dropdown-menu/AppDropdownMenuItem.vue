@@ -25,7 +25,7 @@ const props = defineProps<{
     />
   </AppDropdownMenuGroup>
 
-  <AppDropdownMenuSub v-else-if="props.item.type === 'trigger'">
+  <AppDropdownMenuSub v-else-if="props.item.type === 'subMenu'">
     <AppDropdownMenuSubTrigger :item="props.item" />
 
     <DropdownMenuPortal>

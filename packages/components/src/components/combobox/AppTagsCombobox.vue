@@ -5,13 +5,19 @@ import {
   ComboboxInput,
   ComboboxPortal,
   ComboboxRoot,
+  TagsInputInput,
+  TagsInputRoot,
 } from 'radix-vue'
-import { computed, ref } from 'vue'
+import {
+  computed,
+  ref,
+} from 'vue'
 
 import type { ComboboxItem } from '../../types/comboboxItem.type'
 import type { AcceptableValue } from '../../types/selectItem.type'
 import AppIcon from '../icon/AppIcon.vue'
 import AppLoader from '../loader/AppLoader.vue'
+import AppTagsInputItem from '../tags-input/AppTagsInputItem.vue'
 import AppComboboxContent from './AppComboboxContent.vue'
 import AppComboboxEmpty from './AppComboboxEmpty.vue'
 import AppComboboxItem from './AppComboboxItem.vue'
@@ -47,10 +53,6 @@ const props = withDefaults(
      */
     items: ComboboxItem<TValue>[]
     /**
-     * The value of the combobox.
-     */
-    modelValue: TValue | null
-    /**
      * The placeholder text to display when the combobox is empty.
      * @default null
      */
@@ -67,18 +69,15 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   'blur': []
-  'update:modelValue': [value: TValue | null]
+  'update:modelValue': [value: TValue[]]
 }>()
 
-const searchModel = defineModel<null | string>('search', {
+const model = defineModel<TValue[]>({
   required: true,
 })
 
-const model = computed<TValue | undefined>({
-  get: () => props.modelValue ?? undefined,
-  set: (value) => {
-    emit('update:modelValue', value ?? null)
-  },
+const searchModel = defineModel<null | string>('search', {
+  required: true,
 })
 
 const search = computed<string | undefined>({
@@ -89,14 +88,6 @@ const search = computed<string | undefined>({
 })
 
 const isOpen = ref<boolean>(false)
-
-const placeholderValue = computed<string | undefined>(() => {
-  if (model.value === undefined) {
-    return props.placeholder ?? undefined
-  }
-
-  return props.displayFn(model.value as TValue)
-})
 
 function onBlur(): void {
   if (!isOpen.value) {
@@ -112,34 +103,72 @@ function onBlur(): void {
       v-model:open="isOpen"
       v-model:search-term="search"
       :filter-function="(options) => options"
+      :multiple="true"
       :display-value="displayFn"
       :disabled="props.isDisabled"
+      :class="{
+        'cursor-not-allowed': props.isDisabled,
+      }"
     >
       <ComboboxAnchor>
         <div class="relative">
-          <ComboboxInput
-            :class="{
-              'border-input-border focus-visible:ring-ring': !props.isInvalid,
-              'border-destructive focus-visible:ring-destructive': props.isInvalid,
-            }"
-            :placeholder="placeholderValue"
-            class="h-10 w-full truncate rounded-input border bg-input pl-3 pr-9 text-sm outline-none ring-offset-background duration-200 placeholder:text-input-placeholder focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-            tabindex="0"
-            @blur="onBlur"
-          />
+          <TagsInputRoot
+            :model-value="(model as string[])"
+            :disabled="props.isDisabled"
+            :class="[
+              model.length > 0 ? 'pl-2' : 'pl-3',
+              {
+                'border-input-border focus-within:ring-ring': !props.isInvalid,
+                'border-destructive focus-within:ring-destructive': props.isInvalid,
+              }]"
+            class="flex h-10 w-full items-center truncate rounded-input border border-solid bg-input pr-9 ring-offset-background transition-shadow duration-200 placeholder:text-input-placeholder focus-within:ring-2 focus-within:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <div
+              :class="{
+                'mr-2': model.length > 0,
+              }"
+              class="flex items-center gap-1"
+            >
+              <template
+                v-for="tag in model"
+                :key="displayFn(tag)"
+              >
+                <slot
+                  :value="tag"
+                  name="tag"
+                >
+                  <AppTagsInputItem
 
-          <AppComboboxTrigger :is-disabled="props.isDisabled">
-            <AppLoader
-              v-if="props.isLoading"
-              class="pointer-events-none size-4 text-muted-foreground"
-            />
+                    :value="tag"
+                    :is-disabled="props.isDisabled"
+                    :display-fn="props.displayFn"
+                  />
+                </slot>
+              </template>
+            </div>
 
-            <AppIcon
-              class="text-muted-foreground"
-              icon="chevronDown"
-              size="sm"
-            />
-          </AppComboboxTrigger>
+            <ComboboxInput :as-child="true">
+              <TagsInputInput
+                :placeholder="props.placeholder ?? undefined"
+                class="size-full flex-1 bg-transparent text-sm outline-none placeholder:text-input-placeholder"
+                @blur="onBlur"
+                @keydown.enter.prevent
+              />
+            </ComboboxInput>
+
+            <AppComboboxTrigger :is-disabled="props.isDisabled">
+              <AppLoader
+                v-if="props.isLoading"
+                class="pointer-events-none size-4 text-muted-foreground"
+              />
+
+              <AppIcon
+                class="text-muted-foreground"
+                icon="chevronDown"
+                size="sm"
+              />
+            </AppComboboxTrigger>
+          </TagsInputRoot>
         </div>
       </ComboboxAnchor>
 
@@ -161,7 +190,7 @@ function onBlur(): void {
                   v-for="(item, i) of props.items"
                   :key="i"
                   :item="item"
-                  :is-multiple="false"
+                  :is-multiple="true"
                   :display-fn="props.displayFn"
                 >
                   <template #default="{ item: itemValue }">

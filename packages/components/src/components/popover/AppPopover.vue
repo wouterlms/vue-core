@@ -29,7 +29,7 @@ const props = withDefaults(
     offset?: number
     /**
      * The side of the trigger the popover should be on.
-     * @default 'top'
+     * @default 'bottom'
      */
     side?: 'bottom' | 'left' | 'right' | 'top'
   }>(),
@@ -37,20 +37,9 @@ const props = withDefaults(
     align: 'center',
     hideArrow: false,
     offset: 10,
-    side: 'top',
+    side: 'bottom',
   },
 )
-
-defineSlots<{
-  /**
-   * (Required) The content to show in the tooltip.
-   */
-  content: () => unknown
-  /**
-   * (Required) The trigger element. But be a single, interactive element.
-   */
-  default: () => unknown
-}>()
 
 const slots = useSlots()
 

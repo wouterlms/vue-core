@@ -10,13 +10,10 @@ import {
 import type { RouteLocationNamedRaw } from 'vue-router'
 
 import type {
-  FilterChangeEvent,
   PageChangeEvent,
-  PaginationOptions,
-  SortChangeEvent,
-} from '../../composables/tablePagination.composable'
-import type {
   PaginatedData,
+  Pagination,
+  SortChangeEvent,
   TableColumn,
   TableFilter,
 } from '../../types/table.type'
@@ -32,7 +29,7 @@ const props = withDefaults(
     emptyMessage: string
     filters: TableFilter<TFilters>[]
     isLoading: boolean
-    paginationOptions: PaginationOptions<TFilters>
+    pagination: Pagination<TFilters>
     pinFirstColumn?: boolean
     pinLastColumn?: boolean
     rowClick?: ((row: TSchema) => void) | null
@@ -46,12 +43,6 @@ const props = withDefaults(
     rowTo: null,
   },
 )
-
-const emit = defineEmits<{
-  filter: [event: FilterChangeEvent<TFilters>]
-  page: [event: PageChangeEvent]
-  sort: [event: SortChangeEvent]
-}>()
 
 const tableRef = ref<HTMLElement | null>(null)
 
@@ -70,7 +61,7 @@ const gridTemplateColumns = computed<string>(() => {
 })
 
 function handleSortChange(sortChangeEvent: SortChangeEvent): void {
-  emit('sort', sortChangeEvent)
+  props.pagination.handleSortChange(sortChangeEvent)
 }
 
 // function handleFilterChange(filterId: keyof TFilters, value: unknown): void {
@@ -83,7 +74,7 @@ function handleSortChange(sortChangeEvent: SortChangeEvent): void {
 // }
 
 function handlePageChange(event: PageChangeEvent): void {
-  emit('page', event)
+  props.pagination.handlePageChange(event)
 }
 
 function setIsHorizontallyScrollable(): void {
@@ -176,7 +167,7 @@ onBeforeUnmount(() => {
         :has-reached-horizontal-scroll-end="hasReachedHorizontalScrollEnd"
         :is-horizontally-scrollable="isHorizontallyScrollable"
         :is-scrolled-to-right="isScrolledToRight"
-        :pagination-options="props.paginationOptions"
+        :pagination-options="props.pagination.paginationOptions.value"
         :pin-first-column="props.pinFirstColumn"
         :pin-last-column="props.pinLastColumn"
         @sort="handleSortChange"
@@ -199,7 +190,7 @@ onBeforeUnmount(() => {
     </div>
 
     <AppTableFooter
-      :pagination-options="props.paginationOptions"
+      :pagination-options="props.pagination.paginationOptions.value"
       :total="props.data?.total ?? null"
       @page="handlePageChange"
     />

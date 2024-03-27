@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import type { PageChangeEvent, PaginationOptions } from '../../composables/tablePagination.composable'
+import type { PageChangeEvent, PaginationOptions } from '@/types/table.type'
+
 import { toLocaleNumber } from '../../utils/number.util'
 import AppSkeletonLoaderRow from '../skeleton-loader/AppSkeletonLoaderRow.vue'
 import AppText from '../text/AppText.vue'

@@ -17,18 +17,41 @@ import AppDropdownMenuItem from './AppDropdownMenuItem.vue'
 
 const props = withDefaults(
   defineProps<{
+    /**
+     * The alignment of the dropdown.
+     * @default 'center'
+     */
     align?: 'center' | 'end' | 'start'
+    /**
+     * Whether keyboard commands are enabled.
+     * @default false
+     */
     enableKeyboardCommands?: boolean
+    /**
+     * Whether the dropdown has an arrow.
+     * @default false
+     */
     hasArrow?: boolean
+    /**
+     * The dropdown items.
+     */
     items: DropdownMenuItem[]
+    /**
+     * The offset of the dropdown.
+     * @default 4
+     */
     offset?: number
+    /**
+     * The side of the dropdown.
+     * @default 'bottom'
+     */
     side?: 'bottom' | 'left' | 'right' | 'top'
   }>(),
   {
     align: 'center',
     enableKeyboardCommands: false,
     hasArrow: false,
-    offset: 0,
+    offset: 4,
     side: 'bottom',
   },
 )
@@ -41,7 +64,7 @@ function getAllItems(items: DropdownMenuItem[]): DropdownMenuItem[] {
   items.forEach((item) => {
     allItems.push(item)
 
-    if (item.type === 'group' || item.type === 'trigger') {
+    if (item.type === 'group' || item.type === 'subMenu') {
       allItems.push(...getAllItems(item.items))
     }
   })

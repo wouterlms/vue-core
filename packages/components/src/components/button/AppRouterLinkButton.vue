@@ -1,15 +1,14 @@
-<script setup lang="ts" generic="TRoute extends keyof Routes">
+<script setup lang="ts">
 import { computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import { type RouteLocationNamedRaw, RouterLink } from 'vue-router'
 
 import type { Icon } from '../../icons/icons'
-import type { RouteLocationTyped, Routes } from '../../types/routes.type'
 import AppIcon from '../icon/AppIcon.vue'
 import AppLoader from '../loader/AppLoader.vue'
 import type { ButtonStyleProps } from './button.style'
 import { button } from './button.style'
 
-interface AppRouterLinkButtonProps<TRoute extends keyof Routes> {
+interface Props {
   /**
    * The icon to display on the left side of the button.
    * @default null
@@ -25,11 +24,10 @@ interface AppRouterLinkButtonProps<TRoute extends keyof Routes> {
    * @default 'default'
    */
   size?: ButtonStyleProps['size']
-  test: TRoute
   /**
    * The route to link to.
    */
-  to: RouteLocationTyped<TRoute>
+  to: RouteLocationNamedRaw
   /**
    * The variant of the button.
    * @default 'default'
@@ -37,10 +35,10 @@ interface AppRouterLinkButtonProps<TRoute extends keyof Routes> {
   variant?: ButtonStyleProps['variant']
 }
 
-const props = withDefaults(defineProps<AppRouterLinkButtonProps<TRoute>>(), {
+const props = withDefaults(defineProps<Props>(), {
   // TODO: find out why defaulting these to `null` breaks the `Icon` prop type when using `declare module`.
-  // iconLeft: null,
-  // iconRight: null,
+  // iconLeft: undefined,
+  // iconRight: undefined,
   isLoading: false,
   size: 'default',
   type: 'button',
@@ -51,8 +49,7 @@ const buttonClasses = computed<string>(() =>
   button({
     size: props.size,
     variant: props.variant,
-  }),
-)
+  }))
 </script>
 
 <template>

@@ -60,8 +60,7 @@ const buttonClasses = computed<string>(() =>
   button({
     size: props.size,
     variant: props.variant,
-  }),
-)
+  }))
 </script>
 
 <template>

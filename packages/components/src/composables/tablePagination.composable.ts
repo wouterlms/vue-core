@@ -7,36 +7,15 @@ import {
   watch,
 } from 'vue'
 
-import type { UseTablePaginationReturnType } from '@/types/table.type'
+import type {
+  FilterChangeEvent,
+  PageChangeEvent,
+  PaginationFilters,
+  PaginationOptions,
+  SortChangeEvent,
+  UseTablePaginationReturnType,
+} from '@/types/table.type'
 import { base64Decode, base64Encode } from '@/utils/base64.util'
-
-export type SortDirection = 'asc' | 'desc'
-
-type PaginationSort = Record<string, SortDirection>
-
-type PaginationFilters<TFilters> = {
-  [K in keyof TFilters]: TFilters[K]
-}
-
-export interface PageChangeEvent {
-  page: number
-  perPage: number
-}
-
-export type FilterChangeEvent<TFilters> = {
-  [K in keyof TFilters]?: unknown
-}
-
-export type SortChangeEvent = Record<string, SortDirection>
-
-export interface PaginationOptions<TFilters> {
-  filters?: PaginationFilters<TFilters>
-  pagination: {
-    page: number
-    perPage: number
-  }
-  sort?: PaginationSort
-}
 
 interface UseTablePaginationOptions<TFilters> {
   /**
@@ -70,7 +49,10 @@ export function useTablePagination<TFilters>({
     currentOptions: PaginationOptions<TFilters>,
   ): PaginationOptions<TFilters> {
     return {
-      filters: { ...currentOptions.filters, ...userOptions.filters } as PaginationFilters<TFilters>,
+      filters: {
+        ...currentOptions.filters,
+        ...userOptions.filters,
+      } as PaginationFilters<TFilters>,
       pagination: {
         ...currentOptions.pagination,
         ...userOptions.pagination,

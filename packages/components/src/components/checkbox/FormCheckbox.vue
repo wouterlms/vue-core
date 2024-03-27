@@ -31,7 +31,7 @@ const model = defineModel<boolean>({
   required: true,
 })
 
-const id = useId()
+const id = props.id ?? useId()
 
 const computedModel = computed<'indeterminate' | boolean>({
   get() {
@@ -72,14 +72,12 @@ function onBlur(): void {
         <AppIcon
           v-if="props.isIndeterminate"
           icon="minus"
-          size="sm"
           class="text-primary-foreground"
         />
 
         <AppIcon
           v-else-if="computedModel === true"
           icon="checkmark"
-          size="sm"
           class="text-primary-foreground"
         />
       </CheckboxIndicator>
@@ -88,6 +86,7 @@ function onBlur(): void {
     <FormLabel
       v-if="props.label !== null"
       :for="id"
+      :is-invalid="props.isInvalid"
       :label="props.label"
     />
   </div>

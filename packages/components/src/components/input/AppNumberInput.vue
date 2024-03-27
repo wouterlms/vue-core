@@ -166,6 +166,8 @@ function increment(): void {
           @click="decrement"
         />
       </div>
+
+      <slot name="right" />
     </template>
   </AppInput>
 </template>

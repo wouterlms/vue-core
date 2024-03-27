@@ -53,7 +53,6 @@ const props = withDefaults(
     isInvalid: false,
     isLoading: false,
     placeholder: null,
-    triggerClasses: null,
   },
 )
 

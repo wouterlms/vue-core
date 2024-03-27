@@ -1,11 +1,32 @@
 import type { ComputedRef, VNode } from 'vue'
 
-import type {
-  FilterChangeEvent,
-  PageChangeEvent,
-  PaginationOptions,
-  SortChangeEvent,
-} from '../composables/tablePagination.composable'
+export type SortDirection = 'asc' | 'desc'
+
+type PaginationSort = Record<string, SortDirection>
+
+export type PaginationFilters<TFilters> = {
+  [K in keyof TFilters]: TFilters[K]
+}
+
+export interface PageChangeEvent {
+  page: number
+  perPage: number
+}
+
+export type FilterChangeEvent<TFilters> = {
+  [K in keyof TFilters]?: unknown
+}
+
+export type SortChangeEvent = Record<string, SortDirection>
+
+export interface PaginationOptions<TFilters> {
+  filters?: PaginationFilters<TFilters>
+  pagination: {
+    page: number
+    perPage: number
+  }
+  sort?: PaginationSort
+}
 
 interface BaseTableColumn {
   id: string

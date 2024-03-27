@@ -61,17 +61,6 @@ const props = withDefaults(
   },
 )
 
-defineSlots<{
-  /**
-   * (Optional) The content to show in the tooltip.
-   */
-  content: () => unknown
-  /**
-   * (Required) The trigger element. But be a single, interactive element.
-   */
-  default: () => unknown
-}>()
-
 const slots = useSlots()
 
 if (props.content === null && slots.content === undefined) {

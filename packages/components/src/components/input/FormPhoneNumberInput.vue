@@ -178,5 +178,9 @@ function getCountryFlagUrl(countryCode: string): string {
         />
       </div>
     </template>
+
+    <template #right>
+      <slot name="right" />
+    </template>
   </FormInput>
 </template>

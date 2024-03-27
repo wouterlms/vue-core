@@ -2,7 +2,8 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import type { PageChangeEvent, PaginationOptions } from '../../composables/tablePagination.composable'
+import type { PageChangeEvent, PaginationOptions } from '@/types/table.type'
+
 import AppButton from '../button/AppButton.vue'
 import AppIconButton from '../button/AppIconButton.vue'
 import AppText from '../text/AppText.vue'
@@ -142,7 +143,7 @@ function pageControlButtonVariant(page: number): 'ghost' | 'secondary' {
       :label="t('components.table.previous')"
       icon="arrowLeft"
       icon-size="sm"
-      variant="secondary"
+      variant="ghost"
       @click="handlePrevPageButtonClick"
     />
 
@@ -171,9 +172,9 @@ function pageControlButtonVariant(page: number): 'ghost' | 'secondary' {
     <AppIconButton
       v-if="!isLastPage && hasMoreThanOnePage"
       :label="t('components.table.next')"
-      size="sm"
+      icon-size="sm"
       icon="arrowRight"
-      variant="secondary"
+      variant="ghost"
       @click="handleNextPageButtonClick"
     />
   </div>

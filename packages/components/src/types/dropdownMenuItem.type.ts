@@ -10,11 +10,11 @@ export interface DropdownMenuLabel {
   type: 'label'
 }
 
-export interface DropdownMenuTrigger {
+export interface DropdownMenuSubMenu {
   icon: Icon
   items: DropdownMenuItem[]
   label: string
-  type: 'trigger'
+  type: 'subMenu'
 }
 
 export interface DropdownMenuGroup {
@@ -35,4 +35,4 @@ export type DropdownMenuItem = DropdownMenuDivider
   | DropdownMenuGroup
   | DropdownMenuLabel
   | DropdownMenuOption
-  | DropdownMenuTrigger
+  | DropdownMenuSubMenu

@@ -100,7 +100,6 @@ function onBlur(): void {
     :is-required="props.isRequired"
     :is-touched="props.isTouched"
     :is-disabled="props.isDisabled"
-    :placeholder="placeholder"
     :label="props.label"
   >
     <AppNumberInput

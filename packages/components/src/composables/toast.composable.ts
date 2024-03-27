@@ -1,13 +1,16 @@
 import { h } from 'vue'
 import { toast as vueSonnerToast } from 'vue-sonner'
 
-import AppToast from '@/components/toast/AppToast.vue'
-
+import AppToast from '../components/toast/AppToast.vue'
 import type { Toast } from '../types/toast.type'
 
+interface NamedToast {
+  description: string
+  title: string
+}
 interface UseToastReturnType {
-  showErrorToast: (toast: Omit<Toast, 'icon'>) => void
-  showSuccessToast: (toast: Omit<Toast, 'icon'>) => void
+  showErrorToast: (toast: NamedToast) => void
+  showSuccessToast: (toast: NamedToast) => void
   showToast: (toast: Toast) => void
 }
 
@@ -25,7 +28,7 @@ export function useToast(): UseToastReturnType {
     })
   }
 
-  function showErrorToast(toast: Omit<Toast, 'icon' | 'type'>) {
+  function showErrorToast(toast: NamedToast) {
     vueSonnerToast.custom(h(AppToast, {
       description: toast.description,
       icon: 'close',
@@ -36,7 +39,7 @@ export function useToast(): UseToastReturnType {
     })
   }
 
-  function showSuccessToast(toast: Omit<Toast, 'icon' | 'type'>) {
+  function showSuccessToast(toast: NamedToast) {
     vueSonnerToast.custom(h(AppToast, {
       description: toast.description,
       icon: 'checkmark',

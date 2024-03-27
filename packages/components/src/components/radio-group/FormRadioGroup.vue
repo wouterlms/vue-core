@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<{
    */
   isRequired?: boolean
   /**
-   *
+   * Whether the radio group is touched.
    */
   isTouched: boolean
   /**

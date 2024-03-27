@@ -1,13 +1,13 @@
 <script setup lang="ts" generic="TSchema">
 import { computed } from 'vue'
 
+import type { Icon } from '../../icons/icons'
 import type {
   PaginationOptions,
   SortChangeEvent,
   SortDirection,
-} from '../../composables/tablePagination.composable'
-import type { Icon } from '../../icons/icons'
-import type { TableColumn } from '../../types/table.type'
+  TableColumn,
+} from '../../types/table.type'
 import AppIcon from '../icon/AppIcon.vue'
 import AppText from '../text/AppText.vue'
 

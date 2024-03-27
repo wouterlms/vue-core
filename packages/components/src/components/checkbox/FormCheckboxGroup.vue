@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<{
    */
   isRequired?: boolean
   /**
-   *
+   * Whether the checkbox group has been touched.
    */
   isTouched: boolean
   /**

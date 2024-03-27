@@ -14,6 +14,7 @@ export default {
         full: 'var(--radius-full)',
         input: 'var(--radius-input)',
         popover: 'var(--radius-popover)',
+        tag: 'var(--radius-tag)',
       },
 
       boxShadow: {
@@ -168,16 +169,11 @@ export default {
       },
 
       zIndex: {
-        // @ts-expect-error Tailwind doesn't support named z-index values
-        'aboveEverything': 9999,
-        // @ts-expect-error Tailwind doesn't support named z-index values
-        'dialog': 40,
-        // @ts-expect-error Tailwind doesn't support named z-index values
-        'dialog-overlay': 39,
-        // @ts-expect-error Tailwind doesn't support named z-index values
-        'navbar': 30,
-        // @ts-expect-error Tailwind doesn't support named z-index values
-        'popover': 50,
+        'aboveEverything': '9999',
+        'dialog': '40',
+        'dialog-overlay': '39',
+        'navbar': '30',
+        'popover': '50',
       },
     },
   },

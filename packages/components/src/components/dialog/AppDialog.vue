@@ -15,14 +15,6 @@ import AppDialogOverlay from './AppDialogOverlay.vue'
 
 const props = withDefaults(defineProps<{
   /**
-   * The accessible description for the dialog
-   */
-  accessibleDescription: string
-  /**
-   * The accessible title for the dialog
-   */
-  accessibleTitle: string
-  /**
    * Whether to animate the dialog with the View Transitions API
    * @default false
    */
@@ -196,8 +188,6 @@ watch(isOpen, (isOpen) => {
         >
           <AppDialogContent
             v-if="isActuallyOpen"
-            :accessible-title="props.accessibleTitle"
-            :accessible-description="props.accessibleDescription"
             :hide-close-button="props.hideCloseButton"
           >
             <slot />

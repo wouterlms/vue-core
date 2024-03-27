@@ -56,14 +56,14 @@ watch(activeRouteName, (activeRouteName) => {
 
 <template>
   <TabsRoot v-model="computedModel">
-    <TabsList class="relative flex border-b border-solid border-border ring-offset-background duration-200 [&:has(:focus-visible)]:rounded [&:has(:focus-visible)]:ring-2 [&:has(:focus-visible)]:ring-ring [&:has(:focus-visible)]:ring-offset-2">
+    <TabsList class="relative flex border-b border-solid border-border">
       <TabsIndicator class="absolute bottom-0 left-0 h-[2px] w-[--radix-tabs-indicator-size] translate-x-[--radix-tabs-indicator-position] rounded-t-full bg-primary px-8 duration-200" />
 
       <TabsTrigger
         v-for="tab of tabs"
         :key="tab.label"
         :value="(tab.to.name as string)"
-        class="rounded px-4 py-3 outline-none"
+        class="rounded px-4 py-3 outline-none ring-offset-background duration-200 focus-visible:rounded focus-visible:ring-2 focus-visible:ring-ring"
       >
         {{ tab.label }}
       </TabsTrigger>

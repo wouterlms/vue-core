@@ -2,23 +2,21 @@
 import {
   ComboboxAnchor,
   ComboboxArrow,
-  ComboboxContent,
-  ComboboxEmpty,
   ComboboxInput,
   ComboboxPortal,
   ComboboxRoot,
-  ComboboxTrigger,
   ComboboxViewport,
 } from 'radix-vue'
 import { computed, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 
 import type { ComboboxItem } from '../../types/comboboxItem.type'
 import type { AcceptableValue } from '../../types/selectItem.type'
 import AppIcon from '../icon/AppIcon.vue'
 import AppLoader from '../loader/AppLoader.vue'
-import AppText from '../text/AppText.vue'
+import AppComboboxContent from './AppComboboxContent.vue'
+import AppComboboxEmpty from './AppComboboxEmpty.vue'
 import AppComboboxItem from './AppComboboxItem.vue'
+import AppComboboxTrigger from './AppComboboxTrigger.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -90,8 +88,6 @@ const search = computed<string | undefined>({
   },
 })
 
-const { t } = useI18n()
-
 const isOpen = ref<boolean>(false)
 
 const placeholderValue = computed<string | undefined>(() => {
@@ -139,13 +135,7 @@ function onBlur(): void {
             @blur="onBlur"
           />
 
-          <ComboboxTrigger
-            :disabled="props.isDisabled"
-            :class="{
-              'opacity-50': props.isDisabled,
-            }"
-            class="absolute right-1 top-1/2 box-content -translate-y-1/2 p-2 outline-none"
-          >
+          <AppComboboxTrigger :is-disabled="props.isDisabled">
             <AppLoader
               v-if="props.isLoading"
               class="pointer-events-none size-4 text-muted-foreground"
@@ -156,7 +146,7 @@ function onBlur(): void {
               icon="chevronDown"
               size="sm"
             />
-          </ComboboxTrigger>
+          </AppComboboxTrigger>
         </div>
       </ComboboxAnchor>
 
@@ -170,22 +160,9 @@ function onBlur(): void {
           leave-to-class="opacity-0"
         >
           <div v-if="isOpen">
-            <!-- eslint-disable tailwindcss/no-custom-classname -->
-            <ComboboxContent
-              :force-mount="true"
-              class="combobox-content popover-content relative z-popover min-w-min overflow-hidden rounded-popover border border-solid border-border bg-background shadow-popover-shadow"
-              position="popper"
-            >
-              <!-- eslint-enable tailwindcss/no-custom-classname -->
+            <AppComboboxContent>
               <ComboboxViewport class="max-h-[25rem] p-1.5">
-                <ComboboxEmpty>
-                  <AppText
-                    variant="subtext"
-                    class="p-2"
-                  >
-                    {{ props.emptyText ?? t('components.combobox.empty') }}
-                  </AppText>
-                </ComboboxEmpty>
+                <AppComboboxEmpty :empty-text="props.emptyText" />
 
                 <AppComboboxItem
                   v-for="(item, i) of props.items"
@@ -205,17 +182,10 @@ function onBlur(): void {
               </ComboboxViewport>
 
               <ComboboxArrow />
-            </ComboboxContent>
+            </AppComboboxContent>
           </div>
         </Transition>
       </ComboboxPortal>
     </ComboboxRoot>
   </div>
 </template>
-
-<style>
-.combobox-content {
-  width: var(--radix-combobox-trigger-width);
-  max-height: var(--radix-combobox-content-available-height);
-}
-</style>

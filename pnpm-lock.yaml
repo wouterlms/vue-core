@@ -110,6 +110,9 @@ importers:
       '@wisemen/vue-core':
         specifier: link:../components/src
         version: link:../components/src
+      formango:
+        specifier: ^2.0.14
+        version: 2.0.14(vue@3.4.21)(zod@3.22.4)
       tailwindcss:
         specifier: ^3.4.1
         version: 3.4.1
@@ -119,6 +122,9 @@ importers:
       vue-i18n:
         specifier: ^9.10.1
         version: 9.10.1(vue@3.4.21)
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^5.0.4
@@ -3241,7 +3247,6 @@ packages:
 
   /@types/web-bluetooth@0.0.20:
     resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
-    dev: true
 
   /@typescript-eslint/eslint-plugin@7.1.1(@typescript-eslint/parser@7.1.1)(eslint@8.57.0)(typescript@5.4.2):
     resolution: {integrity: sha512-zioDz623d0RHNhvx0eesUmGfIjzrk18nSBC8xewepKXbBvN/7c1qImV7Hg8TI1URTxKax7/zxfxj3Uph8Chcuw==}
@@ -3647,7 +3652,6 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
-    dev: true
 
   /@vueuse/integrations@10.9.0(focus-trap@7.5.4)(vue@3.4.21):
     resolution: {integrity: sha512-acK+A01AYdWSvL4BZmCoJAcyHJ6EqhmkQEXbQLwev1MY7NBnS+hcEMx/BzVoR9zKI+UqEPMD9u6PsyAuiTRT4Q==}
@@ -3701,7 +3705,6 @@ packages:
 
   /@vueuse/metadata@10.9.0:
     resolution: {integrity: sha512-iddNbg3yZM0X7qFY2sAotomgdHK7YJ6sKUvQqbvwnf7TmaVPxS4EJydcNsVejNdS8iWCtDk+fYXr7E32nyTnGA==}
-    dev: true
 
   /@vueuse/router@10.9.0(vue-router@4.3.0)(vue@3.4.21):
     resolution: {integrity: sha512-MOmrCMQlRuPS4PExE1hy8T0XbZUXaNbEuh7CAG5mC8kdvdgANQMkdvJ7vIEOP27n5mXK/4YjvXJOZSsur4E0QQ==}
@@ -3723,7 +3726,6 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
-    dev: true
 
   /@wisemen/eslint-config-vue@0.0.10(@vue/compiler-sfc@3.4.21)(eslint@8.57.0)(putout@35.7.1)(tailwindcss@3.4.1)(typescript@5.4.2):
     resolution: {integrity: sha512-7funz4XkjVLOVxm68Tz8Spt4FJn5mvxS2JMkuWm4H1py5qEAv01hfZwn1wm9FBBuwvUzwyrA136oTS395zuPgw==}
@@ -4401,6 +4403,10 @@ packages:
     dependencies:
       character-entities: 2.0.2
     dev: true
+
+  /deep-clone@4.0.0:
+    resolution: {integrity: sha512-bMvDVR8GiGCGHT4SgqXyXDD9Zmo3kv9YLq8aSO2xslP97A3mFkpNBg+t+fjXERvewzhmtk9efvL+V52iVkD0lg==}
+    dev: false
 
   /deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
@@ -5472,6 +5478,21 @@ packages:
       combined-stream: 1.0.8
       mime-types: 2.1.35
     dev: true
+
+  /formango@2.0.14(vue@3.4.21)(zod@3.22.4):
+    resolution: {integrity: sha512-lMvHRSkec4daVCMJJUV+0YqiJwsX5JzfNADCjR4nCoF30XdD/79tgf9wDGMmloo5LnhvWuoUN6G3xmPJOVQL/w==}
+    peerDependencies:
+      vue: ^3.2.47
+      zod: ^3.21.4
+    dependencies:
+      '@vue/devtools-api': 6.6.1
+      '@vueuse/core': 10.9.0(vue@3.4.21)
+      deep-clone: 4.0.0
+      vue: 3.4.21(typescript@5.3.3)
+      zod: 3.22.4
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+    dev: false
 
   /format-io@2.0.0:
     resolution: {integrity: sha512-iQz8w2qr4f+doWBV6LsfScHbu1gXhccByjbmA1wjBTaKRhweH2baJL96UGR4C7Fjpr8zSkK7EXiLmbzZWTyQIA==}
@@ -9155,7 +9176,6 @@ packages:
         optional: true
     dependencies:
       vue: 3.4.21(typescript@5.3.3)
-    dev: true
 
   /vue-eslint-parser@9.4.2(eslint@8.57.0):
     resolution: {integrity: sha512-Ry9oiGmCAK91HrKMtCrKFWmSFWvYkpGglCeFAIqDdr9zdXmMMpJOmUJS7WWsW7fX81h6mwHmUZCQQ1E0PkSwYQ==}
@@ -9480,7 +9500,6 @@ packages:
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
-    dev: true
 
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}

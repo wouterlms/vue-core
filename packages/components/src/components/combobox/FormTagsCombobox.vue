@@ -2,8 +2,8 @@
 import type { ComboboxItem } from '../../types/comboboxItem.type'
 import type { FormFieldErrors } from '../../types/formFieldErrors.type'
 import type { AcceptableValue } from '../../types/selectItem.type'
-import AppCombobox from '../combobox/AppCombobox.vue'
 import FormInputContainer from '../form-input-container/FormInputContainer.vue'
+import AppTagsCombobox from './AppTagsCombobox.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -45,6 +45,10 @@ const props = withDefaults(
      */
     label: string
     /**
+     * The maximum number of tags that can be selected.
+     */
+    max?: null | number
+    /**
      * The placeholder of the combobox.
      * @default null
      */
@@ -56,6 +60,7 @@ const props = withDefaults(
     isLoading: false,
     isRequired: false,
     isTouched: false,
+    max: null,
     placeholder: null,
   },
 )
@@ -65,7 +70,7 @@ const emit = defineEmits<{
   filter: [value: string]
 }>()
 
-const model = defineModel<TValue | null>({
+const model = defineModel<TValue[]>({
   required: true,
 })
 
@@ -91,7 +96,7 @@ function onFilter(filter: string): void {
     :is-disabled="props.isDisabled"
     :label="props.label"
   >
-    <AppCombobox
+    <AppTagsCombobox
       :id="id"
       v-model:search="search"
       v-model="model"
@@ -103,6 +108,7 @@ function onFilter(filter: string): void {
       :is-required="props.isRequired"
       :placeholder="props.placeholder"
       :is-loading="props.isLoading"
+      :max="props.max"
       @blur="onBlur"
       @filter="onFilter"
     >
@@ -112,6 +118,6 @@ function onFilter(filter: string): void {
           name="option"
         />
       </template>
-    </AppCombobox>
+    </AppTagsCombobox>
   </FormInputContainer>
 </template>
