@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { DropdownMenuItem as RadixDropdownMenuItem } from 'radix-vue'
-import { ref } from 'vue'
 
 import type { DropdownMenuOption } from '../../types/dropdownMenuItem.type'
 import AppIcon from '../icon/AppIcon.vue'
@@ -10,17 +9,10 @@ import AppText from '../text/AppText.vue'
 const props = defineProps<{
   item: DropdownMenuOption
 }>()
-
-const optionRef = ref<InstanceType<typeof RadixDropdownMenuItem> | null>(null)
-
-function onCommandFired(): void {
-  optionRef.value?.$el.click()
-}
 </script>
 
 <template>
   <RadixDropdownMenuItem
-    ref="optionRef"
     class="group flex cursor-default items-center justify-between overflow-hidden rounded-md p-2 outline-none focus:bg-muted-background"
     @select="props.item.onSelect"
   >
@@ -42,11 +34,9 @@ function onCommandFired(): void {
 
     <AppKeyboardCommand
       v-if="props.item.command !== undefined"
-      :command="props.item.command"
-      :is-active="true"
-      scope="global"
+      :keys="props.item.command.keys"
+      :command-type="props.item.command.type"
       class="ml-4"
-      @command-fired="onCommandFired"
     />
   </RadixDropdownMenuItem>
 </template>

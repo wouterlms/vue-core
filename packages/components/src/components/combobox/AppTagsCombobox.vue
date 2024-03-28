@@ -27,7 +27,7 @@ import AppComboboxViewport from './AppComboboxViewport.vue'
 const props = withDefaults(
   defineProps<{
     /**
-     *
+     * The function to use to display the value.
      */
     displayFn: (value: TValue) => string
     /**
@@ -80,14 +80,16 @@ const searchModel = defineModel<null | string>('search', {
   required: true,
 })
 
+const isOpen = ref<boolean>(false)
+
+const tagsInputRootRef = ref<InstanceType<typeof TagsInputRoot> | null>(null)
+
 const search = computed<string | undefined>({
   get: () => searchModel.value ?? undefined,
   set: (value) => {
     searchModel.value = value ?? null
   },
 })
-
-const isOpen = ref<boolean>(false)
 
 function onBlur(): void {
   if (!isOpen.value) {
@@ -113,44 +115,40 @@ function onBlur(): void {
       <ComboboxAnchor>
         <div class="relative">
           <TagsInputRoot
+            ref="tagsInputRootRef"
             :model-value="(model as string[])"
             :disabled="props.isDisabled"
             :class="[
-              model.length > 0 ? 'pl-2' : 'pl-3',
               {
                 'border-input-border focus-within:ring-ring': !props.isInvalid,
                 'border-destructive focus-within:ring-destructive': props.isInvalid,
-              }]"
-            class="flex h-10 w-full items-center truncate rounded-input border border-solid bg-input pr-9 ring-offset-background transition-shadow duration-200 placeholder:text-input-placeholder focus-within:ring-2 focus-within:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              },
+            ]"
+            class="flex min-h-10 w-full flex-wrap items-center gap-1 truncate rounded-input border border-solid bg-input p-1.5 pr-9 ring-offset-background transition-shadow duration-200 placeholder:text-input-placeholder focus-within:ring-2 focus-within:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <div
-              :class="{
-                'mr-2': model.length > 0,
-              }"
-              class="flex items-center gap-1"
+            <template
+              v-for="tag in model"
+              :key="displayFn(tag)"
             >
-              <template
-                v-for="tag in model"
-                :key="displayFn(tag)"
+              <slot
+                :value="tag"
+                name="tag"
               >
-                <slot
+                <AppTagsInputItem
                   :value="tag"
-                  name="tag"
-                >
-                  <AppTagsInputItem
-
-                    :value="tag"
-                    :is-disabled="props.isDisabled"
-                    :display-fn="props.displayFn"
-                  />
-                </slot>
-              </template>
-            </div>
+                  :is-disabled="props.isDisabled"
+                  :display-fn="props.displayFn"
+                />
+              </slot>
+            </template>
 
             <ComboboxInput :as-child="true">
               <TagsInputInput
+                :class="{
+                  'ml-0.5': model.length === 0,
+                }"
                 :placeholder="props.placeholder ?? undefined"
-                class="size-full flex-1 bg-transparent text-sm outline-none placeholder:text-input-placeholder"
+                class="size-full flex-1 bg-transparent px-1 text-sm outline-none placeholder:text-input-placeholder"
                 @blur="onBlur"
                 @keydown.enter.prevent
               />

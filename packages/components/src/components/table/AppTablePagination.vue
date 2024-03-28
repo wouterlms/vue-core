@@ -6,6 +6,8 @@ import type { PageChangeEvent, PaginationOptions } from '@/types/table.type'
 
 import AppButton from '../button/AppButton.vue'
 import AppIconButton from '../button/AppIconButton.vue'
+import AppRovingFocus from '../roving-focus/AppRovingFocus.vue'
+import AppRovingFocusItem from '../roving-focus/AppRovingFocusItem.vue'
 import AppText from '../text/AppText.vue'
 
 const props = defineProps<{
@@ -139,38 +141,46 @@ function pageControlButtonVariant(page: number): 'ghost' | 'secondary' {
 <template>
   <div class="flex h-10 items-center rounded-md border">
     <AppIconButton
-      v-if="!isFirstPage && hasMoreThanOnePage"
+      v-if="hasMoreThanOnePage"
       :label="t('components.table.previous')"
+      :is-disabled="isFirstPage"
       icon="arrowLeft"
       icon-size="sm"
       variant="ghost"
       @click="handlePrevPageButtonClick"
     />
 
-    <div
-      v-for="(page, index) of pageControls"
-      :key="index"
-    >
-      <AppButton
-        v-if="typeof page === 'number'"
-        :variant="pageControlButtonVariant(page - 1)"
-        class="duration-0"
-        @click="handlePageButtonClick(page - 1)"
+    <AppRovingFocus class="flex items-center">
+      <div
+        v-for="(page, index) of pageControls"
+        :key="index"
       >
-        {{ page }}
-      </AppButton>
+        <AppRovingFocusItem
+          v-if="typeof page === 'number'"
+          :as-child="true"
+        >
+          <AppButton
+            :variant="pageControlButtonVariant(page - 1)"
+            class="duration-0"
+            @click="handlePageButtonClick(page - 1)"
+          >
+            {{ page }}
+          </AppButton>
+        </AppRovingFocusItem>
 
-      <AppText
-        v-else
-        class="cursor-default px-2 text-muted-foreground"
-        variant="subtext"
-      >
-        {{ page }}
-      </AppText>
-    </div>
+        <AppText
+          v-else
+          class="cursor-default px-2 text-muted-foreground"
+          variant="subtext"
+        >
+          {{ page }}
+        </AppText>
+      </div>
+    </AppRovingFocus>
 
     <AppIconButton
-      v-if="!isLastPage && hasMoreThanOnePage"
+      v-if="hasMoreThanOnePage"
+      :is-disabled="isLastPage"
       :label="t('components.table.next')"
       icon-size="sm"
       icon="arrowRight"

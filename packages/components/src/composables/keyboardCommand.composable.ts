@@ -91,11 +91,18 @@ export function useKeyboardCommand(options: UseKeyboardCommandOptions): void {
   }
 
   useEventListener('keydown', (e) => {
-    if (!canFireEvent.value || isInputFocused()) {
+    if (!canFireEvent.value) {
       return
     }
 
     const pressedKeys = getPressedKeys(e)
+
+    const isModifierKey = pressedKeys[0] === 'ctrl' || pressedKeys[0] === 'alt' || pressedKeys[0] === 'meta'
+
+    if (!isModifierKey && isInputFocused()) {
+      return
+    }
+
     const isActive = isCommandActive(options.command, pressedKeys)
 
     if (isActive) {

@@ -13,6 +13,7 @@ export const button = cva({
       icon: 'size-10 text-sm',
       lg: 'h-11 rounded-button px-8 text-base',
       sm: 'h-9 rounded-button px-3 text-xs',
+      xs: 'h-6 rounded-button px-2 text-xs',
     },
     variant: {
       'default':
@@ -38,6 +39,7 @@ export const buttonIcon = cva({
       default: 'size-3.5',
       lg: 'size-4',
       sm: 'size-3.5',
+      xs: 'size-2.5',
     },
   },
 })

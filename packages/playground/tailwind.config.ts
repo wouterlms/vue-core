@@ -16,6 +16,7 @@ export default {
         full: 'var(--radius-full)',
         input: 'var(--radius-input)',
         popover: 'var(--radius-popover)',
+        tag: 'var(--radius-tag)',
       },
 
       boxShadow: {

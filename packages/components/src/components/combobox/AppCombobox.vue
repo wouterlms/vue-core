@@ -128,6 +128,10 @@ function onBlur(): void {
             @blur="onBlur"
           />
 
+          <slot name="right">
+            <!-- <AppButton /> -->
+          </slot>
+
           <AppComboboxTrigger :is-disabled="props.isDisabled">
             <AppLoader
               v-if="props.isLoading"

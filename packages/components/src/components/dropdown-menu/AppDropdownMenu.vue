@@ -4,7 +4,7 @@ import {
   DropdownMenuRoot,
   DropdownMenuTrigger,
 } from 'radix-vue'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 
 import { useKeyboardCommand } from '../../composables/keyboardCommand.composable'
 import type {
@@ -56,8 +56,6 @@ const props = withDefaults(
   },
 )
 
-const isDropdownOpen = ref<boolean>(false)
-
 function getAllItems(items: DropdownMenuItem[]): DropdownMenuItem[] {
   const allItems: DropdownMenuItem[] = []
 
@@ -89,14 +87,14 @@ optionItems.value.forEach((item) => {
       onPressed: item.onSelect,
       type: command.type,
     },
-    isActive: computed<boolean>(() => props.enableKeyboardCommands && !isDropdownOpen.value),
+    isActive: computed<boolean>(() => props.enableKeyboardCommands),
     scope: 'controlled',
   })
 })
 </script>
 
 <template>
-  <DropdownMenuRoot v-model:open="isDropdownOpen">
+  <DropdownMenuRoot>
     <DropdownMenuTrigger :as-child="true">
       <slot />
     </DropdownMenuTrigger>

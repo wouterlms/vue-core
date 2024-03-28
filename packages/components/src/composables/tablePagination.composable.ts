@@ -15,7 +15,8 @@ import type {
   SortChangeEvent,
   UseTablePaginationReturnType,
 } from '@/types/table.type'
-import { base64Decode, base64Encode } from '@/utils/base64.util'
+
+import { base64Decode, base64Encode } from '../utils/base64.util'
 
 interface UseTablePaginationOptions<TFilters> {
   /**

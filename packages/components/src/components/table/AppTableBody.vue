@@ -9,6 +9,8 @@ import type { RouteLocationNamedRaw } from 'vue-router'
 import { RouterLink } from 'vue-router'
 
 import type { TableColumn } from '../../types/table.type'
+import AppRovingFocus from '../roving-focus/AppRovingFocus.vue'
+import AppRovingFocusItem from '../roving-focus/AppRovingFocusItem.vue'
 import AppText from '../text/AppText.vue'
 import AppTableSkeletonLoader from './AppTableSkeletonLoader.vue'
 import AppTableTextCell from './AppTableTextCell.vue'
@@ -74,50 +76,52 @@ const areRowsClickable = computed<boolean>(() => props.rowClick !== null || prop
       </AppText>
     </div>
 
-    <Component
-      :is="rowComponent"
-      v-for="(row, index) in props.data"
-      :key="index"
-      :to="props.rowTo ? props.rowTo(row) : undefined"
-      :class="[props.isHorizontallyScrollable ? 'w-fit' : 'w-full']"
-      :style="{
-        gridTemplateColumns: props.gridTemplateColumns,
-      }"
-      class="group grid items-center rounded-none border-b border-solid border-border outline-none last:border-none hover:bg-muted-background focus:bg-muted-background"
-      @click="onRowClick(row)"
-      @focus="onRowFocus(index)"
-      @mouseenter="onRowFocus(index)"
-      @mouseleave="onRowBlur"
-      @blur="onRowBlur"
-    >
-      <div
-        v-for="column in props.columns"
-        :key="column.id"
-        :class="[
-          props.isScrolledToRight ? 'first:border-r-border' : 'first:border-r-transparent',
-          props.hasReachedHorizontalScrollEnd ? 'last:border-l-transparent' : 'last:border-l-border',
-          {
-            'left-0 bg-background first:sticky first:z-10 first:border-r first:border-solid': props.pinFirstColumn,
-          },
-          {
-            'right-0 bg-background last:sticky last:z-10 last:border-l last:border-solid':
-              props.pinLastColumn && props.isHorizontallyScrollable,
-          },
-          {
-            'group-hover:bg-muted-background group-focus-visible:bg-muted-background': areRowsClickable,
-          },
-        ]"
-        class="flex h-full items-center px-6 py-4"
+    <AppRovingFocus orientation="vertical">
+      <AppRovingFocusItem
+        v-for="(row, index) in props.data"
+        :key="index"
+        :as="rowComponent"
+        :to="props.rowTo ? props.rowTo(row) : undefined"
+        :class="[props.isHorizontallyScrollable ? 'w-fit' : 'w-full']"
+        :style="{
+          gridTemplateColumns: props.gridTemplateColumns,
+        }"
+        class="group grid items-center rounded-none border-b border-solid border-border outline-none last:border-none hover:bg-muted-background focus:bg-muted-background"
+        @click="onRowClick(row)"
+        @focus="onRowFocus(index)"
+        @mouseenter="onRowFocus(index)"
+        @mouseleave="onRowBlur"
+        @blur="onRowBlur"
       >
-        <Component
-          :is="column.render(row, index === focusedRowIndex)"
-          v-if="column.render !== undefined"
-        />
+        <div
+          v-for="column in props.columns"
+          :key="column.id"
+          :class="[
+            props.isScrolledToRight ? 'first:border-r-border' : 'first:border-r-transparent',
+            props.hasReachedHorizontalScrollEnd ? 'last:border-l-transparent' : 'last:border-l-border',
+            {
+              'left-0 bg-background first:sticky first:z-10 first:border-r first:border-solid': props.pinFirstColumn,
+            },
+            {
+              'right-0 bg-background last:sticky last:z-10 last:border-l last:border-solid':
+                props.pinLastColumn && props.isHorizontallyScrollable,
+            },
+            {
+              'group-hover:bg-muted-background group-focus-visible:bg-muted-background': areRowsClickable,
+            },
+          ]"
+          class="flex h-full items-center px-6 py-4"
+        >
+          <Component
+            :is="column.render(row)"
+            v-if="column.render !== undefined"
+          />
 
-        <AppTableTextCell v-else>
-          {{ column.value(row) }}
-        </AppTableTextCell>
-      </div>
-    </Component>
+          <AppTableTextCell v-else>
+            {{ column.value(row) }}
+          </AppTableTextCell>
+        </div>
+      </AppRovingFocusItem>
+    </AppRovingFocus>
   </div>
-</template>
+</template>import { useKeyboardCommand } from '@/composables/keyboardCommand.composable'

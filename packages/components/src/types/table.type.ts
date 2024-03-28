@@ -36,7 +36,7 @@ interface BaseTableColumn {
 }
 
 interface TableColumnWithRender<TSchema> extends BaseTableColumn {
-  render: (row: TSchema, isFocused: boolean) => VNode
+  render: (row: TSchema) => VNode
   value?: never
 }
 
