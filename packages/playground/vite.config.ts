@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: [
-      {
-        find: '@lib',
-        replacement: '../components/src/',
-      },
+      // {
+      //   find: '@lib',
+      //   replacement: '../components/src/',
+      // },
     ],
   },
 })

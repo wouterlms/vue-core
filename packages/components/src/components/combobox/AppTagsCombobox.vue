@@ -23,11 +23,12 @@ import AppComboboxEmpty from './AppComboboxEmpty.vue'
 import AppComboboxItem from './AppComboboxItem.vue'
 import AppComboboxTrigger from './AppComboboxTrigger.vue'
 import AppComboboxViewport from './AppComboboxViewport.vue'
+import { useCombobox } from './combobox.composable'
 
 const props = withDefaults(
   defineProps<{
     /**
-     * The function to use to display the value.
+     * Function to use to display the value.
      */
     displayFn: (value: TValue) => string
     /**
@@ -37,6 +38,7 @@ const props = withDefaults(
     emptyText?: null | string
     /**
      * Whether the combobox is disabled.
+     * @default false
      */
     isDisabled?: boolean
     /**
@@ -46,6 +48,7 @@ const props = withDefaults(
     isInvalid?: boolean
     /**
      * Whether the combobox is loading.
+     * @default false
      */
     isLoading?: boolean
     /**
@@ -68,8 +71,7 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'blur': []
-  'update:modelValue': [value: TValue[]]
+  blur: []
 }>()
 
 const model = defineModel<TValue[]>({
@@ -83,6 +85,12 @@ const searchModel = defineModel<null | string>('search', {
 const isOpen = ref<boolean>(false)
 
 const tagsInputRootRef = ref<InstanceType<typeof TagsInputRoot> | null>(null)
+
+const { canOpenDropdown } = useCombobox({
+  isLoading: computed<boolean>(() => props.isLoading),
+  items: computed<ComboboxItem<TValue>[]>(() => props.items),
+  search: computed<null | string>(() => searchModel.value),
+})
 
 const search = computed<string | undefined>({
   get: () => searchModel.value ?? undefined,
@@ -161,6 +169,7 @@ function onBlur(): void {
               />
 
               <AppIcon
+                v-else
                 class="text-muted-foreground"
                 icon="chevronDown"
                 size="sm"
@@ -179,10 +188,12 @@ function onBlur(): void {
           leave-from-class="opacity-100"
           leave-to-class="opacity-0"
         >
-          <div v-if="isOpen">
+          <div v-if="isOpen && canOpenDropdown">
             <AppComboboxContent>
               <AppComboboxViewport>
-                <AppComboboxEmpty :empty-text="props.emptyText" />
+                <AppComboboxEmpty :empty-text="props.emptyText">
+                  <slot name="empty" />
+                </AppComboboxEmpty>
 
                 <AppComboboxItem
                   v-for="(item, i) of props.items"

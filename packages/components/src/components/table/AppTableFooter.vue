@@ -35,9 +35,7 @@ function handlePageEvent(event: PageChangeEvent): void {
 </script>
 
 <template>
-  <div
-    class="sticky bottom-0 left-0 z-10 flex h-14 w-full items-center justify-between border-t border-solid border-border bg-background px-6 py-2"
-  >
+  <div class="sticky bottom-0 left-0 z-10 flex h-14 w-full items-center justify-between border-t border-solid border-border bg-background px-6 py-2">
     <AppSkeletonLoaderRow
       v-if="props.total === null"
       class="w-20"
@@ -52,7 +50,7 @@ function handlePageEvent(event: PageChangeEvent): void {
 
     <AppSkeletonLoaderRow
       v-if="props.total === null"
-      class="w-32"
+      class="w-24"
     />
 
     <AppTablePagination

@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="T extends string">
 import type { DataItem } from '../../types/dataItem.type'
 import type { FormFieldErrors } from '../../types/formFieldErrors.type'
-import FormInputContainer from '../form-input-container/FormInputContainer.vue'
+import FormElement from '../form-element/FormElement.vue'
 import FormCheckbox from './FormCheckbox.vue'
 
 const props = withDefaults(defineProps<{
@@ -23,8 +23,9 @@ const props = withDefaults(defineProps<{
   isTouched: boolean
   /**
    * The label of the checkbox group.
+   * @default null
    */
-  label: string
+  label?: null | string
   /**
    * The options of the checkbox group.
    */
@@ -32,6 +33,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   isDisabled: false,
   isRequired: false,
+  label: null,
 })
 
 const model = defineModel<T[]>({
@@ -58,7 +60,7 @@ function toggleOption(value: T) {
 </script>
 
 <template>
-  <FormInputContainer
+  <FormElement
     :errors="props.errors"
     :is-touched="props.isTouched"
     :label="props.label"
@@ -83,5 +85,5 @@ function toggleOption(value: T) {
         </label>
       </div>
     </div>
-  </FormInputContainer>
+  </FormElement>
 </template>

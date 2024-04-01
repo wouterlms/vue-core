@@ -16,6 +16,20 @@ export function useComponentAttrs(): UseComponentAttrsReturnType {
 
   const otherAttrs = computed<Record<string, unknown>>(() => {
     const { class: _, ...otherAttrs } = attrs
+
+    const keyboardCommands = [
+      'onKeydown',
+      'onKeyup',
+      'onKeypress',
+    ]
+
+    // Not sure why this is necessary, but without it the listeners are fired multiple times
+    for (const key of keyboardCommands) {
+      if (key in otherAttrs) {
+        delete otherAttrs[key]
+      }
+    }
+
     return otherAttrs
   })
 

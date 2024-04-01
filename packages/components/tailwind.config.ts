@@ -40,6 +40,7 @@ export default {
         black: 'rgba(var(--black), <alpha-value>)',
 
         border: 'rgba(var(--border), <alpha-value>)',
+
         card: {
           DEFAULT: 'rgba(var(--card), <alpha-value>)',
           foreground: 'rgba(var(--card-foreground), <alpha-value>)',
@@ -169,7 +170,7 @@ export default {
       },
 
       zIndex: {
-        'aboveEverything': '9999',
+        'above-everything': '9999',
         'dialog': '40',
         'dialog-overlay': '39',
         'navbar': '30',

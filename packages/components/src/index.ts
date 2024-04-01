@@ -3,6 +3,9 @@ import './styles/index.scss'
 // Badge
 export { default as AppBadge } from './components/badge/AppBadge.vue'
 
+// Breadcrumbs
+export { default as AppBreadcrumbs } from './components/breadcrumbs/AppBreadcrumbs.vue'
+
 // Button
 export type { AppButtonProps } from './components/button/AppButton.vue'
 export { default as AppButton } from './components/button/AppButton.vue'
@@ -42,7 +45,7 @@ export { default as FormError } from './components/form-error/FormError.vue'
 export { default as FormGroup } from './components/form-group/FormGroup.vue'
 
 // Form input container
-export { default as FormInputContainer } from './components/form-input-container/FormInputContainer.vue'
+export { default as FormElement } from './components/form-element/FormElement.vue'
 
 // Form label
 export { default as FormLabel } from './components/form-label/FormLabel.vue'
@@ -77,6 +80,12 @@ export { default as FormRadioGroupRoot } from './components/radio-group/FormRadi
 // Select
 export { default as AppSelect } from './components/select/AppSelect.vue'
 export { default as FormSelect } from './components/select/FormSelect.vue'
+
+// Skeleton loader
+export { default as AppPageSkeletonLoader } from './components/skeleton-loader/AppPageSkeletonLoader.vue'
+export { default as AppSkeletonLoaderButton } from './components/skeleton-loader/AppSkeletonLoaderButton.vue'
+export { default as AppSkeletonLoaderRow } from './components/skeleton-loader/AppSkeletonLoaderRow.vue'
+export { default as AppSkeletonLoaderRows } from './components/skeleton-loader/AppSkeletonLoaderRows.vue'
 
 // Switch
 export { default as FormSwitch } from './components/switch/FormSwitch.vue'
@@ -114,6 +123,7 @@ export { useToast } from './composables/toast.composable'
 
 // Types
 export type { Icon, Icons } from './icons/icons'
+export type { BreadcrumbItem } from './types/breadcrumbItem.type'
 export type { ComboboxItem } from './types/comboboxItem.type'
 export type { DropdownMenuItem } from './types/dropdownMenuItem.type'
 export type { FormFieldErrors } from './types/formFieldErrors.type'

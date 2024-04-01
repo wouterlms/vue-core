@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="T extends string">
 import type { DataItem } from '../../types/dataItem.type'
 import type { FormFieldErrors } from '../../types/formFieldErrors.type'
-import FormInputContainer from '../form-input-container/FormInputContainer.vue'
+import FormElement from '../form-element/FormElement.vue'
 import FormRadioGroupIndicator from './FormRadioGroupIndicator.vue'
 import FormRadioGroupItem from './FormRadioGroupItem.vue'
 import FormRadioGroupRoot from './FormRadioGroupRoot.vue'
@@ -25,8 +25,9 @@ const props = withDefaults(defineProps<{
   isTouched: boolean
   /**
    * The label of the radio group.
+   * @default null
    */
-  label: string
+  label?: null | string
   /**
    * The options of the radio group.
    */
@@ -34,6 +35,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   isDisabled: false,
   isRequired: false,
+  label: null,
 })
 
 const model = defineModel<T | null>({
@@ -42,7 +44,7 @@ const model = defineModel<T | null>({
 </script>
 
 <template>
-  <FormInputContainer
+  <FormElement
     :errors="props.errors"
     :is-touched="props.isTouched"
     :label="props.label"
@@ -73,5 +75,5 @@ const model = defineModel<T | null>({
         </div>
       </div>
     </FormRadioGroupRoot>
-  </FormInputContainer>
+  </FormElement>
 </template>

@@ -23,7 +23,7 @@ const props = withDefaults(
         <div
           v-for="i of 4"
           :key="i"
-          class="mt-4 rounded-md bg-neutral-50 p-3"
+          class="mt-4 rounded-md bg-neutral-100 p-3"
         />
       </AppContainer>
     </div>
@@ -32,18 +32,18 @@ const props = withDefaults(
       <div
         v-for="i of props.numberOfRows"
         :key="i"
-        class="odd:bg-neutral-50"
+        class="odd:bg-neutral-100"
       >
         <AppContainer class="grid grid-cols-table-skeleton gap-x-8 px-8 py-4">
           <div
             v-for="j of 4"
             :key="j"
-            class="rounded-md bg-neutral-100 p-3"
+            class="rounded-md bg-neutral-200 p-3"
           />
         </AppContainer>
       </div>
 
-      <div class="absolute left-0 top-0 z-10 size-full bg-gradient-to-b from-transparent to-white" />
+      <div class="absolute left-0 top-0 z-10 size-full bg-gradient-to-b from-transparent to-background" />
     </div>
   </div>
 </template>

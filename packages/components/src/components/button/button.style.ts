@@ -11,9 +11,10 @@ export const button = cva({
     size: {
       default: 'h-10 px-4 py-2 text-sm',
       icon: 'size-10 text-sm',
-      lg: 'h-11 rounded-button px-8 text-base',
-      sm: 'h-9 rounded-button px-3 text-xs',
-      xs: 'h-6 rounded-button px-2 text-xs',
+      lg: 'h-11 px-8 text-base',
+      sm: 'h-9 px-3 text-xs',
+      unset: '',
+      xs: 'h-6 px-2 text-xs',
     },
     variant: {
       'default':
@@ -21,11 +22,11 @@ export const button = cva({
       'destructive': 'border-destructive bg-destructive text-destructive-foreground focus-visible:ring-destructive',
       'destructive-outline': 'border-destructive bg-transparent text-destructive ring-destructive',
       'ghost':
-        'border-transparent bg-transparent text-muted-foreground ring-foreground hover:enabled:bg-muted-background focus:enabled:bg-muted-background',
+        'border-transparent bg-transparent text-muted-foreground ring-ring hover:enabled:bg-muted-background focus:enabled:bg-muted-background',
       'outline':
-        'border-primary bg-background text-primary ring-primary',
+        'border-primary bg-background text-primary ring-ring',
       'secondary':
-        'border-muted-background bg-muted-background text-muted-foreground ring-foreground',
+        'border-muted-background bg-muted-background text-muted-foreground ring-ring',
     },
   },
 })
@@ -36,10 +37,12 @@ export const buttonIcon = cva({
   },
   variants: {
     size: {
-      default: 'size-3.5',
-      lg: 'size-4',
-      sm: 'size-3.5',
-      xs: 'size-2.5',
+      default: '!size-3.5',
+      icon: '!size-3.5',
+      lg: '!size-8',
+      sm: '!size-3.5',
+      unset: '',
+      xs: '!size-2.5',
     },
   },
 })

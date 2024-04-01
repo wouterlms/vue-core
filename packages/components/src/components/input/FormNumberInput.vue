@@ -2,7 +2,7 @@
 import { useComponentAttrs } from '../../composables/componentAttrs.composable'
 import type { Icon } from '../../icons/icons'
 import type { FormFieldErrors } from '../../types/formFieldErrors.type'
-import FormInputContainer from '../form-input-container/FormInputContainer.vue'
+import FormElement from '../form-element/FormElement.vue'
 import AppNumberInput from '../input/AppNumberInput.vue'
 
 const props = withDefaults(
@@ -93,7 +93,7 @@ function onBlur(): void {
 </script>
 
 <template>
-  <FormInputContainer
+  <FormElement
     v-slot="{ isInvalid, id }"
     :class="classAttr"
     :errors="props.errors"
@@ -123,5 +123,5 @@ function onBlur(): void {
         <slot name="right" />
       </template>
     </AppNumberInput>
-  </FormInputContainer>
+  </FormElement>
 </template>

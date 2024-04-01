@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormFieldErrors } from '../../types/formFieldErrors.type'
-import FormInputContainer from '../form-input-container/FormInputContainer.vue'
+import FormElement from '../form-element/FormElement.vue'
 import AppTagsInput from './AppTagsInput.vue'
 
 const props = withDefaults(defineProps<{
@@ -54,7 +54,7 @@ function onBlur(): void {
 </script>
 
 <template>
-  <FormInputContainer
+  <FormElement
     v-slot="{ isInvalid, id }"
     :errors="props.errors"
     :is-required="props.isRequired"
@@ -78,5 +78,5 @@ function onBlur(): void {
         />
       </template>
     </AppTagsInput>
-  </FormInputContainer>
+  </FormElement>
 </template>

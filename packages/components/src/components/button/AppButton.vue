@@ -5,7 +5,7 @@ import type { Icon } from '../../icons/icons'
 import AppIcon from '../icon/AppIcon.vue'
 import AppLoader from '../loader/AppLoader.vue'
 import type { ButtonStyleProps } from './button.style'
-import { button } from './button.style'
+import { button, buttonIcon } from './button.style'
 
 export interface AppButtonProps {
   /**
@@ -61,6 +61,11 @@ const buttonClasses = computed<string>(() =>
     size: props.size,
     variant: props.variant,
   }))
+
+const buttonIconClasses = computed<string>(() =>
+  buttonIcon({
+    size: props.size,
+  }))
 </script>
 
 <template>
@@ -72,9 +77,9 @@ const buttonClasses = computed<string>(() =>
     <AppIcon
       v-if="props.iconLeft !== null && props.iconLeft !== undefined"
       :icon="props.iconLeft"
-      :class="{
+      :class="[{
         'opacity-0': props.isLoading,
-      }"
+      }, buttonIconClasses]"
       class="mr-3"
     />
 
@@ -98,9 +103,9 @@ const buttonClasses = computed<string>(() =>
     <AppIcon
       v-if="props.iconRight !== null && props.iconRight !== undefined"
       :icon="props.iconRight"
-      :class="{
+      :class="[buttonIconClasses, {
         'opacity-0': props.isLoading,
-      }"
+      }]"
       class="ml-3"
     />
   </button>

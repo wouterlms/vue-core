@@ -5,13 +5,13 @@ import AppToast from '../components/toast/AppToast.vue'
 import type { Toast } from '../types/toast.type'
 
 interface NamedToast {
-  description: string
+  description?: string
   title: string
 }
 interface UseToastReturnType {
-  showErrorToast: (toast: NamedToast) => void
-  showSuccessToast: (toast: NamedToast) => void
-  showToast: (toast: Toast) => void
+  custom: (toast: Toast) => void
+  error: (toast: NamedToast) => void
+  success: (toast: NamedToast) => void
 }
 
 export function useToast(): UseToastReturnType {
@@ -19,19 +19,20 @@ export function useToast(): UseToastReturnType {
 
   function showToast(toast: Toast) {
     vueSonnerToast.custom(h(AppToast, {
-      description: toast.description,
+      action: toast.action,
+      description: toast.description ?? null,
       icon: toast.icon,
       title: toast.title,
       type: toast.type,
     }), {
-      duration: TOAST_DURATION,
+      duration: toast.duration ?? TOAST_DURATION,
     })
   }
 
   function showErrorToast(toast: NamedToast) {
     vueSonnerToast.custom(h(AppToast, {
-      description: toast.description,
-      icon: 'close',
+      description: toast.description ?? null,
+      icon: 'alertCircle',
       title: toast.title,
       type: 'error',
     }), {
@@ -41,8 +42,8 @@ export function useToast(): UseToastReturnType {
 
   function showSuccessToast(toast: NamedToast) {
     vueSonnerToast.custom(h(AppToast, {
-      description: toast.description,
-      icon: 'checkmark',
+      description: toast.description ?? null,
+      icon: 'checkmarkCircle',
       title: toast.title,
       type: 'success',
     }), {
@@ -51,8 +52,8 @@ export function useToast(): UseToastReturnType {
   }
 
   return {
-    showErrorToast,
-    showSuccessToast,
-    showToast,
+    custom: showToast,
+    error: showErrorToast,
+    success: showSuccessToast,
   }
 }

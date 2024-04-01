@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import type { Icon } from '../../icons/icons'
-import type { ToastType } from '../../types/toast.type'
+import type { ToastAction, ToastType } from '../../types/toast.type'
+import AppButton from '../button/AppButton.vue'
 import AppIcon from '../icon/AppIcon.vue'
 import AppText from '../text/AppText.vue'
 
 const props = withDefaults(defineProps<{
+  action?: ToastAction | null
   description?: null | string
   icon: Icon
   title: string
   type: ToastType
 }>(), {
+  action: null,
   description: null,
 })
 
@@ -23,7 +26,7 @@ function onClose(): void {
 </script>
 
 <template>
-  <div class="relative w-80 rounded-popover border border-solid border-neutral-100 bg-popover p-4 shadow-toast-shadow">
+  <div class="relative w-[22rem] rounded-popover border border-solid border-neutral-100 bg-popover p-4 shadow-toast-shadow">
     <div class="absolute right-0 top-0 -translate-y-1/3 translate-x-1/3">
       <button
         type="button"
@@ -38,37 +41,50 @@ function onClose(): void {
       </button>
     </div>
 
-    <div class="flex items-start gap-x-4">
-      <div
+    <div class="flex shrink-0 items-start gap-x-4">
+      <AppIcon
+        :icon="props.icon"
         :class="{
-          'bg-destructive text-destructive-foreground': props.type === 'error',
-          'bg-success text-success-foreground': props.type === 'success',
-          'bg-primary text-primary-foreground': props.type === 'info',
+          'text-destructive': props.type === 'error',
+          'text-success': props.type === 'success',
+          'text-primary': props.type === 'info',
         }"
-        class="mt-1 line-clamp-2  flex size-4 shrink-0 items-center justify-center rounded-full"
-      >
-        <AppIcon
-          :icon="props.icon"
-          size="sm"
-          class="p-px"
-        />
-      </div>
+        size="lg"
+        class="mt-[3px]"
+      />
 
-      <div class="pr-4">
-        <AppText
-          variant="body"
-          class="font-medium"
-        >
-          {{ props.title }}
-        </AppText>
+      <div class="w-full pr-4">
+        <div>
+          <AppText
+            variant="body"
+            class="font-medium"
+          >
+            {{ props.title }}
+          </AppText>
 
-        <AppText
-          v-if="props.description !== null"
-          variant="subtext"
-          class="mt-1"
+          <AppText
+            v-if="props.description !== null"
+            variant="subtext"
+            class="mt-1"
+          >
+            {{ props.description }}
+          </AppText>
+        </div>
+
+        <div
+          v-if="props.action !== null"
+          class="mt-4 flex justify-end"
         >
-          {{ props.description }}
-        </AppText>
+          <AppButton
+            :variant="props.type === 'error' ? 'destructive' : 'default'"
+            :icon-left="props.action.icon ?? null"
+            :is-loading="props.action.isLoading?.value ?? false"
+            size="sm"
+            @click="props.action.onClick(onClose)"
+          >
+            {{ props.action.label }}
+          </AppButton>
+        </div>
       </div>
     </div>
   </div>

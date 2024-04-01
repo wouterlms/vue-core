@@ -2,7 +2,7 @@
 import { useComponentAttrs } from '../../composables/componentAttrs.composable'
 import type { Icon } from '../../icons/icons'
 import type { FormFieldErrors } from '../../types/formFieldErrors.type'
-import FormInputContainer from '../form-input-container/FormInputContainer.vue'
+import FormElement from '../form-element/FormElement.vue'
 import AppInput from '../input/AppInput.vue'
 
 const props = withDefaults(
@@ -65,28 +65,15 @@ const props = withDefaults(
   },
 )
 
-const emit = defineEmits<{
-  blur: []
-  focus: []
-}>()
-
 const model = defineModel<null | string>({
   required: true,
 })
 
 const { classAttr, otherAttrs } = useComponentAttrs()
-
-function onFocus(): void {
-  emit('focus')
-}
-
-function onBlur(): void {
-  emit('blur')
-}
 </script>
 
 <template>
-  <FormInputContainer
+  <FormElement
     v-slot="{ isInvalid, id }"
     :class="classAttr"
     :errors="props.errors"
@@ -106,8 +93,6 @@ function onBlur(): void {
       :is-loading="props.isLoading"
       :icon-left="props.iconLeft"
       :icon-right="props.iconRight"
-      @focus="onFocus"
-      @blur="onBlur"
     >
       <template #left>
         <slot name="left" />
@@ -117,5 +102,5 @@ function onBlur(): void {
         <slot name="right" />
       </template>
     </AppInput>
-  </FormInputContainer>
+  </FormElement>
 </template>

@@ -1,66 +1,30 @@
 <script setup lang="ts">
-import AppTable from '../../components/src/components/table/AppTable.vue'
-import { useTablePagination } from '../../components/src/composables/tablePagination.composable'
-import type { TableColumn } from '../../components/src/types/table.type'
+import { ref } from 'vue'
 
-interface Client {
-  email: string
-  name: string
-}
+import AppButton from '../../components/src/components/button/AppButton.vue'
+import AppViewTransition from '../../components/src/components/view-transition/AppViewTransition.vue'
 
-const data: Client[] = [
-  {
-    email: 'john.doe@email.com',
-    name: 'John Doe',
-  },
-  {
-    email: 'jane.doe@email.com',
-    name: 'Jane Doe',
-  },
-]
-
-const pagination = useTablePagination({
-  defaultPaginationOptions: {
-    pagination: {
-      page: 0,
-      perPage: 1,
-    },
-  },
-  id: 'clients',
-})
-
-const columns: TableColumn<Client>[] = [
-  {
-    id: 'name',
-    label: 'Name',
-    size: '2fr',
-    value: row => row.name,
-  },
-  {
-    id: 'email',
-    label: 'Email',
-    size: '2fr',
-    value: row => row.email,
-  },
-]
+const isTest = ref<boolean>(false)
 </script>
 
 <template>
   <div class="p-24">
-    <AppTable
-      :pagination="pagination"
-      :columns="columns"
-      :data="{
-        data,
-        total: data.length,
-      }"
-      :row-click="() => ({
-        name: '',
-      })"
-      :filters="[]"
-      :is-loading="false"
-      empty-message="Empty"
-      title="Clients"
-    />
+    <AppViewTransition :is-toggled="isTest">
+      <template #a>
+        <div class="h-24 w-40 rounded-card bg-card p-8 shadow-card-shadow">
+          A
+        </div>
+      </template>
+
+      <template #b>
+        <div class="w-80 rounded-card bg-card p-8 shadow-card-shadow">
+          This is B
+        </div>
+      </template>
+    </AppViewTransition>
+
+    <AppButton @click="isTest = !isTest">
+      Toggle
+    </AppButton>
   </div>
 </template>

@@ -27,7 +27,7 @@ const props = defineProps<{
   /**
    * The label of the input.
    */
-  label: string
+  label: null | string
 }>()
 
 const inputId = useId(null, 'input')
@@ -40,6 +40,7 @@ const isInvalid = computed<boolean>(() => {
 <template>
   <FormGroup>
     <FormLabel
+      v-if="props.label !== null"
       :for="inputId"
       :label="props.label"
       :is-required="props.isRequired"

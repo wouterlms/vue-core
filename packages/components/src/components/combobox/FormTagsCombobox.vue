@@ -2,7 +2,7 @@
 import type { ComboboxItem } from '../../types/comboboxItem.type'
 import type { FormFieldErrors } from '../../types/formFieldErrors.type'
 import type { AcceptableValue } from '../../types/selectItem.type'
-import FormInputContainer from '../form-input-container/FormInputContainer.vue'
+import FormElement from '../form-element/FormElement.vue'
 import AppTagsCombobox from './AppTagsCombobox.vue'
 
 const props = withDefaults(
@@ -88,7 +88,7 @@ function onFilter(filter: string): void {
 </script>
 
 <template>
-  <FormInputContainer
+  <FormElement
     v-slot="{ isInvalid, id }"
     :errors="props.errors"
     :is-required="props.isRequired"
@@ -119,5 +119,5 @@ function onFilter(filter: string): void {
         />
       </template>
     </AppTagsCombobox>
-  </FormInputContainer>
+  </FormElement>
 </template>

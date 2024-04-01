@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="TValue extends AcceptableValue">
 import type { FormFieldErrors } from '../../types/formFieldErrors.type'
 import type { AcceptableValue, SelectItem } from '../../types/selectItem.type'
-import FormInputContainer from '../form-input-container/FormInputContainer.vue'
+import FormElement from '../form-element/FormElement.vue'
 import AppSelect from '../select/AppSelect.vue'
 
 const props = withDefaults(
@@ -31,7 +31,7 @@ const props = withDefaults(
      */
     isTouched: boolean
     /**
-     * The options of the select.
+     * The items of the select.
      */
     items: SelectItem<TValue>[]
     /**
@@ -67,7 +67,7 @@ function onBlur(): void {
 </script>
 
 <template>
-  <FormInputContainer
+  <FormElement
     v-slot="{ isInvalid, id }"
     :errors="props.errors"
     :is-required="props.isRequired"
@@ -94,5 +94,5 @@ function onBlur(): void {
         />
       </template>
     </AppSelect>
-  </FormInputContainer>
+  </FormElement>
 </template>

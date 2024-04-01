@@ -55,24 +55,13 @@ const props = withDefaults(defineProps<{
   type: 'text',
 })
 
-const emit = defineEmits<{
-  blur: []
-  focus: []
-}>()
-
 const model = defineModel<null | string>({
   required: true,
 })
 
 const { classAttr, otherAttrs } = useComponentAttrs()
 
-function onBlur(): void {
-  emit('blur')
-}
-
-function onFocus(): void {
-  emit('focus')
-}
+// console.log(otherAttrs.value.onKeydown[0])
 </script>
 
 <template>
@@ -92,10 +81,11 @@ function onFocus(): void {
       <AppIcon
         v-if="props.iconLeft !== null && props.iconLeft !== undefined"
         :icon="props.iconLeft"
-        class="ml-3 text-input-foreground"
+        class="ml-3 text-muted-foreground"
       />
     </slot>
 
+    <!-- I'm not sure why, but without the `.stop` modifier, the events seem to fire twice -->
     <input
       v-bind="otherAttrs"
       :id="props.id ?? undefined"
@@ -105,8 +95,6 @@ function onFocus(): void {
       :disabled="props.isDisabled"
       :placeholder="props.placeholder ?? undefined"
       class="block size-full truncate bg-transparent px-3 py-2 text-sm text-input-foreground outline-none placeholder:text-input-placeholder disabled:cursor-not-allowed"
-      @blur="onBlur"
-      @focus="onFocus"
     >
 
     <AppLoader
@@ -121,7 +109,7 @@ function onFocus(): void {
       <AppIcon
         v-if="props.iconRight !== null && props.iconRight !== undefined"
         :icon="props.iconRight"
-        class="mr-3 text-input-foreground"
+        class="mr-3 text-muted-foreground"
       />
     </slot>
   </label>

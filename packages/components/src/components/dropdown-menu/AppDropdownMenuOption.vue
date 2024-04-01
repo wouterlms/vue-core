@@ -18,7 +18,7 @@ const props = defineProps<{
   >
     <div class="flex items-center gap-x-3 overflow-hidden">
       <AppIcon
-        v-if="props.item.icon !== null"
+        v-if="props.item.icon !== undefined"
         :icon="props.item.icon"
         class="shrink-0 text-muted-foreground group-focus:text-foreground"
         size="default"

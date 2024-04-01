@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TooltipTrigger } from 'radix-vue'
+import { TooltipPortal, TooltipTrigger } from 'radix-vue'
 import { useSlots } from 'vue'
 
 import AppText from '../text/AppText.vue'
@@ -39,6 +39,11 @@ const props = withDefaults(
      */
     hideArrow?: boolean
     /**
+     * When true, the tooltip will be hidden.
+     * @default false
+     */
+    isHidden?: boolean
+    /**
      * The offset of the tooltip content.
      * @default 10
      */
@@ -56,6 +61,7 @@ const props = withDefaults(
     disableCloseOnTriggerClick: false,
     disableHoverableContent: false,
     hideArrow: false,
+    isHidden: false,
     offset: 10,
     side: 'top',
   },
@@ -78,20 +84,23 @@ if (props.content === null && slots.content === undefined) {
       <slot />
     </TooltipTrigger>
 
-    <AppTooltipContent
-      :align="props.align"
-      :has-arrow="!props.hideArrow"
-      :offset="props.offset"
-      :side="props.side"
-    >
-      <slot name="content">
-        <AppText
-          class="max-w-xs p-2 text-center text-popover-foreground"
-          variant="subtext"
-        >
-          {{ props.content }}
-        </AppText>
-      </slot>
-    </AppTooltipContent>
+    <TooltipPortal>
+      <AppTooltipContent
+        v-if="!props.isHidden"
+        :align="props.align"
+        :has-arrow="!props.hideArrow"
+        :offset="props.offset"
+        :side="props.side"
+      >
+        <slot name="content">
+          <AppText
+            class="max-w-xs px-3 py-1.5 text-center text-sm text-popover-foreground"
+            variant="subtext"
+          >
+            {{ props.content }}
+          </AppText>
+        </slot>
+      </AppTooltipContent>
+    </TooltipPortal>
   </AppTooltipProvider>
 </template>

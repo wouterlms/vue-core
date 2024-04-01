@@ -5,23 +5,24 @@ import {
   ComboboxInput,
   ComboboxPortal,
   ComboboxRoot,
-  ComboboxViewport,
 } from 'radix-vue'
 import { computed, ref } from 'vue'
 
+import type { Icon } from '../../icons/icons'
 import type { ComboboxItem } from '../../types/comboboxItem.type'
 import type { AcceptableValue } from '../../types/selectItem.type'
-import AppIcon from '../icon/AppIcon.vue'
-import AppLoader from '../loader/AppLoader.vue'
+import AppInput from '../input/AppInput.vue'
 import AppComboboxContent from './AppComboboxContent.vue'
 import AppComboboxEmpty from './AppComboboxEmpty.vue'
 import AppComboboxItem from './AppComboboxItem.vue'
 import AppComboboxTrigger from './AppComboboxTrigger.vue'
+import AppComboboxViewport from './AppComboboxViewport.vue'
+import { useCombobox } from './combobox.composable'
 
 const props = withDefaults(
   defineProps<{
     /**
-     * The display function for the selected value.
+     * Display function for the selected value
      */
     displayFn: (value: TValue) => string
     /**
@@ -30,7 +31,23 @@ const props = withDefaults(
      */
     emptyText?: null | string
     /**
+     * The icon to display on the left side of the combobox.
+     * @default null
+     */
+    iconLeft?: Icon | null
+    /**
+     * The icon to display on the right side of the combobox.
+     * @default null
+     */
+    iconRight?: Icon | null
+    /**
+     * Whether the chevron icon is hidden.
+     * @default false
+     */
+    isChevronHidden?: boolean
+    /**
      * Whether the combobox is disabled.
+     * @default false
      */
     isDisabled?: boolean
     /**
@@ -40,6 +57,7 @@ const props = withDefaults(
     isInvalid?: boolean
     /**
      * Whether the combobox is loading.
+     * @default false
      */
     isLoading?: boolean
     /**
@@ -58,6 +76,9 @@ const props = withDefaults(
   }>(),
   {
     emptyText: null,
+    iconLeft: undefined,
+    iconRight: undefined,
+    isChevronHidden: false,
     isDisabled: false,
     isInvalid: false,
     isLoading: false,
@@ -74,6 +95,8 @@ const searchModel = defineModel<null | string>('search', {
   required: true,
 })
 
+const isOpen = ref<boolean>(false)
+
 const model = computed<TValue[]>({
   get: () => props.modelValue,
   set: (value) => {
@@ -88,7 +111,11 @@ const search = computed<string | undefined>({
   },
 })
 
-const isOpen = ref<boolean>(false)
+const { canOpenDropdown } = useCombobox({
+  isLoading: computed<boolean>(() => props.isLoading),
+  items: computed<ComboboxItem<TValue>[]>(() => props.items),
+  search: computed<null | string>(() => searchModel.value),
+})
 
 const placeholderValue = computed<string | undefined>(() => {
   if (model.value.length === 0) {
@@ -107,6 +134,10 @@ function onBlur(): void {
     emit('blur')
   }
 }
+
+function onClose(): void {
+  isOpen.value = false
+}
 </script>
 
 <template>
@@ -121,33 +152,32 @@ function onBlur(): void {
       :multiple="true"
     >
       <ComboboxAnchor>
-        <div class="relative">
-          <ComboboxInput
+        <ComboboxInput :as-child="true">
+          <AppInput
+            v-model="searchModel"
             :class="{
-              'border-input-border [&:has(:focus-visible)]:ring-ring': !props.isInvalid,
-              'border-destructive [&:has(:focus-visible)]:ring-destructive': props.isInvalid,
-              'placeholder:text-input-placeholder': isEmpty,
-              'placeholder:text-input-foreground focus:placeholder:text-input-placeholder': !isEmpty,
+              '[&_input]:placeholder:text-input-foreground focus:[&_input]:placeholder:text-input-placeholder': !isEmpty,
             }"
+            :is-loading="props.isLoading"
+            :is-disabled="props.isDisabled"
+            :icon-left="props.iconLeft"
+            :icon-right="props.iconRight"
             :placeholder="placeholderValue"
-            class="h-10 w-full truncate rounded-input border bg-input pl-3 pr-9 text-sm outline-none ring-offset-background duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-            tabindex="0"
             @blur="onBlur"
-          />
+            @keydown.escape="onClose"
+          >
+            <template #left>
+              <slot name="left" />
+            </template>
 
-          <AppComboboxTrigger :is-disabled="props.isDisabled">
-            <AppLoader
-              v-if="props.isLoading"
-              class="pointer-events-none size-4 text-muted-foreground"
-            />
-
-            <AppIcon
-              class="text-muted-foreground"
-              icon="chevronDown"
-              size="sm"
-            />
-          </AppComboboxTrigger>
-        </div>
+            <template
+              v-if="props.iconRight === undefined && !props.isChevronHidden"
+              #right
+            >
+              <AppComboboxTrigger :is-disabled="props.isDisabled" />
+            </template>
+          </AppInput>
+        </ComboboxInput>
       </ComboboxAnchor>
 
       <ComboboxPortal>
@@ -159,10 +189,12 @@ function onBlur(): void {
           leave-from-class="opacity-100"
           leave-to-class="opacity-0"
         >
-          <div v-if="isOpen">
+          <div v-if="isOpen && canOpenDropdown">
             <AppComboboxContent>
-              <ComboboxViewport class="max-h-[25rem] p-1.5">
-                <AppComboboxEmpty :empty-text="props.emptyText" />
+              <AppComboboxViewport>
+                <AppComboboxEmpty :empty-text="props.emptyText">
+                  <slot name="empty" />
+                </AppComboboxEmpty>
 
                 <AppComboboxItem
                   v-for="(item, i) of props.items"
@@ -179,7 +211,7 @@ function onBlur(): void {
                     />
                   </template>
                 </AppComboboxItem>
-              </ComboboxViewport>
+              </AppComboboxViewport>
 
               <ComboboxArrow />
             </AppComboboxContent>

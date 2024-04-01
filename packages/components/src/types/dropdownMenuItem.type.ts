@@ -11,7 +11,7 @@ export interface DropdownMenuLabel {
 }
 
 export interface DropdownMenuSubMenu {
-  icon: Icon
+  icon?: Icon
   items: DropdownMenuItem[]
   label: string
   type: 'subMenu'
@@ -25,7 +25,7 @@ export interface DropdownMenuGroup {
 
 export interface DropdownMenuOption {
   command?: Omit<KeyboardCommand, 'onPressed'>
-  icon: Icon
+  icon?: Icon
   label: string
   onSelect: () => void
   type: 'option'

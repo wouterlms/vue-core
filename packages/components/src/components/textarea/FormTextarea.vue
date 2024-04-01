@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useComponentAttrs } from '../../composables/componentAttrs.composable'
 import type { FormFieldErrors } from '../../types/formFieldErrors.type'
-import FormInputContainer from '../form-input-container/FormInputContainer.vue'
+import FormElement from '../form-element/FormElement.vue'
 import AppTextarea from './AppTextarea.vue'
 
 const props = withDefaults(
@@ -73,7 +73,7 @@ function onBlur(): void {
 </script>
 
 <template>
-  <FormInputContainer
+  <FormElement
     v-slot="{ isInvalid, id }"
     :class="classAttr"
     :errors="props.errors"
@@ -94,5 +94,5 @@ function onBlur(): void {
       @focus="onFocus"
       @blur="onBlur"
     />
-  </FormInputContainer>
+  </FormElement>
 </template>

@@ -151,12 +151,12 @@ function getColumnIcon(columnId: string): Icon {
         v-if="column.isSortable ?? false"
         :class="[
           isColumnSorted(column.id)
-            ? 'text-muted-foreground'
-            : 'text-muted-foreground/25 group-hover:text-muted-foreground/50 group-focus-visible:text-muted-foreground/50',
+            ? 'text-foreground'
+            : 'text-muted-foreground/50 group-hover:text-foreground group-focus-visible:text-foreground',
         ]"
         :icon="getColumnIcon(column.id)"
         class="duration-200"
-        size="xs"
+        size="sm"
       />
     </Component>
   </div>

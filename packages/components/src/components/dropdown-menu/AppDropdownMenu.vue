@@ -11,7 +11,6 @@ import type {
   DropdownMenuItem,
   DropdownMenuOption,
 } from '../../types/dropdownMenuItem.type'
-import AppDropdownMenuArrow from './AppDropdownMenuArrow.vue'
 import AppDropdownMenuContent from './AppDropdownMenuContent.vue'
 import AppDropdownMenuItem from './AppDropdownMenuItem.vue'
 
@@ -104,14 +103,17 @@ optionItems.value.forEach((item) => {
         :align="props.align"
         :side="props.side"
         :side-offset="props.offset"
+        :has-arrow="props.hasArrow"
       >
+        <slot name="header" />
+
         <AppDropdownMenuItem
           v-for="(item, i) of props.items"
           :key="i"
           :item="item"
         />
 
-        <AppDropdownMenuArrow v-if="hasArrow" />
+        <slot name="footer" />
       </AppDropdownMenuContent>
     </DropdownMenuPortal>
   </DropdownMenuRoot>

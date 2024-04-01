@@ -81,8 +81,8 @@ export function useDialog<TComponent extends Record<string, unknown>>({
   }
 
   return {
-    closeDialog,
-    openDialog: openDialog as UseDialogReturnType<TComponent>['openDialog'],
+    close: closeDialog,
+    open: openDialog as UseDialogReturnType<TComponent>['open'],
     triggerId,
   }
 }

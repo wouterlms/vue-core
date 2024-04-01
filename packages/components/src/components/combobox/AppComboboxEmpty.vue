@@ -13,11 +13,13 @@ const { t } = useI18n()
 
 <template>
   <ComboboxEmpty>
-    <AppText
-      variant="subtext"
-      class="p-2"
-    >
-      {{ props.emptyText ?? t('components.combobox.empty') }}
-    </AppText>
+    <slot>
+      <AppText
+        variant="subtext"
+        class="p-2"
+      >
+        {{ props.emptyText ?? t('components.combobox.empty') }}
+      </AppText>
+    </slot>
   </ComboboxEmpty>
 </template>

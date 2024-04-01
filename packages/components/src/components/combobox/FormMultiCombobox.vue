@@ -1,9 +1,10 @@
 <script setup lang="ts" generic="TValue extends AcceptableValue">
+import type { Icon } from '../../icons/icons'
 import type { ComboboxItem } from '../../types/comboboxItem.type'
 import type { FormFieldErrors } from '../../types/formFieldErrors.type'
 import type { AcceptableValue } from '../../types/selectItem.type'
 import AppMultiCombobox from '../combobox/AppMultiCombobox.vue'
-import FormInputContainer from '../form-input-container/FormInputContainer.vue'
+import FormElement from '../form-element/FormElement.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -21,15 +22,33 @@ const props = withDefaults(
      */
     errors: FormFieldErrors
     /**
+     * The icon to display on the left side of the combobox.
+     * @default null
+     */
+    iconLeft?: Icon | null
+    /**
+     * The icon to display on the right side of the combobox.
+     * @default null
+     */
+    iconRight?: Icon | null
+    /**
+     * Whether the chevron icon is hidden.
+     * @default false
+     */
+    isChevronHidden?: boolean
+    /**
      * Whether the combobox is disabled.
+     * @default false
      */
     isDisabled?: boolean
     /**
      * Whether the select is loading.
+     * @default false
      */
     isLoading?: boolean
     /**
-     *  Whether the combobox is required.
+     * Whether the combobox is required.
+     * @default false
      */
     isRequired?: boolean
     /**
@@ -62,7 +81,6 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   blur: []
-  filter: [value: string]
 }>()
 
 const model = defineModel<TValue[]>({
@@ -76,14 +94,10 @@ const search = defineModel<null | string>('search', {
 function onBlur(): void {
   emit('blur')
 }
-
-function onFilter(filter: string): void {
-  emit('filter', filter)
-}
 </script>
 
 <template>
-  <FormInputContainer
+  <FormElement
     v-slot="{ isInvalid, id }"
     :errors="props.errors"
     :is-required="props.isRequired"
@@ -103,9 +117,15 @@ function onFilter(filter: string): void {
       :is-required="props.isRequired"
       :placeholder="props.placeholder"
       :is-loading="props.isLoading"
+      :icon-left="props.iconLeft"
+      :icon-right="props.iconRight"
+      :is-chevron-hidden="props.isChevronHidden"
       @blur="onBlur"
-      @filter="onFilter"
     >
+      <template #left>
+        <slot name="left" />
+      </template>
+
       <template #option="{ value }">
         <slot
           :value="value"
@@ -113,5 +133,5 @@ function onFilter(filter: string): void {
         />
       </template>
     </AppMultiCombobox>
-  </FormInputContainer>
+  </FormElement>
 </template>

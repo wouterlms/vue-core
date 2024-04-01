@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ComboboxTrigger } from 'radix-vue'
 
+import AppIcon from '../icon/AppIcon.vue'
+
 const props = defineProps<{
   isDisabled: boolean
 }>()
@@ -10,10 +12,14 @@ const props = defineProps<{
   <ComboboxTrigger
     :disabled="props.isDisabled"
     :class="{
-      'opacity-50': props.isDisabled,
+      'cursor-not-allowed opacity-50': props.isDisabled,
     }"
-    class="absolute right-1 top-1/2 box-content -translate-y-1/2 p-2 outline-none"
+    class="box-content p-3 outline-none"
   >
-    <slot />
+    <AppIcon
+      icon="chevronDown"
+      size="sm"
+      class="text-muted-foreground"
+    />
   </ComboboxTrigger>
 </template>

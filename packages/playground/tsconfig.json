@@ -9,9 +9,9 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
 
-    "paths": {
-      "@lib": ["../components/src/*"]
-    },
+    // "paths": {
+    //   "@lib": ["../components/src/*"]
+    // },
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
 
