@@ -36,6 +36,10 @@ const props = withDefaults(defineProps<{
   triggerId: null,
 })
 
+const emit = defineEmits<{
+  close: []
+}>()
+
 const isOpen = defineModel<boolean>('isOpen', {
   default: false,
 })
@@ -159,6 +163,12 @@ watch(isOpen, (isOpen) => {
   }
   else {
     hideDialog()
+  }
+})
+
+watch(isActuallyOpen, () => {
+  if (!isActuallyOpen.value) {
+    emit('close')
   }
 })
 </script>

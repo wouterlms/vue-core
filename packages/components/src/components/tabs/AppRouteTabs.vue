@@ -10,16 +10,15 @@ import {
   ref,
   watch,
 } from 'vue'
-import type { RouteLocationNamedRaw, RouteRecordName } from 'vue-router'
+import type { RouteRecordName } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 
-interface Tab {
-  label: string
-  to: RouteLocationNamedRaw
-}
+import type { RouteTabItem } from '@/types/tabItem.type'
+
+import AppText from '../text/AppText.vue'
 
 const props = defineProps<{
-  tabs: Tab[]
+  tabs: RouteTabItem[]
 }>()
 
 const route = useRoute()
@@ -51,6 +50,10 @@ watch(activeRouteName, (activeRouteName) => {
   void router.push(tab.to)
 })
 
+function isTabActive(tab: RouteTabItem): boolean {
+  return tab.to.name === activeRouteName.value
+}
+
 // TODO: tabs should render a RouterLink instead of a button
 </script>
 
@@ -63,9 +66,21 @@ watch(activeRouteName, (activeRouteName) => {
         v-for="tab of tabs"
         :key="tab.label"
         :value="(tab.to.name as string)"
-        class="rounded px-4 py-3 outline-none ring-offset-background duration-200 focus-visible:rounded focus-visible:ring-2 focus-visible:ring-ring"
+        class="group py-2 outline-none"
       >
-        {{ tab.label }}
+        <div class="rounded-button px-3 py-2 duration-200 group-hover:bg-muted-background group-focus-visible:bg-muted-background">
+          <AppText
+            :class="{
+              'text-primary': isTabActive(tab),
+              'text-muted-foreground': !isTabActive(tab),
+            }"
+            as="span"
+            variant="subtext"
+            class="duration-200"
+          >
+            {{ tab.label }}
+          </AppText>
+        </div>
       </TabsTrigger>
     </TabsList>
   </TabsRoot>

@@ -22,11 +22,19 @@ const props = defineProps<{
       v-for="(groupItem, i) of props.item.items"
       :key="i"
       :item="groupItem"
-    />
+    >
+      <template #default="{ item: itemValue }">
+        <slot :item="itemValue" />
+      </template>
+    </AppDropdownMenuItem>
   </AppDropdownMenuGroup>
 
   <AppDropdownMenuSub v-else-if="props.item.type === 'subMenu'">
-    <AppDropdownMenuSubTrigger :item="props.item" />
+    <AppDropdownMenuSubTrigger :item="props.item">
+      <template #default="{ item: itemValue }">
+        <slot :item="itemValue" />
+      </template>
+    </AppDropdownMenuSubTrigger>
 
     <DropdownMenuPortal>
       <AppDropdownMenuSubContent>
@@ -34,7 +42,11 @@ const props = defineProps<{
           v-for="(subItem, i) of props.item.items"
           :key="i"
           :item="subItem"
-        />
+        >
+          <template #default="{ item: itemValue }">
+            <slot :item="itemValue" />
+          </template>
+        </AppDropdownMenuItem>
       </AppDropdownMenuSubContent>
     </DropdownMenuPortal>
   </AppDropdownMenuSub>
@@ -42,5 +54,7 @@ const props = defineProps<{
   <AppDropdownMenuOption
     v-if="props.item.type === 'option'"
     :item="props.item"
-  />
+  >
+    <slot :item="props.item" />
+  </AppDropdownMenuOption>
 </template>

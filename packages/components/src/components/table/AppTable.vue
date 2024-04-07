@@ -48,6 +48,7 @@ const tableRef = ref<HTMLElement | null>(null)
 
 // Because of how css works, we need to apply a different width (w-fit) when scrollable
 const isHorizontallyScrollable = ref<boolean>(false)
+const isVerticallyScrollable = ref<boolean>(false)
 const isScrolledToRight = ref<boolean>(false)
 const hasReachedHorizontalScrollEnd = ref<boolean>(false)
 
@@ -87,6 +88,16 @@ function setIsHorizontallyScrollable(): void {
   isHorizontallyScrollable.value = scrollWidth > clientWidth
 }
 
+function setIsVerticallyScrollable(): void {
+  if (tableRef.value === null) {
+    return
+  }
+
+  const { clientHeight, scrollHeight } = tableRef.value
+
+  isVerticallyScrollable.value = scrollHeight > clientHeight
+}
+
 function setIsScrolledToRight(): void {
   if (tableRef.value === null) {
     return
@@ -120,6 +131,7 @@ function createResizeObserver(element: HTMLElement, onResize: () => void): Resiz
 
 function handleResize(): void {
   setIsHorizontallyScrollable()
+  setIsVerticallyScrollable()
 }
 
 function handleScroll(): void {
@@ -130,6 +142,7 @@ function handleScroll(): void {
 async function onDataChange(): Promise<void> {
   await nextTick()
   setIsHorizontallyScrollable()
+  setIsVerticallyScrollable()
 }
 
 watch(() => props.data, onDataChange)
@@ -141,6 +154,7 @@ onMounted(() => {
 
   resizeObserver = createResizeObserver(tableRef.value, handleResize)
   setIsHorizontallyScrollable()
+  setIsVerticallyScrollable()
 })
 
 onBeforeUnmount(() => {
@@ -174,6 +188,7 @@ onBeforeUnmount(() => {
       />
 
       <AppTableBody
+        :is-vertically-scrollable="isVerticallyScrollable"
         :columns="props.columns"
         :data="props.data?.data ?? []"
         :empty-message="props.emptyMessage"

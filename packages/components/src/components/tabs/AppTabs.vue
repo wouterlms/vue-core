@@ -7,23 +7,20 @@ import {
 } from 'radix-vue'
 import { computed } from 'vue'
 
-interface Tab {
-  id: string
-  label: string
-}
+import type { TabItem } from '../../types/tabItem.type'
 
 const props = defineProps<{
-  tabs: Tab[]
+  items: TabItem[]
 }>()
 
-const activeTabModel = defineModel<Tab>('tab', {
+const activeTabModel = defineModel<TabItem>('tab', {
   required: true,
 })
 
 const computedModel = computed<string>({
   get: () => activeTabModel.value.id,
   set: (value) => {
-    activeTabModel.value = props.tabs.find(tab => tab.id === value)!
+    activeTabModel.value = props.items.find(tab => tab.id === value)!
   },
 })
 </script>
@@ -34,7 +31,7 @@ const computedModel = computed<string>({
       <TabsIndicator class="absolute bottom-0 left-0 h-[2px] w-[--radix-tabs-indicator-size] translate-x-[--radix-tabs-indicator-position] rounded-t-full bg-primary px-8 duration-200" />
 
       <TabsTrigger
-        v-for="tab of tabs"
+        v-for="tab of items"
         :key="tab.label"
         :value="tab.id"
         class="rounded px-4 py-3 outline-none ring-offset-background duration-200 focus-visible:rounded focus-visible:ring-2 focus-visible:ring-ring"

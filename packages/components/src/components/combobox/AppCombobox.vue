@@ -126,6 +126,23 @@ const placeholderValue = computed<string | undefined>(() => {
   return props.displayFn(model.value as TValue)
 })
 
+// We need to show the search value, but if not available, we should show the selected value
+const computedSearchValue = computed<null | string>(() => {
+  if (searchModel.value !== null && searchModel.value !== '') {
+    return searchModel.value
+  }
+
+  if (model.value !== null) {
+    return props.displayFn(model.value as TValue)
+  }
+
+  return null
+})
+
+function onUpdateModelvalue(value: null | string): void {
+  searchModel.value = value
+}
+
 function onClose(): void {
   isOpen.value = false
 }
@@ -144,13 +161,14 @@ function onClose(): void {
       <ComboboxAnchor>
         <ComboboxInput :as-child="true">
           <AppInput
-            v-model="searchModel"
+            :model-value="computedSearchValue"
             :is-loading="props.isLoading"
             :is-disabled="props.isDisabled"
             :icon-left="props.iconLeft"
             :icon-right="props.iconRight"
             :placeholder="placeholderValue"
             @keydown.escape="onClose"
+            @update:model-value="onUpdateModelvalue"
           >
             <template #left>
               <slot name="left" />
@@ -183,8 +201,8 @@ function onClose(): void {
                 </AppComboboxEmpty>
 
                 <AppComboboxItem
-                  v-for="(item, i) of props.items"
-                  :key="i"
+                  v-for="item of props.items"
+                  :key="JSON.stringify(item)"
                   :item="item"
                   :is-multiple="false"
                   :display-fn="props.displayFn"

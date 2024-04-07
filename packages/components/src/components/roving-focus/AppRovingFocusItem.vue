@@ -31,7 +31,9 @@ const props = withDefaults(defineProps<RovingFocusItemProps>(), {
 const context = injectRovingFocusGroupContext()
 const id = computed<string>(() => props.tabStopId ?? useId())
 const isCurrentTabStop = computed<boolean>(
-  () => context.currentTabStopId.value === id.value,
+  () => {
+    return context.currentTabStopId.value === id.value
+  },
 )
 
 const { injectCollection } = useCollection('rovingFocus')

@@ -107,6 +107,10 @@ export function useTablePagination<TFilters>({
         ...paginationOptions.value.filters,
         ...event,
       } as PaginationFilters<TFilters>,
+      pagination: {
+        ...paginationOptions.value.pagination,
+        page: 0,
+      },
     }
   }
 

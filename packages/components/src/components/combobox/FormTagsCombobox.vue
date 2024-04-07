@@ -118,6 +118,13 @@ function onFilter(filter: string): void {
           name="option"
         />
       </template>
+
+      <template #tag="{ value }">
+        <slot
+          :value="value"
+          name="tag"
+        />
+      </template>
     </AppTagsCombobox>
   </FormElement>
 </template>

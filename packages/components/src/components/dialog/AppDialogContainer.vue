@@ -5,10 +5,12 @@ const { dialogs } = useDialogContainer()
 </script>
 
 <template>
-  <Component
-    :is="dialog.component"
-    v-for="dialog of dialogs"
-    :key="dialog.id"
-    v-model:is-open="dialog.isOpen"
-  />
+  <div>
+    <Component
+      :is="dialog.component"
+      v-for="dialog of dialogs"
+      :key="dialog.id"
+      :is-open="dialog.isOpen"
+    />
+  </div>
 </template>

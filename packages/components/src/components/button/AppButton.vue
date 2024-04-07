@@ -80,7 +80,7 @@ const buttonIconClasses = computed<string>(() =>
       :class="[{
         'opacity-0': props.isLoading,
       }, buttonIconClasses]"
-      class="mr-3"
+      class="mr-2"
     />
 
     <span
@@ -106,7 +106,7 @@ const buttonIconClasses = computed<string>(() =>
       :class="[buttonIconClasses, {
         'opacity-0': props.isLoading,
       }]"
-      class="ml-3"
+      class="ml-2"
     />
   </button>
 </template>

@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { toValue } from 'vue'
+
 import type { Icon } from '../../icons/icons'
 import type { ToastAction, ToastType } from '../../types/toast.type'
-import AppButton from '../button/AppButton.vue'
+import AppUnstyledButton from '../button/AppUnstyledButton.vue'
 import AppIcon from '../icon/AppIcon.vue'
+import AppLoader from '../loader/AppLoader.vue'
 import AppText from '../text/AppText.vue'
 
 const props = withDefaults(defineProps<{
@@ -26,12 +29,12 @@ function onClose(): void {
 </script>
 
 <template>
-  <div class="relative w-[22rem] rounded-popover border border-solid border-neutral-100 bg-popover p-4 shadow-toast-shadow">
+  <div class="pointer-events-auto relative z-above-everything w-[22rem] rounded-popover border border-solid border-neutral-100 bg-popover p-4 shadow-toast-shadow">
     <div class="absolute right-0 top-0 -translate-y-1/3 translate-x-1/3">
       <button
         type="button"
         class="flex size-5 items-center justify-center rounded-full border border-solid border-neutral-100 bg-background p-1"
-        @click="onClose"
+        @click.stop="onClose"
       >
         <AppIcon
           icon="close"
@@ -73,17 +76,26 @@ function onClose(): void {
 
         <div
           v-if="props.action !== null"
-          class="mt-4 flex justify-end"
+          class="mt-4"
         >
-          <AppButton
-            :variant="props.type === 'error' ? 'destructive' : 'default'"
-            :icon-left="props.action.icon ?? null"
-            :is-loading="props.action.isLoading?.value ?? false"
-            size="sm"
+          <AppLoader
+            v-if="props.action.isLoading?.value ?? false"
+            class="size-5 text-muted-foreground"
+          />
+
+          <AppUnstyledButton
+            v-else
+            class="h-5"
             @click="props.action.onClick(onClose)"
           >
-            {{ props.action.label }}
-          </AppButton>
+            <AppText
+              variant="subtext"
+              as="span"
+              class="font-medium text-muted-foreground"
+            >
+              {{ toValue(props.action.label) }}
+            </AppText>
+          </AppUnstyledButton>
         </div>
       </div>
     </div>

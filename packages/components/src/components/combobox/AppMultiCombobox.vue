@@ -197,8 +197,8 @@ function onClose(): void {
                 </AppComboboxEmpty>
 
                 <AppComboboxItem
-                  v-for="(item, i) of props.items"
-                  :key="i"
+                  v-for="item of props.items"
+                  :key="JSON.stringify(item)"
                   :item="item"
                   :display-fn="displayFn"
                   :is-multiple="true"

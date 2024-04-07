@@ -60,6 +60,8 @@ export { default as FormInput } from './components/input/FormInput.vue'
 export { default as FormNumberInput } from './components/input/FormNumberInput.vue'
 export { default as FormPasswordInput } from './components/input/FormPasswordInput.vue'
 export { default as FormPhoneNumberInput } from './components/input/FormPhoneNumberInput.vue'
+export { default as AppTextarea } from './components/textarea/AppTextarea.vue'
+export { default as FormTextarea } from './components/textarea/FormTextarea.vue'
 
 // Keyboard
 export { default as AppKeyboardCommand } from './components/keyboard/AppKeyboardCommand.vue'
@@ -130,6 +132,7 @@ export type { FormFieldErrors } from './types/formFieldErrors.type'
 export type { KeyboardKey } from './types/keyboard.type'
 export type { Routes } from './types/routes.type'
 export type { SelectItem } from './types/selectItem.type'
+export type { RouteTabItem, TabItem } from './types/tabItem.type'
 export type {
   PaginatedData,
   Pagination,

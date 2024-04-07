@@ -112,6 +112,8 @@ function onBlur(): void {
       :type="props.type"
       :is-loading="props.isLoading"
       :icon-left="props.iconLeft"
+      :min="props.min"
+      :max="props.max"
       @focus="onFocus"
       @blur="onBlur"
     >

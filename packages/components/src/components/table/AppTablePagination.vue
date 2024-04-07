@@ -6,8 +6,6 @@ import type { PageChangeEvent, PaginationOptions } from '@/types/table.type'
 
 import AppButton from '../button/AppButton.vue'
 import AppIconButton from '../button/AppIconButton.vue'
-import AppRovingFocus from '../roving-focus/AppRovingFocus.vue'
-import AppRovingFocusItem from '../roving-focus/AppRovingFocusItem.vue'
 import AppText from '../text/AppText.vue'
 
 const props = defineProps<{
@@ -150,23 +148,19 @@ function pageControlButtonVariant(page: number): 'ghost' | 'secondary' {
       @click="handlePrevPageButtonClick"
     />
 
-    <AppRovingFocus class="flex items-center">
+    <div class="flex items-center">
       <div
         v-for="(page, index) of pageControls"
         :key="index"
       >
-        <AppRovingFocusItem
+        <AppButton
           v-if="typeof page === 'number'"
-          :as-child="true"
+          :variant="pageControlButtonVariant(page - 1)"
+          class="duration-0"
+          @click="handlePageButtonClick(page - 1)"
         >
-          <AppButton
-            :variant="pageControlButtonVariant(page - 1)"
-            class="duration-0"
-            @click="handlePageButtonClick(page - 1)"
-          >
-            {{ page }}
-          </AppButton>
-        </AppRovingFocusItem>
+          {{ page }}
+        </AppButton>
 
         <AppText
           v-else
@@ -176,7 +170,7 @@ function pageControlButtonVariant(page: number): 'ghost' | 'secondary' {
           {{ page }}
         </AppText>
       </div>
-    </AppRovingFocus>
+    </div>
 
     <AppIconButton
       v-if="hasMoreThanOnePage"

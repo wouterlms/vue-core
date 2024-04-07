@@ -32,6 +32,10 @@ const props = withDefaults(
      */
     hasArrow?: boolean
     /**
+     * Whether to inherit the trigger's width.
+     */
+    inheritTriggerWidth?: boolean
+    /**
      * The dropdown items.
      */
     items: DropdownMenuItem[]
@@ -50,6 +54,7 @@ const props = withDefaults(
     align: 'center',
     enableKeyboardCommands: false,
     hasArrow: false,
+    inheritTriggerWidth: false,
     offset: 4,
     side: 'bottom',
   },
@@ -104,6 +109,7 @@ optionItems.value.forEach((item) => {
         :side="props.side"
         :side-offset="props.offset"
         :has-arrow="props.hasArrow"
+        :inherit-trigger-width="props.inheritTriggerWidth"
       >
         <slot name="header" />
 
@@ -111,7 +117,21 @@ optionItems.value.forEach((item) => {
           v-for="(item, i) of props.items"
           :key="i"
           :item="item"
-        />
+        >
+          <template #default="{ item: itemValue }">
+            <slot
+              v-if="itemValue.type === 'option'"
+              :item="itemValue"
+              name="option"
+            />
+
+            <slot
+              v-else-if="itemValue.type === 'subMenu'"
+              :item="itemValue"
+              name="subMenuTrigger"
+            />
+          </template>
+        </AppDropdownMenuItem>
 
         <slot name="footer" />
       </AppDropdownMenuContent>

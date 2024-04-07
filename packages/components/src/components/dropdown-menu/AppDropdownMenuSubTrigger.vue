@@ -21,12 +21,14 @@ const props = defineProps<{
           size="default"
         />
 
-        <AppText
-          class="truncate text-muted-foreground group-focus:text-foreground"
-          variant="subtext"
-        >
-          {{ props.item.label }}
-        </AppText>
+        <slot :item="props.item">
+          <AppText
+            class="truncate text-muted-foreground group-focus:text-foreground"
+            variant="subtext"
+          >
+            {{ props.item.label }}
+          </AppText>
+        </slot>
       </div>
 
       <AppIcon

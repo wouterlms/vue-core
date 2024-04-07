@@ -132,7 +132,7 @@ function onBlur(): void {
                 'border-destructive focus-within:ring-destructive': props.isInvalid,
               },
             ]"
-            class="flex min-h-10 w-full flex-wrap items-center gap-1 truncate rounded-input border border-solid bg-input p-1.5 pr-9 ring-offset-background transition-shadow duration-200 placeholder:text-input-placeholder focus-within:ring-2 focus-within:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            class="flex min-h-10 w-full flex-wrap items-center gap-1 truncate rounded-input border border-solid bg-input p-1.5 ring-offset-background transition-shadow duration-200 placeholder:text-input-placeholder focus-within:ring-2 focus-within:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <template
               v-for="tag in model"
@@ -162,7 +162,10 @@ function onBlur(): void {
               />
             </ComboboxInput>
 
-            <AppComboboxTrigger :is-disabled="props.isDisabled">
+            <AppComboboxTrigger
+              :is-disabled="props.isDisabled"
+              class="!py-2"
+            >
               <AppLoader
                 v-if="props.isLoading"
                 class="pointer-events-none size-4 text-muted-foreground"
@@ -196,8 +199,8 @@ function onBlur(): void {
                 </AppComboboxEmpty>
 
                 <AppComboboxItem
-                  v-for="(item, i) of props.items"
-                  :key="i"
+                  v-for="item of props.items"
+                  :key="JSON.stringify(item)"
                   :item="item"
                   :is-multiple="true"
                   :display-fn="props.displayFn"

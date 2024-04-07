@@ -60,6 +60,12 @@ export function useDialog<TComponent extends Record<string, unknown>>({
   }
 
   async function createDialog(attrs: Attrs<TComponent>): Promise<Ref<Dialog>> {
+    const dialogWithSameTriggerId = dialogs.value.find(dialog => dialog.id === triggerId) ?? null
+
+    if (dialogWithSameTriggerId !== null) {
+      throw new Error(`Dialog with triggerId ${triggerId} already exists`)
+    }
+
     const c = await component()
 
     const dialogComponent = computed<Component>(() => {
@@ -68,6 +74,9 @@ export function useDialog<TComponent extends Record<string, unknown>>({
         reactive<Attrs<TComponent>>({
           ...attrs,
           animateFromTrigger,
+          onClose: () => {
+            setTimeout(removeDialogFromContainer, 500)
+          },
           triggerId,
         }),
       )

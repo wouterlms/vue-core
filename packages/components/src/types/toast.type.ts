@@ -1,13 +1,16 @@
-import type { ComputedRef, Ref } from 'vue'
+import type {
+  ComputedRef,
+  MaybeRef,
+  Ref,
+} from 'vue'
 
 import type { Icon } from '../icons/icons'
 
 export type ToastType = 'error' | 'info' | 'success'
 
 export interface ToastAction {
-  icon?: Icon
   isLoading?: ComputedRef<boolean> | Ref<boolean>
-  label: string
+  label: MaybeRef<string>
   onClick: (onClose: () => void) => void
 }
 
