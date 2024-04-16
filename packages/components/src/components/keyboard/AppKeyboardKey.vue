@@ -44,6 +44,10 @@ const keyMap = new Map<KeyboardKey, string>([
     '↵',
   ],
   [
+    'escape',
+    'ESC',
+  ],
+  [
     'meta',
     '⌘',
   ],
@@ -61,7 +65,7 @@ const keyboardKey = computed<string>(() => keyMap.get(props.keyboardKey) ?? prop
     :class="{
       'border border-solid border-border shadow-keyboard-key-shadow': props.hasBorder,
     }"
-    class="flex size-[1.1rem] items-center justify-center rounded bg-muted-background text-center text-[11px] capitalize text-secondary-foreground"
+    class="flex h-[1.1rem] min-w-[1.1rem] items-center justify-center rounded bg-muted-background p-1 text-center text-[11px] capitalize text-secondary-foreground"
   >
     {{ keyboardKey }}
   </kbd>

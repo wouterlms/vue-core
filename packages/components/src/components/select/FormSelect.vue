@@ -1,4 +1,5 @@
 <script setup lang="ts" generic="TValue extends AcceptableValue">
+import type { Icon } from '../../icons/icons'
 import type { FormFieldErrors } from '../../types/formFieldErrors.type'
 import type { AcceptableValue, SelectItem } from '../../types/selectItem.type'
 import FormElement from '../form-element/FormElement.vue'
@@ -14,6 +15,10 @@ const props = withDefaults(
      * The errors associated with the select.
      */
     errors: FormFieldErrors
+    /**
+     * The icon to display on the left side of the select.
+     */
+    iconLeft?: Icon
     /**
      * Whether the select is disabled.
      */
@@ -44,13 +49,12 @@ const props = withDefaults(
      */
     placeholder?: null | string
   }>(),
-  {
+  { iconLeft: undefined,
     isDisabled: false,
     isLoading: false,
     isRequired: false,
     isTouched: false,
-    placeholder: null,
-  },
+    placeholder: null },
 )
 
 const emit = defineEmits<{
@@ -80,6 +84,7 @@ function onBlur(): void {
       v-model="model"
       :is-invalid="isInvalid"
       :items="props.items"
+      :icon-left="props.iconLeft"
       :display-fn="props.displayFn"
       :is-disabled="props.isDisabled"
       :is-required="props.isRequired"
@@ -87,6 +92,10 @@ function onBlur(): void {
       :placeholder="props.placeholder"
       @blur="onBlur"
     >
+      <template #left>
+        <slot name="left" />
+      </template>
+
       <template #option="{ value }">
         <slot
           :value="value"

@@ -23,3 +23,10 @@ import AppSelectScrollUpButton from './AppSelectScrollUpButton.vue'
     <AppSelectScrollDownButton />
   </SelectContent>
 </template>
+
+<style>
+.select-content {
+  width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
+}
+</style>

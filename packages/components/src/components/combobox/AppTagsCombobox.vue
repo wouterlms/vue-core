@@ -37,6 +37,10 @@ const props = withDefaults(
      */
     emptyText?: null | string
     /**
+     * The function to filter the options.
+     */
+    filterFn: (options: TValue[], searchTerm: string) => TValue[]
+    /**
      * Whether the combobox is disabled.
      * @default false
      */
@@ -79,7 +83,8 @@ const model = defineModel<TValue[]>({
 })
 
 const searchModel = defineModel<null | string>('search', {
-  required: true,
+  default: '',
+  required: false,
 })
 
 const isOpen = ref<boolean>(false)
@@ -112,7 +117,7 @@ function onBlur(): void {
       v-model="model"
       v-model:open="isOpen"
       v-model:search-term="search"
-      :filter-function="(options) => options"
+      :filter-function="(props.filterFn as any)"
       :multiple="true"
       :display-value="displayFn"
       :disabled="props.isDisabled"

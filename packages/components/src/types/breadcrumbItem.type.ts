@@ -1,10 +1,10 @@
 import type { RouteLocationNamedRaw } from 'vue-router'
 
-import type { Icon } from '..'
+import type { Icon } from '../icons/icons'
 
 export interface BreadcrumbRoute {
   icon?: Icon
-  label: string
+  label?: string
   to: RouteLocationNamedRaw
   type: 'route'
 }
@@ -16,7 +16,7 @@ export interface BreadcrumbEllipsis {
 
 export interface BreadcrumbCurrentRoute {
   icon?: Icon
-  label: string
+  label?: string
   type: 'page'
 }
 

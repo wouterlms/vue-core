@@ -106,8 +106,6 @@ export function useKeyboardCommand(options: UseKeyboardCommandOptions): void {
     const isActive = isCommandActive(options.command, pressedKeys)
 
     if (isActive) {
-      e.preventDefault()
-      e.stopPropagation()
       options.command.onPressed()
     }
 

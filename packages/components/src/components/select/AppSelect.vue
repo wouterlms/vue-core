@@ -5,6 +5,7 @@ import {
 } from 'radix-vue'
 import { ref } from 'vue'
 
+import type { Icon } from '../../icons/icons'
 import type { AcceptableValue, SelectItem } from '../../types/selectItem.type'
 import AppIcon from '../icon/AppIcon.vue'
 import AppLoader from '../loader/AppLoader.vue'
@@ -20,6 +21,10 @@ const props = withDefaults(
      * display function for the selected value
      */
     displayFn: (value: TValue) => null | string
+    /**
+     * The icon to display on the left side of the select.
+     */
+    iconLeft?: Icon
     /**
      * The id of the select.
      * @default null
@@ -48,6 +53,7 @@ const props = withDefaults(
     placeholder?: null | string
   }>(),
   {
+    iconLeft: undefined,
     id: null,
     isDisabled: false,
     isInvalid: false,
@@ -91,6 +97,14 @@ function onTriggerBlur(): void {
         :is-invalid="props.isInvalid"
         @blur="onTriggerBlur"
       >
+        <slot name="left">
+          <AppIcon
+            v-if="props.iconLeft !== undefined"
+            :icon="props.iconLeft"
+            class="ml-3 text-muted-foreground"
+          />
+        </slot>
+
         <AppSelectValue :is-empty="model === null">
           <template v-if="placeholder !== null && model === null">
             {{ props.placeholder }}
@@ -109,6 +123,7 @@ function onTriggerBlur(): void {
         <SelectIcon
           v-else
           :as-child="true"
+          class="mr-3"
         >
           <AppIcon
             class="text-muted-foreground"
@@ -150,10 +165,3 @@ function onTriggerBlur(): void {
     </AppSelectRoot>
   </div>
 </template>
-
-<style>
-.select-content {
-  width: var(--radix-select-trigger-width);
-  max-height: var(--radix-select-content-available-height);
-}
-</style>

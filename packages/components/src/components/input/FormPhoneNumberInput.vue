@@ -74,8 +74,6 @@ function getCountryFromPhoneNumber(phoneNumber: string): CountryCode | null {
     return null
   }
 
-  // let parsedCallingCode: string
-
   // Loop over first 3 characters of the phone number to find the calling code
   // 3 has priority, but if 3 has no match, then 2, and if 2 has no match, then 1
   let country = null

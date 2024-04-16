@@ -11,7 +11,7 @@ const props = defineProps<{
     :class="{
       'text-input-placeholder': props.isEmpty,
     }"
-    class="truncate text-sm"
+    class="w-full truncate px-3 text-left text-sm"
   >
     <slot />
   </SelectValue>

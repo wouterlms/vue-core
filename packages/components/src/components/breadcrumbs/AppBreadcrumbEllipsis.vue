@@ -16,7 +16,7 @@ const router = useRouter()
 const dropdownMenuItems: DropdownMenuItem[] = [
   {
     items: props.item.items.map(item => ({
-      label: item.label,
+      label: item.label ?? '',
       onSelect: () => {
         void router.push(item.to)
       },

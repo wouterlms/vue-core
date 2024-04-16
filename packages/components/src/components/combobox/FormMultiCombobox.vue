@@ -22,6 +22,10 @@ const props = withDefaults(
      */
     errors: FormFieldErrors
     /**
+     * The function to filter the options.
+     */
+    filterFn: (options: TValue[], searchTerm: string) => TValue[]
+    /**
      * The icon to display on the left side of the combobox.
      * @default null
      */
@@ -88,7 +92,8 @@ const model = defineModel<TValue[]>({
 })
 
 const search = defineModel<null | string>('search', {
-  required: true,
+  default: '',
+  required: false,
 })
 
 function onBlur(): void {
@@ -112,6 +117,7 @@ function onBlur(): void {
       :is-invalid="isInvalid"
       :items="props.items"
       :display-fn="props.displayFn"
+      :filter-fn="props.filterFn"
       :empty-text="props.emptyText"
       :is-disabled="props.isDisabled"
       :is-required="props.isRequired"
@@ -122,10 +128,6 @@ function onBlur(): void {
       :is-chevron-hidden="props.isChevronHidden"
       @blur="onBlur"
     >
-      <template #left>
-        <slot name="left" />
-      </template>
-
       <template #option="{ value }">
         <slot
           :value="value"

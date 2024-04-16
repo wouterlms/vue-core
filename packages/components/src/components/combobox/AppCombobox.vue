@@ -2,21 +2,22 @@
 import {
   ComboboxAnchor,
   ComboboxArrow,
-  ComboboxInput,
   ComboboxPortal,
   ComboboxRoot,
 } from 'radix-vue'
-import { computed, ref } from 'vue'
+import {
+  computed,
+  ref,
+} from 'vue'
 
 import type { Icon } from '@/icons/icons'
 
 import type { ComboboxItem } from '../../types/comboboxItem.type'
 import type { AcceptableValue } from '../../types/selectItem.type'
-import AppInput from '../input/AppInput.vue'
 import AppComboboxContent from './AppComboboxContent.vue'
 import AppComboboxEmpty from './AppComboboxEmpty.vue'
+import AppComboboxInput from './AppComboboxInput.vue'
 import AppComboboxItem from './AppComboboxItem.vue'
-import AppComboboxTrigger from './AppComboboxTrigger.vue'
 import AppComboboxViewport from './AppComboboxViewport.vue'
 import { useCombobox } from './combobox.composable'
 
@@ -32,6 +33,10 @@ const props = withDefaults(
      */
     emptyText?: null | string
     /**
+     * The function to filter the options.
+     */
+    filterFn: (options: TValue[], searchTerm: string) => TValue[]
+    /**
      * The icon to display on the left side of the combobox.
      * @default null
      */
@@ -41,6 +46,10 @@ const props = withDefaults(
      * @default null
      */
     iconRight?: Icon | null
+    /**
+     * The html id of the combobox.
+     */
+    id?: null | string
     /**
      * Whether the chevron icon is hidden.
      * @default false
@@ -79,6 +88,7 @@ const props = withDefaults(
     emptyText: null,
     iconLeft: undefined,
     iconRight: undefined,
+    id: null,
     isChevronHidden: false,
     isDisabled: false,
     isInvalid: false,
@@ -93,7 +103,8 @@ const emit = defineEmits<{
 }>()
 
 const searchModel = defineModel<null | string>('search', {
-  required: true,
+  default: '',
+  required: false,
 })
 
 const isOpen = ref<boolean>(false)
@@ -118,33 +129,16 @@ const { canOpenDropdown } = useCombobox({
   search: computed<null | string>(() => searchModel.value),
 })
 
-const placeholderValue = computed<string | undefined>(() => {
+const placeholderValue = computed<null | string>(() => {
   if (model.value === undefined) {
-    return props.placeholder ?? undefined
+    return props.placeholder
   }
 
   return props.displayFn(model.value as TValue)
 })
 
-// We need to show the search value, but if not available, we should show the selected value
-const computedSearchValue = computed<null | string>(() => {
-  if (searchModel.value !== null && searchModel.value !== '') {
-    return searchModel.value
-  }
-
-  if (model.value !== null) {
-    return props.displayFn(model.value as TValue)
-  }
-
-  return null
-})
-
-function onUpdateModelvalue(value: null | string): void {
-  searchModel.value = value
-}
-
-function onClose(): void {
-  isOpen.value = false
+function onBlur(): void {
+  emit('blur')
 }
 </script>
 
@@ -154,34 +148,30 @@ function onClose(): void {
       v-model="model"
       v-model:open="isOpen"
       v-model:search-term="search"
-      :filter-function="(options) => options"
+      :filter-function="(props.filterFn as any)"
       :display-value="displayFn"
       :disabled="props.isDisabled"
     >
       <ComboboxAnchor>
-        <ComboboxInput :as-child="true">
-          <AppInput
-            :model-value="computedSearchValue"
-            :is-loading="props.isLoading"
-            :is-disabled="props.isDisabled"
-            :icon-left="props.iconLeft"
-            :icon-right="props.iconRight"
-            :placeholder="placeholderValue"
-            @keydown.escape="onClose"
-            @update:model-value="onUpdateModelvalue"
-          >
-            <template #left>
-              <slot name="left" />
-            </template>
+        <AppComboboxInput
+          :id="props.id"
+          :icon-left="props.iconLeft ?? null"
+          :icon-right="props.iconRight ?? null"
+          :is-chevron-hidden="props.isChevronHidden"
+          :is-disabled="props.isDisabled"
+          :is-invalid="props.isInvalid"
+          :is-loading="props.isLoading"
+          :placeholder="placeholderValue"
+          @blur="onBlur"
+        >
+          <template #left>
+            <slot name="left" />
+          </template>
 
-            <template
-              v-if="props.iconRight === undefined && !props.isChevronHidden"
-              #right
-            >
-              <AppComboboxTrigger :is-disabled="props.isDisabled" />
-            </template>
-          </AppInput>
-        </ComboboxInput>
+          <template #right>
+            <slot name="right" />
+          </template>
+        </AppComboboxInput>
       </ComboboxAnchor>
 
       <ComboboxPortal>

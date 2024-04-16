@@ -22,6 +22,10 @@ const props = withDefaults(
      */
     errors: FormFieldErrors
     /**
+     * The function to filter the options.
+     */
+    filterFn: (options: TValue[], searchTerm: string) => TValue[]
+    /**
      * The icon to display on the left side of the combobox.
      * @default null
      */
@@ -92,7 +96,8 @@ const model = defineModel<TValue | null>({
 })
 
 const search = defineModel<null | string>('search', {
-  required: true,
+  default: '',
+  required: false,
 })
 
 function onBlur(): void {
@@ -120,6 +125,7 @@ function onFilter(filter: string): void {
       :is-invalid="isInvalid"
       :items="props.items"
       :display-fn="props.displayFn"
+      :filter-fn="props.filterFn"
       :empty-text="props.emptyText"
       :is-disabled="props.isDisabled"
       :is-required="props.isRequired"

@@ -25,6 +25,7 @@ const props = defineProps<{
       />
 
       <AppText
+        v-if="props.item.label !== undefined"
         variant="subtext"
         class="max-w-32 truncate text-muted-foreground/75"
       >
@@ -48,6 +49,7 @@ const props = defineProps<{
       />
 
       <AppText
+        v-if="props.item.label !== undefined"
         variant="subtext"
         class="max-w-32 truncate text-muted-foreground"
       >

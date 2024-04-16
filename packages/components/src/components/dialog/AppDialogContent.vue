@@ -16,6 +16,10 @@ function onInteractOutside(e: CustomEvent): void {
     e.preventDefault()
   }
 }
+
+function onOpenAutoFocus(e: Event): void {
+  e.preventDefault()
+}
 </script>
 
 <template>
@@ -24,6 +28,7 @@ function onInteractOutside(e: CustomEvent): void {
     :disable-outside-pointer-events="false"
     class="fixed left-1/2 top-1/2 z-dialog -translate-x-1/2 -translate-y-1/2 rounded-dialog bg-background shadow-dialog-shadow outline-none"
     @interact-outside="onInteractOutside"
+    @open-auto-focus="onOpenAutoFocus"
   >
     <div>
       <slot />

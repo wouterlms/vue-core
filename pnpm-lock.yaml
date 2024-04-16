@@ -28,6 +28,10 @@ importers:
         version: 1.0.0-rc.45(@algolia/client-search@4.22.1)(postcss@8.4.38)(search-insights@2.13.0)(typescript@5.4.3)
 
   packages/components:
+    dependencies:
+      formango:
+        specifier: ^2.0.23
+        version: 2.0.23(vue@3.4.21)(zod@3.22.4)
     devDependencies:
       '@tsconfig/node18':
         specifier: ^2.0.1
@@ -104,9 +108,6 @@ importers:
       vue-router:
         specifier: ^4.3.0
         version: 4.3.0(vue@3.4.21)
-      vue-sonner:
-        specifier: ^1.1.2
-        version: 1.1.2
       vue-tsc:
         specifier: ^2.0.6
         version: 2.0.6(typescript@5.3.3)
@@ -5552,6 +5553,18 @@ packages:
       - '@vue/composition-api'
     dev: false
 
+  /formango@2.0.23(vue@3.4.21)(zod@3.22.4):
+    resolution: {integrity: sha512-WE7Kok5WBXcPw1i4m6CeIAqbo0COB7SidYD8/zRqiFOxoM343s1lHf2Pq30ef2LuLiwWAYzjhOaIrKcLuX/X+Q==}
+    peerDependencies:
+      vue: ^3.2.47
+      zod: ^3.21.4
+    dependencies:
+      '@vue/devtools-api': 6.6.1
+      deep-clone: 4.0.0
+      vue: 3.4.21(typescript@5.3.3)
+      zod: 3.22.4
+    dev: false
+
   /format-io@2.0.0:
     resolution: {integrity: sha512-iQz8w2qr4f+doWBV6LsfScHbu1gXhccByjbmA1wjBTaKRhweH2baJL96UGR4C7Fjpr8zSkK7EXiLmbzZWTyQIA==}
     engines: {node: '>=8'}
@@ -9477,10 +9490,6 @@ packages:
     dependencies:
       '@vue/devtools-api': 6.6.1
       vue: 3.4.21(typescript@5.3.3)
-
-  /vue-sonner@1.1.2:
-    resolution: {integrity: sha512-yg4f5s0a3oiiI7cNvO0Dajux1Y7s04lxww3vnQtnwQawJ3KqaKA9RIRMdI9wGTosRGIOwgYFniFRGl4+IuKPZw==}
-    dev: true
 
   /vue-template-compiler@2.7.16:
     resolution: {integrity: sha512-AYbUWAJHLGGQM7+cNTELw+KsOG9nl2CnSv467WobS5Cv9uk3wFcnr1Etsz2sEIHEZvw1U+o9mRlEO6QbZvUPGQ==}

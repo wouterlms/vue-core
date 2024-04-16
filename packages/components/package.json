@@ -1,7 +1,7 @@
 {
   "name": "@wisemen/vue-core",
   "type": "module",
-  "version": "0.0.44",
+  "version": "0.0.51",
   "license": "MIT",
   "sideEffects": false,
   "exports": {
@@ -52,8 +52,10 @@
     "vue-docgen-web-types": "^0.1.8",
     "vue-i18n": "^9.10.1",
     "vue-router": "^4.3.0",
-    "vue-sonner": "^1.1.2",
     "vue-tsc": "^2.0.6",
     "zod": "^3.22.4"
+  },
+  "dependencies": {
+    "formango": "^2.0.23"
   }
 }

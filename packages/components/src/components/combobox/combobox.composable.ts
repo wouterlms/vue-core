@@ -15,9 +15,8 @@ interface UseComboboxReturnType {
 }
 
 export function useCombobox(params: UseComboboxParams): UseComboboxReturnType {
-  // TODO: Add to other components
   const canOpenDropdown = computed<boolean>(() => {
-  // If there are options, the dropdown can be opened
+    // If there are options, the dropdown can be opened
     if (hasOptions(params.items.value)) {
       return true
     }

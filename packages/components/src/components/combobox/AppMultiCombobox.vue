@@ -2,7 +2,6 @@
 import {
   ComboboxAnchor,
   ComboboxArrow,
-  ComboboxInput,
   ComboboxPortal,
   ComboboxRoot,
 } from 'radix-vue'
@@ -11,11 +10,10 @@ import { computed, ref } from 'vue'
 import type { Icon } from '../../icons/icons'
 import type { ComboboxItem } from '../../types/comboboxItem.type'
 import type { AcceptableValue } from '../../types/selectItem.type'
-import AppInput from '../input/AppInput.vue'
 import AppComboboxContent from './AppComboboxContent.vue'
 import AppComboboxEmpty from './AppComboboxEmpty.vue'
+import AppComboboxInput from './AppComboboxInput.vue'
 import AppComboboxItem from './AppComboboxItem.vue'
-import AppComboboxTrigger from './AppComboboxTrigger.vue'
 import AppComboboxViewport from './AppComboboxViewport.vue'
 import { useCombobox } from './combobox.composable'
 
@@ -30,6 +28,10 @@ const props = withDefaults(
      * @default t('components.combobox.empty')
      */
     emptyText?: null | string
+    /**
+     * The function to filter the options.
+     */
+    filterFn: (options: TValue[], searchTerm: string) => TValue[]
     /**
      * The icon to display on the left side of the combobox.
      * @default null
@@ -92,7 +94,8 @@ const emit = defineEmits<{
 }>()
 
 const searchModel = defineModel<null | string>('search', {
-  required: true,
+  default: '',
+  required: false,
 })
 
 const isOpen = ref<boolean>(false)
@@ -117,9 +120,9 @@ const { canOpenDropdown } = useCombobox({
   search: computed<null | string>(() => searchModel.value),
 })
 
-const placeholderValue = computed<string | undefined>(() => {
+const placeholderValue = computed<null | string>(() => {
   if (model.value.length === 0) {
-    return props.placeholder ?? undefined
+    return props.placeholder
   }
 
   return model.value.map(value => props.displayFn(value)).join(', ')
@@ -134,10 +137,6 @@ function onBlur(): void {
     emit('blur')
   }
 }
-
-function onClose(): void {
-  isOpen.value = false
-}
 </script>
 
 <template>
@@ -146,38 +145,31 @@ function onClose(): void {
       v-model="model"
       v-model:open="isOpen"
       v-model:search-term="search"
-      :filter-function="(options) => options"
+      :filter-function="(props.filterFn as any)"
       :display-value="displayFn"
       :disabled="props.isDisabled"
       :multiple="true"
     >
       <ComboboxAnchor>
-        <ComboboxInput :as-child="true">
-          <AppInput
-            v-model="searchModel"
-            :class="{
-              '[&_input]:placeholder:text-input-foreground focus:[&_input]:placeholder:text-input-placeholder': !isEmpty,
-            }"
-            :is-loading="props.isLoading"
-            :is-disabled="props.isDisabled"
-            :icon-left="props.iconLeft"
-            :icon-right="props.iconRight"
-            :placeholder="placeholderValue"
-            @blur="onBlur"
-            @keydown.escape="onClose"
-          >
-            <template #left>
-              <slot name="left" />
-            </template>
+        <AppComboboxInput
+          :icon-left="props.iconLeft ?? null"
+          :icon-right="props.iconRight ?? null"
+          :is-chevron-hidden="props.isChevronHidden"
+          :is-disabled="props.isDisabled"
+          :is-invalid="props.isInvalid"
+          :is-loading="props.isLoading"
+          :placeholder="placeholderValue"
+          :show-placeholder-as-value="!isEmpty && !isOpen"
+          @blur="onBlur"
+        >
+          <template #left>
+            <slot name="left" />
+          </template>
 
-            <template
-              v-if="props.iconRight === undefined && !props.isChevronHidden"
-              #right
-            >
-              <AppComboboxTrigger :is-disabled="props.isDisabled" />
-            </template>
-          </AppInput>
-        </ComboboxInput>
+          <template #right>
+            <slot name="right" />
+          </template>
+        </AppComboboxInput>
       </ComboboxAnchor>
 
       <ComboboxPortal>

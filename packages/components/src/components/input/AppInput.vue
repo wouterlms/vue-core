@@ -60,8 +60,6 @@ const model = defineModel<null | string>({
 })
 
 const { classAttr, otherAttrs } = useComponentAttrs()
-
-// console.log(otherAttrs.value.onKeydown[0])
 </script>
 
 <template>
@@ -75,7 +73,7 @@ const { classAttr, otherAttrs } = useComponentAttrs()
         'cursor-not-allowed opacity-50': props.isDisabled,
       },
     ]"
-    class="flex h-10 items-center rounded-input border border-solid bg-input ring-offset-background duration-200 [&:has(:focus-visible)]:outline-none [&:has(:focus-visible)]:ring-2 [&:has(:focus-visible)]:ring-offset-2"
+    class="relative flex h-10 items-center rounded-input border border-solid bg-input ring-offset-background duration-200 [&:has(:focus-visible)]:outline-none [&:has(:focus-visible)]:ring-2 [&:has(:focus-visible)]:ring-offset-2"
   >
     <slot name="left">
       <AppIcon
